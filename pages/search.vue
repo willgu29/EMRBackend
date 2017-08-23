@@ -1,6 +1,8 @@
 <template>
   <section class="search-container">
-
+    <form action="/search">
+      <input class="search-bar" type="search" />
+    </form>
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
         <h2>
@@ -33,6 +35,11 @@ export default {
 </script>
 
 <style scoped>
+.search-bar {
+  width: 30%;
+  font-size: 20px;
+  margin-left: 20px;
+}
 .container {
   text-align: left;
   margin-left: 10px;

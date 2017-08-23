@@ -1,9 +1,6 @@
 <template>
   <header>
     <nuxt-link to="/">EMR Worx</nuxt-link>
-    <nuxt-link to="/about">About</nuxt-link>
-    <nuxt-link to="/contact">Contact</nuxt-link>
-
   </header>
 </template>
 
