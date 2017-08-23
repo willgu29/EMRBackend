@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="error-container">
     <h1 class="title">
       {{ error.statusCode }}
     </h1>
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.error-container {
   text-align: center;
 }
 .title

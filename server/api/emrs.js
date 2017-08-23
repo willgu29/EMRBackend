@@ -4,9 +4,9 @@ const router = Router()
 
 // Mock Emrs
 const emrs = [
-  { name: 'H&P', description: "description text"},
-  { name: 'H&P', description: "description text" },
-  { name: 'H&P', description: "description text" },
+  { id: "0", name: 'H&P', short: "short", description: "description text", author: "Drew Park MD"},
+  { id: "1", name: 'H&P', short: "short", description: "description text", author: "Priscilla Smith MD" },
+  { id: "2", name: 'H&P', short: "short", description: "description text", author: "Eric Kuo MD" },
 ]
 
 /* GET users listing. */

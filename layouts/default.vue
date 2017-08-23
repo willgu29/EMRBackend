@@ -49,4 +49,7 @@ export default {
   font-size: 2.5em;
   margin: 0;
 }
+a {
+  text-decoration: none;
+}
 </style>

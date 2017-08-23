@@ -1,0 +1,114 @@
+DOCTOR'S ORDERS:
+- CIWA Protocol
+- Lorazepam 2 mg PO Q4H PRN
+  for anxiety, tachycardia, agitation, hallucinations
+- Lorazepam 4 mg IVP Q4H PRN
+  for seizures
+- Cardiac telemetry
+  (per Priscilla)
+- Pulse Ox
+  (per Priscilla)
+
+DOCTOR'S ORDERS:
+Order:  CIWA protocol
+
+Activity:
+08/14/2017 15:18  New Order entered by AUDUONG,PRISCILLA (RESIDENT PHYSIC)
+     Order Text:        Order:  CIWA protocol
+     Nature of Order:   ELECTRONICALLY ENTERED
+     Delayed Until:     Admit To Medicine
+     Released by:       ADMISSION on 08/14/2017 17:24 to GENERAL MEDICINE on
+                        N4-M
+     Elec Signature:    AUDUONG,PRISCILLA (RESIDENT PHYSIC) on 08/14/2017 15:19
+     Nurse Verified:    SARMIENTO,GLADYS C (REGISTERED NURS) on 08/14/2017 17:35
+
+Current Data:
+Current Primary Provider:     AUDUONG,PRISCILLA
+Current Attending Physician:  MCLAREN,GORDON D
+Treating Specialty:           GENERAL MEDICINE
+Ordering Location:            N4-M
+Start Date/Time:              08/14/2017 17:26
+Stop Date/Time:               09/13/2017
+Current Status:               ACTIVE
+  Orders that are active or have been accepted by the service for
+  processing.  e.g., Dietetic orders are active upon being
+  ordered, Pharmacy orders are active when the order is verified,
+  Lab orders are active when the sample has been collected,
+  Radiology orders are active upon registration.
+Order #61525867
+
+Order:
+Order:                        CIWA protocol
+Start:                        NOW
+Stop:                         30 DAYS FROM TODAY
+
+NURSE'S TEMPLATE
+Alcohol Withdrawal Assessment Scoring Guidlines (CIWA-Ar)
+
+a. Vitals, Assessment Now
+b. If initial score = or > than 10 perform CIWA-Ar & VS every 4hrs and 1 hour
+after each
+    Lorazepam dose
+c. If initial score < 10 perform CIWA-Ar every 4hrs x 48hrs
+    If score < 10 for 48hrs D/C assessment or MD order
+    If score < 10 at any time go to (b) above
+d. If indicated, (see indications below) administer prn medications as ordered
+    and record on BCMA and below
+
+Vitals Enter at: Aug 16, 2017@08:20:11
+BP: 131/89
+P: 67
+R: 17
+T: 97.8
+17 (08/16/2017 08:20)
+97 (08/16/2017 08:20)
+
+NAUSEA AND VOMITING  0 no nausea and no vomiting
+
+Tremors  4 moderate, with patient's arms extended
+
+Anxiety  2
+
+Agitation  1 somewhat more than normal activity
+
+Paroxysmal Sweats  0 no sweat visible
+
+Orientation and clouding of senorium  0 oriented and can do serial additions
+
+Tactile disturbances  0 none
+
+Auditory disturbances  0 not present
+
+Visual disturbances  0 not present
+
+Headache  0 not present
+
+TOTAL CIWA-Ar SCORE: 7
+
+Indications for PRN Medication:
+a. Total CIWA-Ar < 10: Not Yet In Withdrawal, but is at high risk for
+withdrawal
+(Hx. DTs or recent alcohol use)
+
+b. Total CIWA-Ar = 10: If on scheduled medication. (Scheduled + prn method)
+    Consider transfer to ICU for any of the following: Total score 16 and
+above,
+    patient received total 10mg of Lorazepam in 4hrs, oxygen saturation < 92%
+    on room air or airway compromised, unstable vital signs, or Hemodynamic
+    instability
+PRN Medication
+
+CCU ORDER SET:
+Attach from e-mail
+
+COMMENTARY:
+- CIWA does not have objective measures, in contrast to AWS scale
+- Vitals Q4H is not part of order set
+  Individually, Priscilla ordered cardiac telemetry and pulse ox
+- Exists in CCU Order Set at LBVAMC
+- Exists in Quest at UCIMC
+- Per Morning Conference at LBVAMC, main barrier is nursing was not trained on implementing CIWA
+
+
+AWS SCALE:
+https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/alcalc/32/6/10.1093/oxfordjournals.alcalc.a008326/2/32-6-753.pdf?Expires=1502999090&Signature=B3h4f7LdPW3WkpRvuFNNP-c3QPZoxfHZmQHsrJ41B5zCtij2MeUoXQPpUJ15twrrIRwLm4yUCVZ4N~moN8xKRS~awIjHg~HoEFx6QanKPn~3eJvJpYRGcJhRDC9272Sk3BQV5GAn49a~1xZtNMrBq41SNecRNytVG5qF8x0fOsTH3OuheyXtyA13IPoKO3MHge7iFoxQXEhV~P1~3lAuPxhYry~dIGT94vqYsNNJN9YrAS2FpKClBQUMzCc7yXJkKdlS2Iz3dp7gn4txtn2na4J3AkMQRTy4VqcgkZ4khD7RklcID61EJDY4az4UTH-oGwTRGugUF6CrZxm5uZUF8w__&Key-Pair-Id=APKAIUCZBIA4LVPAVW3Q

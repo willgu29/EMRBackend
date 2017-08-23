@@ -1,13 +1,15 @@
 <template>
-  <section class="container">
-    <h1 class="title">
-      EMRs
-    </h1>
+  <section class="search-container">
+
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
-        <nuxt-link :to="{ name: 'id', params: { id: index }}">
-          {{ emr.name }}
-        </nuxt-link>
+        <h2>
+          <nuxt-link :to="{ name: 'id', params: { id: index }}">
+            {{ emr.name }}
+          </nuxt-link>
+        </h2>
+        <p>{{emr.short}}</p>
+        <p>{{emr.author}}</p>
       </li>
     </ul>
   </section>
@@ -47,6 +49,23 @@ export default {
 }
 .item
 {
-  margin: 10px 0;
+  margin: 30px 50px;
+}
+a {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  text-decoration: none;
+  color: purple;
+}
+h2 {
+  margin-bottom: 0px;
+}
+p {
+  margin-top: 0px;
+  margin-left: 2px;
+}
+a:hover {
+  text-decoration: underline;
 }
 </style>

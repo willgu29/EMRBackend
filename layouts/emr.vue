@@ -16,15 +16,12 @@ export default {
 </script>
 
 <style>
-h1, h2 {
-  font-weight: normal;
-}
-.search-container
+.emr-container
 {
   margin: 0;
   width: 100%;
-  padding: 50px 0;
-  text-align: left;
+  padding: 0px 0;
+  text-align: center;
 }
 
 .button, .button:visited
@@ -51,8 +48,5 @@ h1, h2 {
   font-weight: 300;
   font-size: 2.5em;
   margin: 0;
-}
-a {
-  text-decoration: none;
 }
 </style>
