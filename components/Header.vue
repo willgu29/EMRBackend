@@ -1,16 +1,16 @@
 <template>
-  <footer>
+  <header>
     <nuxt-link to="/">Home</nuxt-link>
     <nuxt-link to="/about">About</nuxt-link>
     <nuxt-link to="/contact">Contact</nuxt-link>
 
-  </footer>
+  </header>
 </template>
 
 <style>
-  footer {
+  header {
     position: fixed;
-    bottom: 0;
+    top: 10px;
   }
   a {
     margin-left: 20px;

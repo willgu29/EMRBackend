@@ -1,15 +1,11 @@
 <template>
   <section class="container">
-    <img src="~assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
     <h1 class="title">
-      User
+      {{ emr.name }}
     </h1>
     <h2 class="info">
-      {{ user.name }}
+      {{ emr.description }}
     </h2>
-    <nuxt-link class="button" to="/">
-      Users
-    </nuxt-link>
   </section>
 </template>
 
@@ -19,9 +15,9 @@ import axios from '~/plugins/axios'
 export default {
   name: 'id',
   asyncData ({ params, error }) {
-    return axios.get('/api/users/' + params.id)
+    return axios.get('/api/emrs/' + params.id)
       .then((res) => {
-        return { user: res.data }
+        return { emr: res.data }
       })
       .catch((e) => {
         error({ statusCode: 404, message: 'User not found' })
@@ -29,7 +25,7 @@ export default {
   },
   head () {
     return {
-      title: `User: ${this.user.name}`
+      title: `EMR: ${this.emr.name}`
     }
   }
 }
