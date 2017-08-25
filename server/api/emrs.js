@@ -4,9 +4,14 @@ const router = Router()
 
 // Mock Emrs
 const emrs = [
-  { id: "0", name: 'H&P', short: "short", description: "description text", author: "Drew Park MD"},
-  { id: "1", name: 'H&P', short: "short", description: "description text", author: "Priscilla Smith MD" },
-  { id: "2", name: 'H&P', short: "short", description: "description text", author: "Eric Kuo MD" },
+  { id: "0", name: 'H&P', short: "inpatient internal medicine",
+    type: "CPRS: Note Template", author: "Drew Park MD"},
+  { id: "1", name: 'H&P', short: "inpatient psychiatry wards",
+    type: "Quest: Note Template", author: "Priscilla Smith MD" },
+  { id: "2", name: 'H&P', short: "inpatient general surgery",
+    type: "Cerner: Note Template", author: "Eric Kuo MD" },
+  { id: "3", name: "CIWA Protocol", short: "inpatient psychiatry wards",
+    type: "Cerner: Order Set", author: "Long Beach VAMC"}
 ]
 
 /* GET users listing. */

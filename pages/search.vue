@@ -7,11 +7,11 @@
       <li v-for="(emr, index) in emrs" :key="index" class="item">
         <h2>
           <nuxt-link :to="{ name: 'id', params: { id: index }}">
-            {{ emr.name }}
+            {{ emr.name }}: {{emr.short}}
           </nuxt-link>
         </h2>
-        <p>{{emr.short}}</p>
-        <p>{{emr.author}}</p>
+        <p>{{emr.type}}</p>
+        <p>By: {{emr.author}}</p>
       </li>
     </ul>
   </section>
@@ -56,7 +56,7 @@ export default {
 }
 .item
 {
-  margin: 30px 50px;
+  margin: 50px 100px;
 }
 a {
   margin-left: 0px;
@@ -70,7 +70,7 @@ h2 {
 }
 p {
   margin-top: 0px;
-  margin-left: 2px;
+  margin-bottom: 2px;
 }
 a:hover {
   text-decoration: underline;

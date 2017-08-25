@@ -4,7 +4,7 @@
       {{ emr.name }}
     </h1>
     <h2 class="info">
-      {{ emr.description }}
+      {{ emr.type }}
     </h2>
     <emr-text-area :id='emr.id' />
   </section>
