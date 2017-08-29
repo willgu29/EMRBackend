@@ -11,7 +11,7 @@
           </nuxt-link>
         </h2>
         <p>{{emr.type}}</p>
-        <p>By: {{emr.author}}</p>
+        <p>By: {{emr.author}}, {{emr.institution}}</p>
       </li>
     </ul>
   </section>

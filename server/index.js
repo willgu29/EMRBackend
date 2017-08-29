@@ -2,6 +2,8 @@ import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 
 import api from './api'
+import mongoose from 'mongoose'
+
 
 const app = express()
 const host = process.env.HOST || '127.0.0.1'
@@ -27,6 +29,17 @@ if (config.dev) {
 
 // Give nuxt middleware to express
 app.use(nuxt.render)
+
+//Set up Database
+if (config.dev) {
+  mongoose.connect('mongodb://localhost/EMRTest')
+} else {
+  const url = 'mongodb://' + config.env.dbUser + ":" + config.env.dbPassword + "@ds161713.mlab.com:61713/emrworx"
+  mongoose.connect(url)
+}
+
+
+
 
 // Listen the server
 app.listen(port, host)

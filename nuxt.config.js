@@ -35,5 +35,9 @@ module.exports = {
         })
       }
     }
+  },
+  env: {
+    dbUser: 'emrAdmin',
+    dbPassword: 'emrDoctorJokes12'
   }
 }
