@@ -2,8 +2,9 @@
 
   <div id='emr'>
 
-    <div id="copy">
-      <button type="submit" v-on:click="copyToClipboard">Copy</button>
+    <div id="buttons">
+      <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
+      <info-button />
     </div>
 
     <textarea ref="copyContainer" readonly></textarea>
@@ -15,20 +16,26 @@
 <style>
 
 #emr {
+  display: inline-grid;
   margin-left: 10px;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
+  margin-top: 5px;
 }
 
 h1, h2 {
   font-weight: normal;
 }
-#copy {
-  display: inline-grid;
+.copy {
+  width: 25%;
 }
+#buttons {
+  display: flex;
+}
+
 textarea {
   margin-top: 15px;
   display: block;
@@ -51,11 +58,16 @@ a {
 
 
 <script>
+import InfoButton from '~/components/InfoButton.vue'
+
 var file = ['/hp1.txt', '/hp2.txt', '/hp3.txt', '/ciwa1.txt']
 
 export default {
   props: ['id'],
   name: 'emr',
+  components: {
+    InfoButton
+  },
   data () {
     return {
       body: file[this.id]

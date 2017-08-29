@@ -7,6 +7,7 @@
       {{ emr.type }}
     </h2>
     <emr-text-area :id='emr.id' />
+    <p>By: {{emr.author}}</p>
   </section>
 </template>
 
