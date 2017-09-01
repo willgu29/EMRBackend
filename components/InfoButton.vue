@@ -11,6 +11,7 @@
 </style>
 
 <script>
+var infoFilePath = '/other/howToTemplate.pdf'
 export default {
   name: 'infoButton',
   data () {
@@ -26,7 +27,10 @@ export default {
         const step = this.steps[index]
         instructionSet = instructionSet + step + '\n'
       }
-      alert(instructionSet)
+      // No need to use alert, just open PDF file instructions
+      // alert(instructionSet)
+
+      window.open(infoFilePath, '_blank')
     }
   }
 }

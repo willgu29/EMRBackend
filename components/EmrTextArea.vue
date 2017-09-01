@@ -59,18 +59,15 @@ a {
 
 <script>
 import InfoButton from '~/components/InfoButton.vue'
-
-var file = ['/hp1.txt', '/hp2.txt', '/hp3.txt', '/ciwa1.txt']
-
 export default {
-  props: ['id'],
+  props: ['id', 'filePath'],
   name: 'emr',
   components: {
     InfoButton
   },
   data () {
     return {
-      body: file[this.id]
+      body: this.filePath
     }
   },
   mounted () {

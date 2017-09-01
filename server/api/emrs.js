@@ -5,17 +5,29 @@ const router = Router()
 // Mock Emrs
 const emrs = [
   { id: "0", name: 'H&P', short: "inpatient internal medicine",
-    type: "CPRS: Note Template", institution: "UC Irvine Medical Center",
-    author: "Drew Park MD"},
+    author: "Drew Park MD", institution: "UC Irvine Medical Center",
+    company: "CPRS", type: "Note Template", fileType: 'txt', filePath: "/notes/hp1.txt"},
   { id: "1", name: 'H&P', short: "inpatient psychiatry wards",
-    type: "Quest: Note Template", institution: "Long Beach VAMC",
-    author: "Priscilla Smith MD" },
+    author: "Priscilla Smith MD", institution: "Long Beach VAMC",
+    company: "Quest", type: "Note Template", fileType: 'txt', filePath: "/notes/hp2.txt" },
   { id: "2", name: 'H&P', short: "inpatient general surgery",
-    type: "Cerner: Note Template", institution: "LAC+USC Medical Center",
-    author: "Eric Kuo MD" },
+    author: "Eric Kuo MD", institution: "LAC+USC Medical Center",
+    company: "Cerner", type: "Note Template", fileType: 'txt', filePath: "/notes/hp3.txt" },
   { id: "3", name: "CIWA Protocol", short: "inpatient psychiatry wards",
-    type: "Cerner: Order Set", institution: "Long Beach VAMC",
-    author: ""}
+    author: "", institution: "Long Beach VAMC",
+    company:"Cerner", type:"Order", fileType: 'txt', filePath: "/orders/ciwa1.txt"},
+  { id: "5", name: "Insulin Sliding Scale", short: "",
+    author: "Drew Park MD", institution: "",
+    company: "CPRS", type: "Order", fileType: 'pdf', filePath: "/orders/iss1.pdf"},
+  { id: "6", name: "Home Oxygen Eval", short: "",
+    author: "Drew Park MD", institution: "",
+    company: "CPRS", type: "Order", fileType: "pdf", filePath: "/orders/hoe1.pdf"},
+  { id: "7", name: "PICC Insertion", short: "",
+    author: "Drew Park MD", institution: "",
+    company: "CPRS", type: "Order", fileType: "pdf", filePath: "/orders/picci1.pdf"},
+  { id: "8", name: "PICC Removal", short: "",
+    author: "Drew Park MD", institution: "",
+    company: "CPRS", type: "Order", fileType: "pdf", filePath: "/orders/piccr1.pdf"},
 ]
 
 /* GET users listing. */

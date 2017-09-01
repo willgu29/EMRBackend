@@ -6,11 +6,18 @@
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
         <h2>
-          <nuxt-link :to="{ name: 'id', params: { id: index }}">
-            {{ emr.name }}: {{emr.short}}
-          </nuxt-link>
+          <div v-if="emr.fileType == 'txt'">
+            <nuxt-link :to="{ name: 'id', params: { id: index }}">
+              {{ emr.name }}: {{emr.short}}
+            </nuxt-link>
+          </div>
+          <div v-else>
+            <nuxt-link target="_blank" :to="emr.filePath" >
+              {{ emr.name }}: {{emr.short}}
+            </nuxt-link>
+          </div>
         </h2>
-        <p>{{emr.type}}</p>
+        <p>{{emr.company}}: {{emr.type}}</p>
         <p>By: {{emr.author}}, {{emr.institution}}</p>
       </li>
     </ul>
@@ -56,9 +63,10 @@ export default {
 }
 .item
 {
-  margin: 50px 100px;
+  margin: 40px 80px;
 }
 a {
+  font-size: 22px;
   margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
@@ -71,6 +79,7 @@ h2 {
 p {
   margin-top: 0px;
   margin-bottom: 2px;
+  font-size: 16px;
 }
 a:hover {
   text-decoration: underline;

@@ -1,8 +1,6 @@
 <template>
   <section class="container">
-    <h1 class="title">
-      EMR Worx
-    </h1>
+    <img width="250" src="~/assets/img/logo.png" />
     <h2>
       Search for templates and shortcuts.
     </h2>

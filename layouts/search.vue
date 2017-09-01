@@ -23,7 +23,7 @@ h1, h2 {
 {
   margin: 0;
   width: 100%;
-  padding: 50px 0;
+  padding: 20px 0;
   text-align: left;
 }
 

@@ -16,7 +16,12 @@
 </template>
 <script>
 export default {
-  props: ['error']
+  props: ['error'],
+  head () {
+    return {
+      title: 'EMR Worx'
+    }
+  }
 }
 </script>
 
