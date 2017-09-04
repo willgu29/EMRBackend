@@ -3,6 +3,7 @@
     <form action="/search" method="get">
       <input class="search-bar" type="search" :value="this.$route.query.text" name="text" />
     </form>
+    <div class="list-wrapper" v-if="emrs.length > 0">
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
         <h2>
@@ -21,6 +22,12 @@
         <p>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
       </li>
     </ul>
+    </div>
+    <div class='no-matches' v-else>
+      <h2>Looks like <b>{{this.$route.query.text}}</b> doesn't exist yet.</h2>
+      <p>Email submissions here: <b><a href="mailto:hello@emrworx.com">hello@emrworx.com</a></b></p>
+    </div>
+
   </section>
 </template>
 
@@ -30,7 +37,7 @@ import axios from '~/plugins/axios'
 export default {
   layout: 'search',
   async asyncData (object) {
-    var url = ('/api/emrs?text=' + object.query.text)
+    var url = ('/api/proxies?text=' + object.query.text)
     let { data } = await axios.get(url)
     return { emrs: data }
   },
@@ -43,6 +50,10 @@ export default {
 </script>
 
 <style scoped>
+.no-matches {
+  margin-top: 40px;
+  text-align: center;
+}
 .search-bar {
   width: 30%;
   font-size: 20px;

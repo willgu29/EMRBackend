@@ -24,10 +24,12 @@ var Emr = mongoose.model('Emr', EmrSchema)
 /* GET emrs listing. */
 router.get('/emrs', function (req, res, next) {
   console.log(req.query.text)
+  var searchText = req.query.text;
 
-  Emr.find({}, function(err, emrs) {
+  // Contains the searchText in name field
+  Emr.find({"name" : {"$regex": searchText, "$options": "i"}}, function(err, emrs) {
     res.json(emrs);
-  })
+  });
 })
 
 /* GET emr by ID. */
