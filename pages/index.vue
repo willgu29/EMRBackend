@@ -4,8 +4,8 @@
     <h2>
       Search for templates and shortcuts.
     </h2>
-    <form action="/search">
-      <input class="search-bar" type="search" />
+    <form action="/search" method="get">
+      <input class="search-bar" type="search" name="text" />
     </form>
 
   </section>

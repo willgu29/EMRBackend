@@ -32,7 +32,8 @@ app.use(nuxt.render)
 
 //Set up Database
 if (config.dev) {
-  mongoose.connect('mongodb://localhost/EMRTest')
+  const url = 'mongodb://' + config.env.dbUserTest + ":" + config.env.dbPasswordTest + "@ds121014.mlab.com:21014/emrtest"
+  mongoose.connect(url)
 } else {
   const url = 'mongodb://' + config.env.dbUser + ":" + config.env.dbPassword + "@ds161713.mlab.com:61713/emrworx"
   mongoose.connect(url)

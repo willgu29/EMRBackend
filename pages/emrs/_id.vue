@@ -7,7 +7,7 @@
       {{ emr.type }}
     </h2>
     <emr-text-area :id='emr.id' :filePath='emr.filePath'/>
-    <p>By: {{emr.author}}</p>
+    <p>By: {{emr.author.name}} {{emr.author.degree}} </p>
   </section>
 </template>
 
@@ -27,7 +27,7 @@ export default {
         return { emr: res.data }
       })
       .catch((e) => {
-        error({ statusCode: 404, message: 'User not found' })
+        error({ statusCode: 404, message: 'Emr not found' })
       })
   },
   head () {

@@ -38,6 +38,8 @@ module.exports = {
   },
   env: {
     dbUser: 'emrAdmin',
-    dbPassword: 'emrDoctorJokes12'
+    dbPassword: 'emrDoctorJokes12',
+    dbUserTest: 'test',
+    dbPasswordTest: 'worstPassword123'
   }
 }

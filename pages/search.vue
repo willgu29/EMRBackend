@@ -1,13 +1,13 @@
 <template>
   <section class="search-container">
-    <form action="/search">
-      <input class="search-bar" type="search" />
+    <form action="/search" method="get">
+      <input class="search-bar" type="search" :value="this.$route.query.text" name="text" />
     </form>
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
         <h2>
           <div v-if="emr.fileType == 'txt'">
-            <nuxt-link :to="{ name: 'id', params: { id: index }}">
+            <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}">
               {{ emr.name }}: {{emr.short}}
             </nuxt-link>
           </div>
@@ -18,7 +18,7 @@
           </div>
         </h2>
         <p>{{emr.company}}: {{emr.type}}</p>
-        <p>By: {{emr.author}}, {{emr.institution}}</p>
+        <p>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
       </li>
     </ul>
   </section>
@@ -29,8 +29,9 @@ import axios from '~/plugins/axios'
 
 export default {
   layout: 'search',
-  async asyncData () {
-    let { data } = await axios.get('/api/emrs')
+  async asyncData (object) {
+    var url = ('/api/emrs?text=' + object.query.text)
+    let { data } = await axios.get(url)
     return { emrs: data }
   },
   head () {
