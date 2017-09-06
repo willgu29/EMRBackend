@@ -5,7 +5,7 @@
       Search for templates and shortcuts.
     </h2>
     <form action="/search" method="get">
-      <input class="search-bar" type="search" name="text" />
+      <input class="search-bar" type="search" name="text" autocomplete="off" />
     </form>
 
   </section>

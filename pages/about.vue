@@ -22,7 +22,14 @@
 export default {
   head () {
     return {
-      title: 'About'
+      title: 'About EMR Worx',
+      meta: [
+        {
+          hid: `keywords`,
+          name: 'keywords',
+          keywords: 'about, emr, worx'
+        }
+      ]
     }
   }
 }

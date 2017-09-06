@@ -1,7 +1,7 @@
 <template>
   <section class="search-container">
     <form action="/search" method="get">
-      <input class="search-bar" type="search" :value="this.$route.query.text" name="text" />
+      <input class="search-bar" type="search" :value="this.$route.query.text" name="text" autocomplete="off" />
     </form>
     <div class="list-wrapper" v-if="emrs.length > 0">
     <ul class="items">
@@ -9,16 +9,16 @@
         <h2>
           <div v-if="emr.fileType == 'txt'">
             <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}">
-              {{ emr.name }}: {{emr.short}}
+              {{ emr.name }}: {{emr.description.short}}
             </nuxt-link>
           </div>
           <div v-else>
             <nuxt-link target="_blank" :to="emr.filePath" >
-              {{ emr.name }}: {{emr.short}}
+              {{ emr.name }}: {{emr.description.short}}
             </nuxt-link>
           </div>
         </h2>
-        <p>{{emr.company}}: {{emr.type}}</p>
+        <p>{{emr.program.name}}: {{emr.type}}</p>
         <p>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
       </li>
     </ul>

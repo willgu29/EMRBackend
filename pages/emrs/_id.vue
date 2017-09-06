@@ -32,7 +32,7 @@ export default {
   },
   head () {
     return {
-      title: `EMR: ${this.emr.name}`
+      title: `EMR Worx: ${this.emr.name}`
     }
   }
 }

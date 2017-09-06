@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
+import removeStopwordsFrom from '../helpers/stopwords.js'
 const router = Router()
 
 var Schema = mongoose.Schema,
@@ -14,11 +15,12 @@ var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
-  console.log(req.query.text)
-  var searchText = req.query.text.toUpperCase();
-  // Contains the searchText in name field
+  var searchText = req.query.text.toLowerCase();
+  var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
+  console.log("Cleaned Search: " + cleanedText)
+  // Contains the searchText in name field in any array of ProxySchema
   Proxy.
-      find({proxy : {$in : [new RegExp(searchText, 'i')] } }).
+      find({proxy : {$in : [new RegExp(cleanedText, 'i')] } }).
       populate('emr').
       exec(function (err, proxies) {
         if (proxies) {

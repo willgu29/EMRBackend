@@ -12,6 +12,9 @@
     <nuxt-link class="button" to="/" v-if="error.statusCode === 404">
       Home
     </nuxt-link>
+    <nuxt-link class="button" to="/" v-if="error.statusCode === 500">
+      Home
+    </nuxt-link>
   </section>
 </template>
 <script>

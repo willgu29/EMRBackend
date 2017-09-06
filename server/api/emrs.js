@@ -7,14 +7,20 @@ var Schema = mongoose.Schema,
 
 var EmrSchema = new Schema({
     name:        String,
-    short:       String,
-    category:    String,
+    description: {
+      short:       String,
+      category:    String,
+      domain:      String,
+    },
     author: {
       name:         String,
       institution:  String,
       degree:       String,
     },
-    company:     String,
+    program: {
+      name:         String,
+      version:      String,
+    },
     type:        String,
     fileType:    String,
     filePath:    String
