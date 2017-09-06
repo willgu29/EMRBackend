@@ -43,7 +43,6 @@ router.get('/emrs/:id', function (req, res, next) {
   const id = req.params.id
   console.log(id)
   Emr.findById(id, function (err, emr) {
-    console.log(emr);
     if (emr) {
       res.json(emr);
     } else {
