@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+
 const router = Router()
 
 var Schema = mongoose.Schema,
@@ -50,5 +52,32 @@ router.get('/emrs/:id', function (req, res, next) {
     }
   });
 })
+
+var jsonParser = bodyParser.json()
+
+
+router.post('/emrs', jsonParser, function (req, res, next) {
+  if (!req.body) return res.sendStatus(400)
+  var emr = req.body
+  var newEmr = new Emr()
+  newEmr.name = emr.name.trim()
+  newEmr.description.short = emr.description.short.trim()
+  newEmr.description.category = emr.description.category.trim()
+  newEmr.description.domain = emr.description.domain.trim()
+  newEmr.author.name = emr.author.name.trim()
+  newEmr.author.institution = emr.author.institution.trim()
+  newEmr.author.degree = emr.author.degree.trim()
+  newEmr.program.name = emr.program.name.trim()
+  newEmr.program.version = emr.program.version.trim()
+  newEmr.type = emr.type.trim()
+  newEmr.fileType = emr.fileType.trim()
+  newEmr.filePath = emr.filePath.trim()
+
+  newEmr.save(function (err, object) {
+    if (err) return res.sendStatus(400)
+    res.json(object)
+  });
+
+});
 
 export default router

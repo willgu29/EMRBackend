@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
 import removeStopwordsFrom from '../helpers/stopwords.js'
+import bodyParser from 'body-parser'
+
 const router = Router()
 
 var Schema = mongoose.Schema,
@@ -48,5 +50,20 @@ router.get('/proxies/:id', function (req, res, next) {
     }
   });
 })
+
+var jsonParser = bodyParser.json()
+
+router.post('/proxies', jsonParser, function (req, res, next) {
+  if (!req.body) return res.sendStatus(400)
+  var proxy = req.body
+  var newProxy = new Proxy()
+  newProxy.emr = proxy.id.trim()
+  newProxy.proxy = proxy.proxy
+
+  newProxy.save(function (err, object) {
+    if (err) return res.sendStatus(400)
+    res.json(object)
+  });
+});
 
 export default router
