@@ -2,7 +2,11 @@
   <section class="search-container">
     <form action="/search" method="get">
       <input class="search-bar" type="search" :value="this.$route.query.text" name="text" autocomplete="off" />
+      <info-button class='info-button' :filePath="'/other/searchHelp.pdf'" />
+
     </form>
+
+
     <div class="list-wrapper" v-if="emrs.length > 0">
     <ul class="items">
       <li v-for="(emr, index) in emrs" :key="index" class="item">
@@ -33,11 +37,16 @@
 
 <script>
 import axios from '~/plugins/axios'
+import InfoButton from '~/components/InfoButton.vue'
 
 export default {
+  components: {
+    InfoButton
+  },
   layout: 'search',
   async asyncData (object) {
-    var url = ('/api/proxies?text=' + object.query.text)
+    var searchText = object.query.text.replace(/&/g, '%26')
+    var url = ('/api/proxies?text=' + searchText)
     let { data } = await axios.get(url)
     return { emrs: data }
   },

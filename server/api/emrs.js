@@ -32,7 +32,6 @@ var Emr = mongoose.model('Emr', EmrSchema)
 
 /* GET emrs listing. */
 router.get('/emrs', function (req, res, next) {
-  //if ( ! req.query.text) { return res.sendStatus(400) }
 
   var searchText = req.query.text;
   // Contains the searchText in name field

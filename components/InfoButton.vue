@@ -7,6 +7,7 @@
     height: 20px;
     width: 20px;
     margin-left: 5px;
+    vertical-align: middle;
   }
 </style>
 
@@ -14,23 +15,15 @@
 var infoFilePath = '/other/howToTemplate.pdf'
 export default {
   name: 'infoButton',
+  props: ['filePath'],
   data () {
     return {
-      steps: ['1. Test', '2. Test', '3. Test']
+      path: this.filePath || infoFilePath
     }
   },
   methods: {
     expand: function () {
-      var instructionSet = ''
-      console.log(this.steps)
-      for (const index in this.steps) {
-        const step = this.steps[index]
-        instructionSet = instructionSet + step + '\n'
-      }
-      // No need to use alert, just open PDF file instructions
-      // alert(instructionSet)
-
-      window.open(infoFilePath, '_blank')
+      window.open(this.path, '_blank')
     }
   }
 }

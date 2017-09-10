@@ -18,8 +18,7 @@ var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
-  //if ( ! req.query.text) { return res.sendStatus(400) }
-
+  
   var searchText = req.query.text.toLowerCase();
   var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
   console.log("Cleaned Search: " + cleanedText)
