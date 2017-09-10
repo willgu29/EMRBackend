@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import fs from 'fs'
+import path from 'path'
 
 const router = Router()
 
@@ -31,14 +33,32 @@ var Emr = mongoose.model('Emr', EmrSchema)
 
 /* GET emrs listing. */
 router.get('/emrs', function (req, res, next) {
-  console.log(req.query.text)
-  var searchText = req.query.text;
+  if ( ! req.query.text) { return res.sendStatus(400) }
 
+  var searchText = req.query.text;
   // Contains the searchText in name field
   Emr.find({"name" : {"$regex": searchText, "$options": "i"}}, function(err, emrs) {
     res.json(emrs);
   });
 })
+
+router.get('/emrs/validate', function (req, res, next) {
+  Emr.find({}, function (err, emrs) {
+    if (err) return res.sendStatus(400)
+
+    var list = []
+    for (var emr of emrs) {
+      if (isValidEmr(emr)) {
+        var validate = emr.id + " VALID"
+        list.push(validate)
+      } else {
+        var validate = emr.id + " INVALID"
+        list.push(validate)
+      }
+    }
+    res.json(list)
+  });
+});
 
 /* GET emr by ID. */
 router.get('/emrs/:id', function (req, res, next) {
@@ -79,5 +99,13 @@ router.post('/emrs', jsonParser, function (req, res, next) {
   });
 
 });
+
+function isValidEmr(emr) {
+  var relativePath = __dirname + '/../../static'
+  if (fs.existsSync(path.join(relativePath, emr.filePath))) {
+    return true
+  }
+  return false;
+}
 
 export default router

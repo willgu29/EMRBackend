@@ -17,6 +17,8 @@ var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
+  if ( ! req.query.text) { return res.sendStatus(400) }
+
   var searchText = req.query.text.toLowerCase();
   var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
   console.log("Cleaned Search: " + cleanedText)
@@ -43,7 +45,7 @@ router.get('/proxies/:id', function (req, res, next) {
   const id = req.params.id
   console.log(id)
   Proxy.findById(id, function (err, proxy) {
-    if (emr) {
+    if (proxy) {
       res.json(proxy);
     } else {
       res.sendStatus(404)
@@ -65,5 +67,6 @@ router.post('/proxies', jsonParser, function (req, res, next) {
     res.json(object)
   });
 });
+
 
 export default router
