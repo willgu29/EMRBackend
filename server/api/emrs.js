@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
-import fs from 'fs'
-import path from 'path'
+import isValidEmr from '../helpers/validateEmr.js'
 
 const router = Router()
 
@@ -33,7 +32,7 @@ var Emr = mongoose.model('Emr', EmrSchema)
 
 /* GET emrs listing. */
 router.get('/emrs', function (req, res, next) {
-  if ( ! req.query.text) { return res.sendStatus(400) }
+  //if ( ! req.query.text) { return res.sendStatus(400) }
 
   var searchText = req.query.text;
   // Contains the searchText in name field
@@ -41,6 +40,24 @@ router.get('/emrs', function (req, res, next) {
     res.json(emrs);
   });
 })
+
+
+/* GET emr by ID. */
+router.get('/emrs/:id', function (req, res, next) {
+  const id = req.params.id
+  if (id == 'validate') {
+    return next()
+  }
+  console.log(id)
+  Emr.findById(id, function (err, emr) {
+    if (emr) {
+      res.json(emr);
+    } else {
+      res.sendStatus(404)
+    }
+  });
+})
+
 
 router.get('/emrs/validate', function (req, res, next) {
   Emr.find({}, function (err, emrs) {
@@ -59,20 +76,6 @@ router.get('/emrs/validate', function (req, res, next) {
     res.json(list)
   });
 });
-
-/* GET emr by ID. */
-router.get('/emrs/:id', function (req, res, next) {
-  const id = req.params.id
-  console.log(id)
-  Emr.findById(id, function (err, emr) {
-    if (emr) {
-      res.json(emr);
-    } else {
-      res.sendStatus(404)
-    }
-  });
-})
-
 var jsonParser = bodyParser.json()
 
 
@@ -100,12 +103,6 @@ router.post('/emrs', jsonParser, function (req, res, next) {
 
 });
 
-function isValidEmr(emr) {
-  var relativePath = __dirname + '/../../static'
-  if (fs.existsSync(path.join(relativePath, emr.filePath))) {
-    return true
-  }
-  return false;
-}
+
 
 export default router

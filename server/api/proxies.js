@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
 import removeStopwordsFrom from '../helpers/stopwords.js'
+import isValidEmr from '../helpers/validateEmr.js'
 import bodyParser from 'body-parser'
 
 const router = Router()
@@ -17,7 +18,7 @@ var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
-  if ( ! req.query.text) { return res.sendStatus(400) }
+  //if ( ! req.query.text) { return res.sendStatus(400) }
 
   var searchText = req.query.text.toLowerCase();
   var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
@@ -31,7 +32,9 @@ router.get('/proxies', function (req, res, next) {
           var emrs = []
           for (var index in proxies) {
             var emr = proxies[index].emr
-            emrs.push(emr);
+            if (isValidEmr(emr)){
+              emrs.push(emr);
+            }
           }
           res.json(emrs);
         } else {
