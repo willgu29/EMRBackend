@@ -18,7 +18,7 @@ var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
-  
+
   var searchText = req.query.text.toLowerCase();
   var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
   console.log("Cleaned Search: " + cleanedText)
@@ -45,6 +45,9 @@ router.get('/proxies', function (req, res, next) {
 /* GET emr by ID. */
 router.get('/proxies/:id', function (req, res, next) {
   const id = req.params.id
+  if (id == 'emr') {
+    return next()
+  }
   console.log(id)
   Proxy.findById(id, function (err, proxy) {
     if (proxy) {
@@ -54,6 +57,14 @@ router.get('/proxies/:id', function (req, res, next) {
     }
   });
 })
+
+router.get('/proxies/emr/:id', function (req, res, next) {
+  const id = req.params.id
+  Proxy.findOne({emr : id}).populate('emr').exec(function (err, proxy) {
+    if (err) { return res.sendStatus(404) }
+    res.json(proxy)
+  })
+});
 
 var jsonParser = bodyParser.json()
 

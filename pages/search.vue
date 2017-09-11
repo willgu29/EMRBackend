@@ -23,7 +23,7 @@
           </div>
         </h2>
         <p>{{emr.program.name}}: {{emr.type}}</p>
-        <p>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
+        <p class='author-subtitle'>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
       </li>
     </ul>
     </div>
@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style scoped>
+.author-subtitle {
+  font-size: 16px;
+}
 .no-matches {
   margin-top: 40px;
   text-align: center;
