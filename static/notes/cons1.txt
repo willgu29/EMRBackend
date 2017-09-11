@@ -1,0 +1,73 @@
+﻿GASTROENTEROLOGY
+Inpatient Consultation Note
+ 
+ 
+HISTORY OF PRESENT ILLNESS:
+ 
+Reason for consult:
+ 
+ 
+Patient reports pain/sx:
+ 
+Patient denies headaches, fevers, chills, joint pains, weight loss, chest pain, shortness of breath, dysphagia, melena, hematemesis, abdominal pain, nausea, vomiting, diarrhea, constipation, hematochezia, dysuria, or hematuria,
+        
+ 
+REVIEW OF SYSTEMS: A full review of systems was performed and is negative except as per history of present illness
+ 
+ALLERGIES:
+[<<ALLERGIES>>]
+ 
+CURRENT MEDS:
+[<<MEDS_ACTIVE>>]
+ 
+ 
+PAST MEDICAL HISTORY
+[[[]]]
+[<<HEALTH_ISSUES>>]
+ 
+PAST SURGICAL HISTORY
+[[[]]]
+[<<HEALTH_ISSUES_SURG_HX>>]
+ 
+SOCIAL HISTORY:
+Tobacco: [[[ Non-smoker, Former smoker, Current smoker, # PPD, quit ]]]
+Alcohol: [[[ use, quit ]]]
+Tattoos: [[[]]]
+IVDU: [[[]]]
+Currently lives with [[[ ]]]
+Profession/job [[[ ]]]
+ 
+FAMILY HISTORY:
+No family history of GI malignancies or liver disease
+[<<HEALTH_ISSUES_FAMILY_HX>>]
+ 
+PHYSICAL EXAM:
+[<<VITALS_CURRENT>>][<<WEIGHT>>]
+General:
+CV:
+Lungs:
+Abd:
+Ext:
+Neuro:
+Skin:
+Rectal:
+SUMMARY OF OUTSIDE DATA:
+ 
+ 
+RECENT LAB DATA:
+[<<LABS_COMMON_72>>]
+ 
+IMAGING DATA:
+[<<ABDOMEN_US>>]
+[<<ABDOMEN_CT_TX>>]
+[<<EGD>>]
+[<<UPPER_GI>>]
+ 
+PATHOLOGY DATA:
+ 
+ASSESSMENT:
+ 
+RECOMMENDATIONS:
+ 
+ 
+Patient staffed with Dr. [[[]]], attending Gastroenterologist, who agrees with the above assessment and plan
