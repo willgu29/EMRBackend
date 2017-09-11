@@ -1,0 +1,12 @@
+Paracentesis Procedure Note 
+ 
+INDICATION: _
+PROCEDURE OPERATOR: _
+ATTENDING PHYSICIAN: _ In Attendance (Y/N) _
+Ultrasound used to mark location: Y/N
+ 
+CONSENT: 
+Consent was obtained from _ prior to the procedure. Indications, risks, and benefits were explained at length. 
+ 
+PROCEDURE SUMMARY: 
+A time-out was performed. My hands were washed immediately prior to the procedure. I wore a surgical cap, mask with protective eyewear, sterile gown and sterile gloves throughout the procedure. The area was cleansed and draped in usual sterile fashion using chlorhexidine scrub. Anesthesia was achieved with 1% lidocaine. The _ of the abdomen was prepped and draped in a sterile fashion using chlorhexidine scrub. 1% lidocaine was used to numb the skin, soft tissue and peritoneum. The paracentesis catheter was inserted and advanced with negative pressure until _ colored fluid was aspirated. Approximately 60 mL of ascitic fluid was collected and sent for laboratory analysis. The catheter was then connected to the vaccutainer and _ liters of additional ascitic fluid were drained. The catheter was removed and no leaking was noted. A bandaid was placed over the puncture wound. The patient tolerated the procedure well without any immediate complications. Estimated blood loss was _.

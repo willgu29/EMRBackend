@@ -1,0 +1,11 @@
+PRE-OP DIAGNOSIS: _ 
+POST-OP DIAGNOSIS: Same 
+PROCEDURE: incision and drainage of abscess
+Performing Physician: _ 
+Supervising Physician (if applicable): _
+ 
+PROCEDURE: 
+A timeout protocol was performed prior to initiating the procedure.  The area was prepared and draped in the usual, sterile manner. The site was anesthetized with _% lidocaine with epinephrine. A linear incision along the local skin lines was made and the purulent material expressed. The abcess was explored thoroughly and sequestered pockets were opened. Bleeding was minimal. 
+Packing: _
+ 
+Followup: The patient tolerated the procedure well without complications.  Standard post-procedure care is explained and return precautions are given.
