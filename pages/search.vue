@@ -74,7 +74,7 @@ export default {
       this.filterEmrs()
     },
     onCheck: function () {
-      setJSON('programs', this.checkedPrograms)
+      setJSON('programs', this.checkedPrograms, { expires: '1M' })
       this.filterEmrs()
     },
     filterEmrs: function () {
