@@ -23,9 +23,10 @@ module.exports = {
   /*
   ** Add axios globally
   */
-  plugins: [{src: '~/plugins/mixpanel.js', ssr: false}],
+  plugins: [{src: '~/plugins/mixpanel.js', ssr: false},
+            {src: '~/plugins/vue-cookie.js', ssr: false, injectAs: '$cookie'} ],
   build: {
-    vendor: ['axios'],
+    vendor: ['axios', 'vue-cookie'],
     /*
     ** Run ESLINT on save
     */

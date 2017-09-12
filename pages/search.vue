@@ -5,11 +5,21 @@
       <info-button class='info-button' :filePath="'/other/searchHelp.pdf'" />
 
     </form>
+    <div class='checkboxes'>
+
+      <label for="cprs">CPRS</label>
+      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="cprs" value="CPRS" v-model="checkedPrograms">
+      <label for="quest">Quest</label>
+      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="quest" value="Quest" v-model="checkedPrograms">
+      <label for="cprs">Cerner</label>
+      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="cerner" value="Cerner" v-model="checkedPrograms">
+
+    </div>
 
 
     <div class="list-wrapper" v-if="emrs.length > 0">
     <ul class="items">
-      <li v-for="(emr, index) in emrs" :key="index" class="item">
+      <li v-for="(emr, index) in filteredEmrs" :key="index" class="item">
         <h2>
           <div v-if="emr.fileType == 'txt'">
             <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}">
@@ -44,21 +54,53 @@ export default {
     InfoButton
   },
   layout: 'search',
-  async asyncData (object) {
-    var searchText = object.query.text.replace(/&/g, '%26')
+  async asyncData (context) {
+    var searchText = context.query.text.replace(/&/g, '%26')
     var url = ('/api/proxies?text=' + searchText)
     let { data } = await axios.get(url)
-    return { emrs: data }
+
+    return { emrs: data, filteredEmrs: [], checkedPrograms: [] }
   },
   head () {
     return {
       title: 'EMRS'
+    }
+  },
+  async created () {
+    var jsonStr = this.$cookie.get('checkedPrograms')
+    if (jsonStr) {
+      this.checkedPrograms = JSON.parse(jsonStr)
+    } else {
+      this.checkedPrograms = ['CPRS', 'Quest', 'Cerner']
+    }
+    this.filterEmrs()
+  },
+  methods: {
+    onCheck: function () {
+      var jsonStr = JSON.stringify(this.checkedPrograms)
+      this.$cookie.set('checkedPrograms', jsonStr)
+      this.filterEmrs()
+    },
+    filterEmrs: function () {
+      var newList = []
+      for (var emr of this.emrs) {
+        if (this.checkedPrograms.includes(emr.program.name)) {
+          newList.push(emr)
+        }
+      }
+      this.filteredEmrs = newList
     }
   }
 }
 </script>
 
 <style scoped>
+.checkbox {
+  margin-right: 10px;
+}
+.checkboxes {
+  margin-left: 22px;
+}
 .author-subtitle {
   font-size: 12px;
 }
