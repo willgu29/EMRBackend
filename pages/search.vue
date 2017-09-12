@@ -47,6 +47,7 @@
 
 <script>
 import axios from '~/plugins/axios'
+import {getJSON, setJSON} from '~/plugins/tiny-cookie'
 import InfoButton from '~/components/InfoButton.vue'
 
 export default {
@@ -58,7 +59,6 @@ export default {
     var searchText = context.query.text.replace(/&/g, '%26')
     var url = ('/api/proxies?text=' + searchText)
     let { data } = await axios.get(url)
-
     return { emrs: data, filteredEmrs: [], checkedPrograms: [] }
   },
   head () {
@@ -66,29 +66,28 @@ export default {
       title: 'EMRS'
     }
   },
-  async created () {
-    var jsonStr = this.$cookie.get('checkedPrograms')
-    if (jsonStr) {
-      this.checkedPrograms = JSON.parse(jsonStr)
-    } else {
-      this.checkedPrograms = ['CPRS', 'Quest', 'Cerner']
-    }
-    this.filterEmrs()
+  mounted () {
+    this.onLoad()
   },
   methods: {
+    onLoad: function () {
+      this.filterEmrs()
+    },
     onCheck: function () {
-      var jsonStr = JSON.stringify(this.checkedPrograms)
-      this.$cookie.set('checkedPrograms', jsonStr)
+      setJSON('test1', this.checkedPrograms)
       this.filterEmrs()
     },
     filterEmrs: function () {
+      var programs = getJSON('test1')
+      if (!programs) { programs = ['CPRS', 'Quest', 'Cerner'] }
       var newList = []
       for (var emr of this.emrs) {
-        if (this.checkedPrograms.includes(emr.program.name)) {
+        if (programs.includes(emr.program.name)) {
           newList.push(emr)
         }
       }
       this.filteredEmrs = newList
+      this.checkedPrograms = programs
     }
   }
 }
