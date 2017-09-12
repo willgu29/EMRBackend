@@ -67,10 +67,10 @@ export default {
     }
   },
   mounted () {
-    this.onLoad()
+    this.setup()
   },
   methods: {
-    onLoad: function () {
+    setup: function () {
       this.filterEmrs()
     },
     onCheck: function () {
