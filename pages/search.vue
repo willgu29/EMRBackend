@@ -74,11 +74,11 @@ export default {
       this.filterEmrs()
     },
     onCheck: function () {
-      setJSON('test1', this.checkedPrograms)
+      setJSON('programs', this.checkedPrograms)
       this.filterEmrs()
     },
     filterEmrs: function () {
-      var programs = getJSON('test1')
+      var programs = getJSON('programs')
       if (!programs) { programs = ['CPRS', 'Quest', 'Cerner'] }
       var newList = []
       for (var emr of this.emrs) {
