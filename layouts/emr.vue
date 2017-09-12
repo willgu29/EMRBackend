@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import 'babel-polyfill'
 import MyHeader from '~/components/Header.vue'
 
 export default {

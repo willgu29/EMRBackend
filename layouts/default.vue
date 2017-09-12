@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import 'babel-polyfill'
 import MyFooter from '~/components/Footer.vue'
 
 export default {

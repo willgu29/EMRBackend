@@ -26,7 +26,7 @@ module.exports = {
   plugins: [{src: '~/plugins/mixpanel.js', ssr: false},
             { src: '~/plugins/tiny-cookie.js', ssr: false }],
   build: {
-    vendor: ['axios', 'tiny-cookie'],
+    vendor: ['axios', 'tiny-cookie', 'babel-polyfill'],
     /*
     ** Run ESLINT on save
     */

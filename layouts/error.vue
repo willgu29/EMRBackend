@@ -18,6 +18,8 @@
   </section>
 </template>
 <script>
+import 'babel-polyfill'
+
 export default {
   props: ['error'],
   head () {
