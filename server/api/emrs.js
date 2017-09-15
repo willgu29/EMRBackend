@@ -46,6 +46,8 @@ router.get('/emrs/:id', function (req, res, next) {
   const id = req.params.id
   if (id == 'validate') {
     return next()
+  } else if (id == 'create') {
+    return next()
   }
   console.log(id)
   Emr.findById(id, function (err, emr) {
@@ -75,8 +77,8 @@ router.get('/emrs/validate', function (req, res, next) {
     res.json(list)
   });
 });
-var jsonParser = bodyParser.json()
 
+var jsonParser = bodyParser.json()
 
 router.post('/emrs', jsonParser, function (req, res, next) {
   if (!req.body) return res.sendStatus(400)

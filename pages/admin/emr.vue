@@ -3,21 +3,21 @@
     <h1 class="title">
       Create EMR
     </h1>
-    <form v-on:submit.prevent="onSubmit">
-      Name: <input type="text" id="name" v-model="name" autocomplete="off" />
-      Short: <input type="text"id="short" v-model="description.short"  autocomplete="off" />
-      Category (inpatient, etc.): <input type="text" id="category" v-model="description.category"  autocomplete="off"  />
-      Domain (psychiatry ward, etc.): <input type="text" id="domain" v-model="description.domain"  autocomplete="off" />
-      Author Name: <input type="text" id="authorName" v-model="author.name"  autocomplete="off" />
-      Author Institution: <input type="text" id="authorInstitution" v-model="author.institution"  autocomplete="off" />
-      Author Degree: <input type="text" id="authorDegree" v-model="author.degree"  autocomplete="off" />
-      Program Name (CPRS, etc.): <input type="text" id="programName" v-model="program.name" autocomplete="off"  />
-      Program Version: <input type='text' id="programVersion" v-model="program.version"  autocomplete="off" />
-      Type (Note Template, Order): <input type='text' id='type' v-model="type" autocomplete="off" />
-      File Type (txt, pdf): <input type='text' id="fileType" v-model="fileType" autocomplete="off"  />
-      File Path: <input type='text' id='filePath' v-model="filePath" autocomplete="off" />
+    <form v-on:submit.stop.prevent="onSubmit">
+      Name: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="name" v-model="name" autocomplete="off" />
+      Short: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text"id="short" v-model="description.short"  autocomplete="off" />
+      Category (inpatient, etc.): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="category" v-model="description.category"  autocomplete="off" />
+      Domain (psychiatry ward, etc.): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="domain" v-model="description.domain"  autocomplete="off" />
+      Author Name: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="authorName" v-model="author.name"  autocomplete="off" />
+      Author Institution: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="authorInstitution" v-model="author.institution"  autocomplete="off" />
+      Author Degree: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="authorDegree" v-model="author.degree"  autocomplete="off" />
+      Program Name (CPRS, etc.): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type="text" id="programName" v-model="program.name" autocomplete="off"  />
+      Program Version: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id="programVersion" v-model="program.version"  autocomplete="off" />
+      Type (Note Template, Order): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id='type' v-model="type" autocomplete="off" />
+      File Type (txt, pdf): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id="fileType" v-model="fileType" autocomplete="off"  />
+      File Path (/orders, /notes, /navs): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id='filePath' v-model="filePath" autocomplete="off" />
       <br />
-      <input type='submit' />
+      <input type="submit" />
     </form>
 
   </section>
@@ -63,7 +63,8 @@ export default {
     }
   },
   methods: {
-    onSubmit: function () {
+    onSubmit: function (event) {
+      console.log(event)
       axios.post('/api/emrs/', {
         name: this.name,
         description: {
