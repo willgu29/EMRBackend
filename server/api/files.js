@@ -8,7 +8,7 @@ const router = Router()
 
 
 /* GET users listing. */
-router.get('/pdfs', function (req, res, next) {
+router.get('/files/pdf', function (req, res, next) {
   doc.pipe(fs.createWriteStream('/other/output.pdf'))
   doc.text('Some text with an embedded font!', 100, 100)
 
@@ -16,8 +16,13 @@ router.get('/pdfs', function (req, res, next) {
   res.json('test')
 })
 
+router.get('/files/txt', function (req, res, next) {
+
+  res.json('txt')
+})
+
 /* GET user by ID. */
-router.get('/pdfs/:id', function (req, res, next) {
+router.get('/files/pdfs/:id', function (req, res, next) {
   const id = parseInt(req.params.id)
 
 })
