@@ -7,7 +7,7 @@
       <info-button />
     </div>
 
-    <textarea ref="copyContainer" readonly></textarea>
+    <textarea ref="copyContainer" readonly>Loading...</textarea>
 
 
   </div>
@@ -58,6 +58,7 @@ a {
 
 
 <script>
+import axios from '~/plugins/axios'
 import InfoButton from '~/components/InfoButton.vue'
 export default {
   props: ['id', 'filePath'],
@@ -65,29 +66,16 @@ export default {
   components: {
     InfoButton
   },
-  data () {
-    return {
-      body: this.filePath
-    }
-  },
-  mounted () {
+  beforeMount () {
     this.getText()
   },
   methods: {
     getText: function () {
-      var request = new XMLHttpRequest()
-      var populate = this.populateTextArea
-      var url = this.$data.body
-      request.open('GET', url, true)
-      request.send(null)
-      request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-          var type = request.getResponseHeader('Content-Type')
-          if (type.indexOf('text') !== 1) {
-            populate(request.responseText)
-          }
-        }
-      }
+      const self = this
+      var url = ('/api/emrs/file/' + this.id)
+      axios.get(url).then(response => {
+        self.populateTextArea(response.data.text)
+      })
     },
     populateTextArea: function (text) {
       this.$refs.copyContainer.value = text

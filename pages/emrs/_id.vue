@@ -6,7 +6,7 @@
     <h2 class="info">
       {{ emr.type }}
     </h2>
-    <emr-text-area :id='emr.id' :filePath='emr.filePath'/>
+    <emr-text-area :id='emr._id' :filePath='emr.filePath'/>
     <p>By: {{emr.author.name}} {{emr.author.degree}} </p>
   </section>
 </template>

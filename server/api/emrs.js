@@ -2,6 +2,7 @@ import { Router } from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import isValidEmr from '../helpers/validateEmr.js'
+import axios from 'axios'
 
 const router = Router()
 
@@ -42,13 +43,8 @@ router.get('/emrs', function (req, res, next) {
 
 
 /* GET emr by ID. */
-router.get('/emrs/:id', function (req, res, next) {
+router.get('/emrs/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
   const id = req.params.id
-  if (id == 'validate') {
-    return next()
-  } else if (id == 'create') {
-    return next()
-  }
   console.log(id)
   Emr.findById(id, function (err, emr) {
     if (emr) {
@@ -58,6 +54,34 @@ router.get('/emrs/:id', function (req, res, next) {
     }
   });
 })
+// var request = new XMLHttpRequest()
+// var populate = this.populateTextArea
+// var url = this.$data.body
+// request.open('GET', url, true)
+// request.send(null)
+// request.onreadystatechange = function () {
+//   if (request.readyState === 4 && request.status === 200) {
+//     var type = request.getResponseHeader('Content-Type')
+//     if (type.indexOf('text') !== 1) {
+//       populate(request.responseText)
+//     }
+//   }
+// }
+
+router.get('/emrs/file/:id', function (req, res, next) {
+  const id = req.params.id
+  Emr.findById(id, function (err, emr) {
+    if (emr) {
+      axios.get(emr.filePath).then(function (response) {
+        res.json({'text' : response.data})
+      }).catch(function (err) {
+        res.sendStatus(404)
+      })
+    } else {
+      res.sendStatus(404)
+    }
+  });
+});
 
 // TODO: update validation to actual URL checker for this route
 router.get('/emrs/validate', function (req, res, next) {
