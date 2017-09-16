@@ -21,7 +21,7 @@
     </div>
 
 
-    <div class="list-wrapper" v-if="emrs.length > 0">
+    <div class="list-wrapper" v-if="filteredEmrs.length > 0">
     <ul class="items">
       <li v-for="(emr, index) in filteredEmrs" :key="index" class="item">
         <h2>

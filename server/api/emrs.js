@@ -59,7 +59,7 @@ router.get('/emrs/:id', function (req, res, next) {
   });
 })
 
-
+// TODO: update validation to actual URL checker for this route
 router.get('/emrs/validate', function (req, res, next) {
   Emr.find({}, function (err, emrs) {
     if (err) return res.sendStatus(400)

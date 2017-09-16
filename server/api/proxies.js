@@ -31,16 +31,23 @@ router.get('/proxies', function (req, res, next) {
           var emrs = []
           for (var index in proxies) {
             var emr = proxies[index].emr
-            if (isValidEmr(emr)){
-              emrs.push(emr);
+            if (isValidEmr(emr)) {
+              emrs.push(emr)
             }
           }
           res.json(emrs);
         } else {
           res.sendStatus(404)
         }
-      });
+      })
 })
+
+function addEmrs(emr, isValid) {
+  console.log('LOL')
+  if (isValid) {
+    return emr;
+  }
+}
 
 /* GET emr by ID. */
 router.get('/proxies/:id', function (req, res, next) {
