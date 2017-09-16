@@ -6,25 +6,19 @@ var doc = new PDFDocument
 const router = Router()
 
 
+// TODO: Create PDF generator
 
-/* GET users listing. */
-router.get('/files/pdf', function (req, res, next) {
-  doc.pipe(fs.createWriteStream('/other/output.pdf'))
-  doc.text('Some text with an embedded font!', 100, 100)
-
-  doc.end()
-  res.json('test')
+router.post('/files/pdf', function (req, res, next) {
+  res.json('pdf')
 })
 
-router.get('/files/txt', function (req, res, next) {
-
+router.post('/files/txt', function (req, res, next) {
   res.json('txt')
 })
 
 /* GET user by ID. */
 router.get('/files/pdfs/:id', function (req, res, next) {
   const id = parseInt(req.params.id)
-
 })
 
 export default router

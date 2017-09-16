@@ -7,7 +7,7 @@
     <br /> <br />
     <form v-on:submit.prevent="onSubmit">
       EMR ID: <input type="text" id="id" v-model="id" autocomplete="off" />
-      Proxies: <textarea id="proxies" name="proxies" v-model="proxies" cols="40" rows="5"></textarea>
+      Proxies: <textarea id="proxies" name="proxies" v-model="proxies"></textarea>
       <br />
       <input type='submit' />
     </form>
