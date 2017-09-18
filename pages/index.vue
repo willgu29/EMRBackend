@@ -2,10 +2,10 @@
   <section class="container">
     <img width="250" src="~/assets/img/logo.png" />
     <h2>
-      Search for templates and shortcuts.
+      Finish your notes faster
     </h2>
     <form action="/search" method="get">
-      <input class="search-bar" type="search" name="text" autocomplete="off" />
+      <input placeholder="Search for note templates" class="search-bar" type="search" name="text" autocomplete="off" />
     </form>
 
   </section>

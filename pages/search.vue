@@ -6,18 +6,16 @@
 
     </form>
     <div class='checkboxes'>
-
+      <label for="cprs">Epic</label>
+      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="epic" value="Epic" v-model="checkedPrograms">
+      <label for="cprs">Cerner</label>
+      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="cerner" value="Cerner" v-model="checkedPrograms">
       <label for="cprs">CPRS</label>
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="cprs" value="CPRS" v-model="checkedPrograms">
       <label for="quest">Quest</label>
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="quest" value="Quest" v-model="checkedPrograms">
-      <label for="cprs">Cerner</label>
-      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="cerner" value="Cerner" v-model="checkedPrograms">
-      <label for="cprs">Epic</label>
-      <input v-on:click="onCheck" class='checkbox' type="checkbox" id="epic" value="Epic" v-model="checkedPrograms">
       <label for="cprs">Other</label>
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="other" value="Other" v-model="checkedPrograms">
-
     </div>
 
 
@@ -83,7 +81,7 @@ export default {
     },
     filterEmrs: function () {
       var programs = getJSON('programs')
-      if (!programs) { programs = ['CPRS', 'Quest', 'Cerner', 'Epic', 'Other'] }
+      if (!programs) { programs = ['Epic', 'Cerner', 'CPRS', 'Quest', 'Other'] }
       var newList = []
       for (var emr of this.emrs) {
         if (programs.includes(emr.program.name)) {
