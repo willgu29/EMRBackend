@@ -97,15 +97,14 @@ router.get('/emrs/invalid', function (req, res, next) {
     if (err) return res.sendStatus(400)
     var emrIds = []
     for (var emr of emrs) {
-      emrIds.push(emr._id)
+      emrIds.push(emr._id.toString())
     }
-    console.log(emrIds)
     Proxy.find({}, function (err, proxies) {
       if (err) return res.sendStatus(400)
-      var createdIds = []
+
       for (var proxy of proxies) {
-        var index = emrIds.indexOf(proxy.emr)
-        if (index) {
+        var index = emrIds.indexOf(proxy.emr.toString())
+        if (index > -1) {
           emrIds.splice(index, 1);
         }
       }
