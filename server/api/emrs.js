@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import isValidEmr from '../helpers/validateEmr.js'
 import axios from 'axios'
+import Proxy from './models/Proxy.js'
 
 const router = Router()
 
@@ -27,7 +28,8 @@ var EmrSchema = new Schema({
     },
     type:        String,
     fileType:    String,
-    filePath:    String
+    filePath:    String,
+    hasProxy: {type: Boolean, default: false}
 });
 var Emr = mongoose.model('Emr', EmrSchema)
 
@@ -54,19 +56,6 @@ router.get('/emrs/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
     }
   });
 })
-// var request = new XMLHttpRequest()
-// var populate = this.populateTextArea
-// var url = this.$data.body
-// request.open('GET', url, true)
-// request.send(null)
-// request.onreadystatechange = function () {
-//   if (request.readyState === 4 && request.status === 200) {
-//     var type = request.getResponseHeader('Content-Type')
-//     if (type.indexOf('text') !== 1) {
-//       populate(request.responseText)
-//     }
-//   }
-// }
 
 router.get('/emrs/file/:id', function (req, res, next) {
   const id = req.params.id
@@ -101,6 +90,31 @@ router.get('/emrs/validate', function (req, res, next) {
     res.json(list)
   });
 });
+
+
+
+router.get('/emrs/invalid', function (req, res, next) {
+  Emr.find({}, function (err, emrs) {
+    if (err) return res.sendStatus(400)
+    var emrIds = []
+    for (var emr of emrs) {
+      emrIds.push(emr._id)
+    }
+    console.log(emrIds)
+    Proxy.find({}, function (err, proxies) {
+      if (err) return res.sendStatus(400)
+      var createdIds = []
+      for (var proxy of proxies) {
+        var index = emrIds.indexOf(proxy.emr)
+        if (index) {
+          emrIds.splice(index, 1);
+        }
+      }
+      res.json(emrIds)
+    })
+  })
+});
+
 
 var jsonParser = bodyParser.json()
 

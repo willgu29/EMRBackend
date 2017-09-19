@@ -1,20 +1,12 @@
 import { Router } from 'express'
-import mongoose from 'mongoose'
 import removeStopwordsFrom from '../helpers/stopwords.js'
 import isValidEmr from '../helpers/validateEmr.js'
 import bodyParser from 'body-parser'
+import Proxy from './models/Proxy.js'
 
 const router = Router()
 
-var Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
 
-var ProxySchema = new Schema({
-
-    emr:         {type: ObjectId, ref: 'Emr'},
-    proxy:       [{type: String, uppercase: true}]
-});
-var Proxy = mongoose.model('Proxy', ProxySchema)
 
 /* GET emrs listing. */
 router.get('/proxies', function (req, res, next) {
@@ -41,13 +33,6 @@ router.get('/proxies', function (req, res, next) {
         }
       })
 })
-
-function addEmrs(emr, isValid) {
-  console.log('LOL')
-  if (isValid) {
-    return emr;
-  }
-}
 
 /* GET emr by ID. */
 router.get('/proxies/:id', function (req, res, next) {
