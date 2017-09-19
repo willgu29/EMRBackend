@@ -16,7 +16,7 @@ var stopwords = [
   'we\'ve', 'were', 'weren\'t', 'what', 'what\'s', 'when', 'when\'s', 'where', 'where\'s',
   'which', 'while', 'who', 'who\'s', 'whom', 'why', 'why\'s', 'with', 'won\'t', 'would',
   'wouldn\'t', 'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve', 'your', 'yours', 'yourself',
-  'yourselves' ]
+  'yourselves', 'note', 'template']
 
 function removeStopwordsFrom (text) {
   var lowercase = text.toLowerCase()
@@ -25,3 +25,5 @@ function removeStopwordsFrom (text) {
 }
 
 export default removeStopwordsFrom
+
+//REMOVED NOTE AND TEMPlATE FROM SEARCH ****
