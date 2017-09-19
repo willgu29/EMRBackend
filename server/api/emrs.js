@@ -29,7 +29,6 @@ var EmrSchema = new Schema({
     type:        String,
     fileType:    String,
     filePath:    String,
-    hasProxy: {type: Boolean, default: false}
 });
 var Emr = mongoose.model('Emr', EmrSchema)
 
