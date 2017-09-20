@@ -90,8 +90,8 @@ export default {
 
 <style scoped>
 #proxies {
-  width: 500px;
-  height: 200px;
+  width: 400px;
+  height: 150px;
 }
 form {
   display: inline-grid;

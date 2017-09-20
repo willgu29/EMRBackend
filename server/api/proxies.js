@@ -33,11 +33,9 @@ router.get('/proxies', function (req, res, next) {
 })
 
 /* GET emr by ID. */
-router.get('/proxies/:id', function (req, res, next) {
+router.get('/proxies/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
   const id = req.params.id
-  if (id == 'emr') {
-    return next()
-  }
+  
   console.log(id)
   Proxy.findById(id, function (err, proxy) {
     if (proxy) {
@@ -46,6 +44,20 @@ router.get('/proxies/:id', function (req, res, next) {
       res.sendStatus(404)
     }
   });
+})
+
+router.get('/proxies/all', function (req, res, next) {
+  Proxy.
+    find({}).
+    populate('emr').
+    exec(function (err, proxies) {
+      if (proxies) {
+        res.json(proxies)
+      } else {
+        res.sendStatus(404)
+      }
+    })
+
 })
 
 router.get('/proxies/emr/:id', function (req, res, next) {
