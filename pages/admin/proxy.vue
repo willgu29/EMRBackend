@@ -9,7 +9,7 @@
       EMR ID: <input type="text" id="id" v-model="id" autocomplete="off" />
       Proxies: <textarea id="proxies" name="proxies" v-model="proxies"></textarea>
       <br />
-      Created Search Terms: <textarea id="proxies" name="combos" v-model="combos"></textarea>
+      Created Search Terms: <textarea id="proxies" name="combos" v-model="combos" readonly></textarea>
       <input type='submit' />
     </form>
 
