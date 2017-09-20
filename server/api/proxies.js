@@ -6,9 +6,7 @@ import Proxy from './models/Proxy.js'
 
 const router = Router()
 
-
-
-/* GET emrs listing. */
+/* GET proxies listing. */
 router.get('/proxies', function (req, res, next) {
 
   var searchText = req.query.text.toLowerCase();
