@@ -8,7 +8,7 @@
 export default {
   validate ({ params, query }) {
     // TODO: Validate via cookie stored, hash via server
-    //(compare saved cookie to sessionId in database)
+    // (compare saved cookie to sessionId in database)
     return true
   },
   head () {
