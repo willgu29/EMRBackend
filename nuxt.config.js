@@ -4,7 +4,6 @@ module.exports = {
   */
   head: {
     title: 'EMR Worx',
-    script: [{src: '/js/zendesk.js'}],
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
