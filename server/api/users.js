@@ -16,9 +16,19 @@ var UserSchema = new Schema({
     timesLoggedIn:  Number,
     favorites:      [{type: ObjectId, ref: 'Emr'}],
     institution:    String,
-    verified:       {type: Boolean, default: false}
+    verified:       {type: Boolean, default: false},
 
 });
+
+// TODO: verify by ip address? Or how to deal with login concerns / sensitive data?
+// Better way to login without passwords?
+/*
+var result = {
+                     username: user.username,
+                     scope: user.scope,
+                     token: Jwt.sign(tokenData, privateKey)
+                 };
+                */
 
 var User = mongoose.model('User', UserSchema)
 

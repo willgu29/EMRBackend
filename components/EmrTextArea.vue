@@ -4,7 +4,7 @@
 
     <div id="buttons">
       <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
-      <info-button />
+      <info-button :filePath='howTo' />
     </div>
 
     <textarea ref="copyContainer" readonly>Loading...</textarea>
@@ -61,10 +61,17 @@ a {
 import axios from '~/plugins/axios'
 import InfoButton from '~/components/InfoButton.vue'
 export default {
-  props: ['id', 'filePath'],
+  props: ['id', 'filePath', 'program'],
   name: 'emr',
   components: {
     InfoButton
+  },
+  data () {
+    if (this.program.name === 'Quest') {
+      return { howTo: '/other/howToQuest.pdf' }
+    } else {
+      return { howTo: '/other/howToTemplate.pdf' }
+    }
   },
   beforeMount () {
     this.getText()
