@@ -75,14 +75,12 @@ export default {
       title: 'EMRS'
     }
   },
-  created () {
+  beforeMount () {
     this.setup()
   },
   methods: {
     setup: function () {
-      this.$nextTick(() => {
-        this.filterEmrs()
-      })
+      this.filterEmrs()
     },
     onCheck: function () {
       setJSON('programs', this.checkedPrograms, { expires: '1M' })
