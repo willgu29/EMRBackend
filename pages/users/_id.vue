@@ -1,6 +1,6 @@
 <template>
   <section class="search-container">
-    <h1 class='title'>{{ this.user.institution}}: {{ this.user.name }}</h1>
+    <h1 class='title'>{{ this.user.name }}</h1>
     <div class="list-wrapper" v-if="user.bundles.length > 0">
       <ul class="items">
         <li v-for="(bundle, index) in user.bundles" :key="index" class="item">
