@@ -78,7 +78,6 @@ export default {
 <style scoped>
 .items {
   list-style: none;
-
 }
 .bundle {
   color: purple;

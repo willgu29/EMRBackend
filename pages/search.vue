@@ -18,7 +18,7 @@
       <label for="cprs">Other</label>
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="other" value="Other" v-model="checkedPrograms">
     </div>
-
+    <div v-show="! loading">
     <div class="list-wrapper" v-if="filteredEmrs.length > 0">
     <ul class="items">
       <li v-for="(emr, index) in filteredEmrs" :key="index" class="item">
@@ -43,6 +43,7 @@
       <h2>Looks like <b>{{this.$route.query.text}}</b> doesn't exist yet.</h2>
       <p>Email submissions here: <b><a href="mailto:hello@emrworx.com">hello@emrworx.com</a></b></p>
     </div>
+    </div>
 
   </section>
 </template>
@@ -65,7 +66,8 @@ export default {
   },
   data () {
     return {
-      login: ''
+      login: '',
+      loading: true
     }
   },
   head () {
@@ -73,18 +75,21 @@ export default {
       title: 'EMRS'
     }
   },
-  mounted () {
+  created () {
     this.setup()
   },
   methods: {
     setup: function () {
-      this.filterEmrs()
+      this.$nextTick(() => {
+        this.filterEmrs()
+      })
     },
     onCheck: function () {
       setJSON('programs', this.checkedPrograms, { expires: '1M' })
       this.filterEmrs()
     },
     filterEmrs: function () {
+      this.loading = true
       var programs = getJSON('programs')
       if (!programs) { programs = ['Epic', 'Cerner', 'CPRS', 'Quest', 'Other'] }
       var newList = []
@@ -95,6 +100,7 @@ export default {
       }
       this.filteredEmrs = newList
       this.checkedPrograms = programs
+      this.loading = false
     }
   }
 }
