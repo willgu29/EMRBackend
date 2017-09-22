@@ -19,30 +19,30 @@
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="other" value="Other" v-model="checkedPrograms">
     </div>
     <div v-show="! loading">
-    <div class="list-wrapper" v-if="filteredEmrs.length > 0">
-    <ul class="items">
-      <li v-for="(emr, index) in filteredEmrs" :key="index" class="item">
-        <h2>
-          <div v-if="emr.fileType == 'txt'">
-            <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank">
-              {{ emr.name }}: {{emr.description.short}}
-            </nuxt-link>
-          </div>
-          <div v-else>
-            <nuxt-link :to="{ name: 'orders-id', params: {id: emr._id }}" target="_blank">
-              {{ emr.name }}: {{emr.description.short}}
-            </nuxt-link>
-          </div>
-        </h2>
-        <p><b>{{emr.program.name}}: {{emr.type}}</b></p>
-        <p class='author-subtitle'>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
-      </li>
-    </ul>
-    </div>
-    <div class='no-matches' v-else>
-      <h2>Looks like <b>{{this.$route.query.text}}</b> doesn't exist yet.</h2>
-      <p>Email submissions here: <b><a href="mailto:hello@emrworx.com">hello@emrworx.com</a></b></p>
-    </div>
+      <div class="list-wrapper" v-if="filteredEmrs.length > 0">
+        <ul class="items">
+          <li v-for="(emr, index) in filteredEmrs" :key="index" class="item">
+            <h2>
+              <div v-if="emr.fileType == 'txt'">
+                <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank">
+                  {{ emr.name }}: {{emr.description.short}}
+                </nuxt-link>
+              </div>
+              <div v-else>
+                <nuxt-link :to="{ name: 'orders-id', params: {id: emr._id }}" target="_blank">
+                  {{ emr.name }}: {{emr.description.short}}
+                </nuxt-link>
+              </div>
+            </h2>
+            <p><b>{{emr.program.name}}: {{emr.type}}</b></p>
+            <p class='author-subtitle'>By: {{emr.author.name}} {{emr.author.degree}}, {{emr.author.institution}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class='no-matches' v-else>
+        <h2>Looks like <b>{{this.$route.query.text}}</b> doesn't exist yet.</h2>
+        <p>Email submissions here: <b><a href="mailto:hello@emrworx.com">hello@emrworx.com</a></b></p>
+      </div>
     </div>
 
   </section>
@@ -75,7 +75,7 @@ export default {
       title: 'EMRS'
     }
   },
-  beforeMount () {
+  mounted () {
     this.setup()
   },
   methods: {
