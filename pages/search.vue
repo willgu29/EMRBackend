@@ -1,5 +1,6 @@
 <template>
   <section class="search-container">
+
     <form action="/search" method="get">
       <input class="search-bar" type="search" :value="this.$route.query.text" name="text" autocomplete="off" />
       <info-button class='info-button' :filePath="'/other/searchHelp.pdf'" />
@@ -17,7 +18,6 @@
       <label for="cprs">Other</label>
       <input v-on:click="onCheck" class='checkbox' type="checkbox" id="other" value="Other" v-model="checkedPrograms">
     </div>
-
 
     <div class="list-wrapper" v-if="filteredEmrs.length > 0">
     <ul class="items">
@@ -62,6 +62,11 @@ export default {
     var url = ('/api/proxies?text=' + searchText)
     let { data } = await axios.get(url)
     return { emrs: data, filteredEmrs: [], checkedPrograms: [] }
+  },
+  data () {
+    return {
+      login: ''
+    }
   },
   head () {
     return {

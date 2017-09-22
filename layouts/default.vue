@@ -1,5 +1,6 @@
 <template>
   <div>
+    <login />
     <nuxt/>
     <my-footer/>
   </div>
@@ -8,10 +9,12 @@
 <script>
 import 'babel-polyfill'
 import MyFooter from '~/components/Footer.vue'
+import Login from '~/components/Login.vue'
 
 export default {
   components: {
-    MyFooter
+    MyFooter,
+    Login
   }
 }
 </script>

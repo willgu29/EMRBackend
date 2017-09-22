@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+
     <img width="250" src="~/assets/img/logo.png" />
     <h2>
       Finish your notes faster
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+
 export default {
   head () {
     return {

@@ -13,8 +13,8 @@ var Schema = mongoose.Schema,
 var UserSchema = new Schema({
     name:           String,
     loginCode:      String,
-    timesLoggedIn:  Number,
-    favorites:      [{type: ObjectId, ref: 'Emr'}],
+    timesLoggedIn:  {type: Number, default: 0},
+    bundles:      [{type: ObjectId, ref: 'Bundle'}],
     institution:    String,
     verified:       {type: Boolean, default: false},
 
@@ -48,14 +48,38 @@ function createToken(data) {
 
 /* GET users listing. */
 router.get('/users', function (req, res, next) {
+
   User.find({}, {loginCode: 0}, function (err, users) {
     res.json(users)
   })
 })
 
+router.get('/users/login', function (req, res, next) {
+  var loginCode = req.query.text.toLowerCase();
+  User.findOne({"loginCode" : loginCode}, function (err, user) {
+    if (user) { return res.json(user) }
+    return res.sendStatus(404)
+  });
+});
+
 /* GET user by ID. */
-router.get('/users/:id', function (req, res, next) {
-  const id = parseInt(req.params.id)
+router.get('/users/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
+  var id = req.params.id
+  console.log("User id: " + id)
+
+  User.
+    findById(id).
+    populate({
+      path: 'bundles',
+      populate: { path: 'emrs' }
+    }).
+    exec(function (err, user) {
+      if (user) {
+        res.json(user)
+      } else {
+        res.sendStatus(404)
+      }
+    })
 
 })
 

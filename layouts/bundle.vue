@@ -1,6 +1,5 @@
 <template>
   <div>
-    <login />
     <my-header />
     <nuxt/>
   </div>
@@ -9,12 +8,10 @@
 <script>
 import 'babel-polyfill'
 import MyHeader from '~/components/Header.vue'
-import Login from '~/components/Login.vue'
 
 export default {
   components: {
-    MyHeader,
-    Login
+    MyHeader
   }
 }
 </script>
