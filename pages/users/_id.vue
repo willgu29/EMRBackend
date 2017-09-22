@@ -4,24 +4,25 @@
     <div class="list-wrapper" v-if="user.bundles.length > 0">
       <ul class="items">
         <li v-for="(bundle, index) in user.bundles" :key="index" class="item">
-          <h2>{{ bundle.name }}: {{ bundle.group }}</h2>
-          <div v-if="user.bundles[index].emrs.length > 0">
-            <ul>
-              <li v-for="(emr, index) in user.bundles[index].emrs" :key="index" class="item">
-                <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank" >
-                  {{emr.name}}: {{emr.description.short}}
-                </nuxt-link>
-              </li>
-            </ul>
+          <h2 class="bundle" v-on:click="toggleShowBundle(index)">{{ bundle.name }}: {{ bundle.group }}</h2>
+          <div v-show="showEmrs[index]" transition="fade" >
+            <div v-if="user.bundles[index].emrs.length > 0">
+              <ul>
+                <li v-for="(emr, index) in user.bundles[index].emrs" :key="index" class="item">
+                  <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank" >
+                    {{emr.name}}: {{emr.description.short}}
+                  </nuxt-link>
+                </li>
+              </ul>
+            </div>
+            <div v-else>
+              <ul>
+                <li>
+                  <p>TBA</p>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div v-else>
-            <ul>
-              <li>
-                <p>TBA</p>
-              </li>
-            </ul>
-          </div>
-
         </li>
       </ul>
     </div>
@@ -58,11 +59,34 @@ export default {
     return {
       title: `EMR Worx: ${this.user.name}`
     }
+  },
+  beforeMount () {
+    this.showEmrs = new Array(this.user.bundles.length).fill(false)
+  },
+  methods: {
+    toggleShowBundle: function (index) {
+      console.log('toggle: ' + index)
+      var array = this.showEmrs.slice()
+      array[index] = !array[index]
+      this.showEmrs = array
+      console.log(this.showEmrs)
+    }
   }
 }
 </script>
 
 <style scoped>
+.items {
+  list-style: none;
+
+}
+.bundle {
+  color: purple;
+
+}
+.bundle:hover {
+  text-decoration: underline;
+}
 .search-container {
  margin-left: 20px;
 }
@@ -78,6 +102,15 @@ a {
   margin-bottom: 0px;
   text-decoration: none;
   color: purple;
+}
+.fade-transition
+{
+  transition: all 0.5s ease;
+}
+
+.fade-enter, .fade-leave
+{
+   opacity : 0;
 }
 
 </style>
