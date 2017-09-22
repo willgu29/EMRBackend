@@ -5,13 +5,23 @@
       <ul class="items">
         <li v-for="(bundle, index) in user.bundles" :key="index" class="item">
           <h2>{{ bundle.name }}: {{ bundle.group }}</h2>
-          <ul>
-            <li v-for="(emr, index) in user.bundles[index].emrs" :key="index" class="item">
-              <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank" >
-                {{emr.name}}: {{emr.description.short}}
-              </nuxt-link>
-            </li>
-          </ul>
+          <div v-if="user.bundles[index].emrs.length > 0">
+            <ul>
+              <li v-for="(emr, index) in user.bundles[index].emrs" :key="index" class="item">
+                <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank" >
+                  {{emr.name}}: {{emr.description.short}}
+                </nuxt-link>
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <ul>
+              <li>
+                <p>TBA</p>
+              </li>
+            </ul>
+          </div>
+
         </li>
       </ul>
     </div>
