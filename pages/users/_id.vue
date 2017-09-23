@@ -26,6 +26,11 @@
         </li>
       </ul>
     </div>
+
+    <div class='macros'>
+
+    </div>
+
   </section>
 </template>
 
@@ -100,7 +105,7 @@ a {
   margin-right: 0px;
   margin-bottom: 0px;
   text-decoration: none;
-  color: purple;
+  color: #0a65ff
 }
 .fade-transition
 {

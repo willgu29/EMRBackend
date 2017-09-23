@@ -147,7 +147,7 @@ a {
   margin-right: 0px;
   margin-bottom: 0px;
   text-decoration: none;
-  color: purple;
+  color: #0a65ff;
 }
 h2 {
   margin-bottom: 0px;

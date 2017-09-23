@@ -6,6 +6,7 @@ import proxies from './proxies'
 import files from './files'
 import curates from './curates'
 import bundles from './bundles'
+import macros from './macros'
 
 const router = Router()
 
@@ -16,5 +17,6 @@ router.use(proxies)
 router.use(files)
 router.use(curates)
 router.use(bundles)
+router.use(macros)
 
 export default router
