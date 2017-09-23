@@ -59,7 +59,7 @@ button {
 }
 
 a {
-  color: purple;
+  color: #0a65ff;
   text-decoration: none;
 }
 </style>

@@ -19,7 +19,7 @@ var Macro = mongoose.model('Macro', MacroSchema)
 router.get('/macros', function (req, res, next) {
   const cleanedText = req.query.text.toUpperCase()
 
-  var get = Macro.find({domains : {$in : [new RegExp(cleanedText, 'i')] } }).limit(5)
+  var get = Macro.find({domains : {$in : [new RegExp(cleanedText, 'i')] } })
   get.exec(function (err, macros) {
     if (macros) { return res.json(macros) }
     return res.sendStatus(404)
