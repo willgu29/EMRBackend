@@ -1,7 +1,7 @@
 <template>
   <section class="search-container">
 
-    <form action="/search" method="get">
+    <form action="/macros/search" method="get">
       <input class="search-bar" type="search" :value="this.$route.query.text" name="text" autocomplete="off" />
     </form>
 
