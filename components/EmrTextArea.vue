@@ -2,7 +2,15 @@
 
   <div id='emr'>
 
-    <div id="buttons">
+    <div id="buttons" v-if="this.program.name === 'Quest' || this.program.name === 'Epic'">
+      <button class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
+      <select v-model="selected">
+        <option name="epic">Epic</option>
+        <option name="quest">Quest</option>
+      </select>
+      <info-button :filePath='howTo' />
+    </div>
+    <div id="buttons" v-else>
       <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
       <info-button :filePath='howTo' />
     </div>
@@ -21,7 +29,7 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: left;
+  text-align: center;
   color: #2c3e50;
   margin-top: 5px;
 }
@@ -68,9 +76,9 @@ export default {
   },
   data () {
     if (this.program.name === 'Quest') {
-      return { howTo: '/other/howToQuest.pdf' }
+      return { howTo: '/other/howToQuest.pdf', selected: this.program.name }
     } else {
-      return { howTo: '/other/howToTemplate.pdf' }
+      return { howTo: '/other/howToTemplate.pdf', selected: this.program.name }
     }
   },
   beforeMount () {
@@ -92,6 +100,22 @@ export default {
       var successful = document.execCommand('copy')
       var msg = successful ? 'successful' : 'unsuccessful'
       console.log('Copying text command was ' + msg)
+    },
+    exportAs: function (program) {
+      if (this.program.name === this.selected) {
+        return
+      }
+
+      if (this.program.name === 'Quest') {
+        this.$refs.copyContainer.replace('/[[[.+]]]/', 'willgusayshi')
+      } else if (this.program.name === 'Epic') {
+        this.$refs.copyContainer.replace('***', 'willgusayshi')
+      }
+      if (this.selected === 'Epic') {
+        this.$refs.copyContainer.replace('willgusayshi', '***')
+      } else if (this.selected === 'Quest') {
+        this.$refs.copyContainer.replace('willgusayshi', '[[[ ]]]')
+      }
     }
   }
 

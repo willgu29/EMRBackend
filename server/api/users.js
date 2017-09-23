@@ -75,6 +75,8 @@ router.get('/users/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
     }).
     exec(function (err, user) {
       if (user) {
+        // user.timesLoggedIn = user.timesLoggedIn + 1
+        // user.save()
         res.json(user)
       } else {
         res.sendStatus(404)

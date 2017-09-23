@@ -15,7 +15,7 @@
       Program Version: <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id="programVersion" v-model="program.version"  autocomplete="off" />
       Type (Note Template, Order): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id='type' v-model="type" autocomplete="off" />
       File Type (txt, pdf): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id="fileType" v-model="fileType" autocomplete="off"  />
-      File Path (/orders, /notes, /navs): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id='filePath' v-model="filePath" autocomplete="off" />
+      File Path (GCS URL): <input v-on:keydown.enter.prevent="$event.target.nextElementSibling.focus()" type='text' id='filePath' v-model="filePath" autocomplete="off" />
       <br />
       <input type="submit" />
     </form>
