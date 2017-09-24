@@ -93,7 +93,7 @@ export default {
   list-style: none;
 }
 .bundle {
-  color: purple;
+  color: #0a65ff;
 
 }
 .bundle:hover {
