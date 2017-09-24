@@ -28,7 +28,7 @@
     </div>
 
     <div class="macros">
-      <h2 class="bundle" v-on:click="toggleShowBundle(user.bundles.length)">Macros</h2>
+      <h2 class="bundle" v-on:click="toggleShowBundle(user.bundles.length)">AutoText</h2>
       <macro-list v-show="showEmrs[user.bundles.length]" :macros="this.user.macros" />
     </div>
 
