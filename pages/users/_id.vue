@@ -27,8 +27,9 @@
       </ul>
     </div>
 
-    <div class='macros'>
-
+    <div class="macros">
+      <h2 class="bundle" v-on:click="toggleShowBundle(user.bundles.length)">Macros</h2>
+      <macro-list v-show="showEmrs[user.bundles.length]" :macros="this.user.macros" />
     </div>
 
   </section>
@@ -36,10 +37,14 @@
 
 <script>
 import axios from '~/plugins/axios'
+import MacroList from '~/components/MacroList.vue'
 
 export default {
   name: 'saved',
   layout: 'bundle',
+  components: {
+    MacroList
+  },
   validate ({ params, query }) {
     // TODO: Validate via cookie stored, hash via server
     // (compare saved cookie to sessionId in database)
@@ -66,7 +71,7 @@ export default {
     }
   },
   beforeMount () {
-    this.showEmrs = new Array(this.user.bundles.length).fill(false)
+    this.showEmrs = new Array(this.user.bundles.length + 1).fill(false)
   },
   methods: {
     toggleShowBundle: function (index) {
@@ -81,6 +86,9 @@ export default {
 </script>
 
 <style scoped>
+.macros {
+  margin-left: 40px;
+}
 .items {
   list-style: none;
 }

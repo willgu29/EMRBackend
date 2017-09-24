@@ -1,28 +1,40 @@
 <template>
-  <section class="search-container">
-
-    <form action="/macros/search" method="get">
-      <input class="search-bar" type="search" :value="this.$route.query.text" name="text" autocomplete="off" />
-    </form>
-    <macro-list :macros="this.macros" />
-  </section>
+    <div class="list-wrapper" v-if="macros.length > 0">
+      <ul class="items">
+        <li v-for="(macro, index) in macros" :key="index" class="item">
+          <h1 class='title-clickable' v-on:click="copyToClipboard(index)" @mouseenter="onHover(index)" @mouseleave="onExit(index)">{{macro.name}}</h1>
+          <p>{{snippet(macro.text, index)}}</p>
+        </li>
+      </ul>
+      <textarea id="flash" v-show="isCopying" ref="copyContainer" readonly>Loading...</textarea>
+    </div>
 </template>
 
-<script>
-import axios from '~/plugins/axios'
-import MacroList from '~/components/MacroList.vue'
+<style>
+#flash {
+  width: 1px;
+  height: 1px
+}
+.title-clickable {
+  font-size: 24px;
+  margin: 15px 0;
+  color: #0a65ff;
+}
+.title-clickable:hover {
+  text-decoration: underline;
+}
+.items {
+  list-style: none;
+}
+/*.item {
+  margin: 40px 80px;
+}*/
+</style>
 
+<script>
 export default {
-  layout: 'search',
-  components: {
-    MacroList
-  },
-  async asyncData (context) {
-    var searchText = context.query.text.replace(/&/g, '%26')
-    var url = ('/api/macros?text=' + searchText)
-    let { data } = await axios.get(url)
-    return { macros: data }
-  },
+  props: ['macros'],
+  name: 'macro-list',
   data () {
     return {
       showHover: [],
@@ -66,34 +78,5 @@ export default {
       }, 1)
     }
   }
-
 }
 </script>
-
-<style scoped>
-#flash {
-  width: 1px;
-  height: 1px
-}
-.title-clickable {
-  font-size: 24px;
-  margin: 15px 0;
-  color: #0a65ff;
-}
-.title-clickable:hover {
-  text-decoration: underline;
-}
-.search-bar {
-  width: 30%;
-  font-size: 20px;
-  margin-left: 20px;
-}
-.items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.item {
-  margin: 40px 80px;
-}
-</style>

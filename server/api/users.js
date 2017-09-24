@@ -14,7 +14,8 @@ var UserSchema = new Schema({
     name:           String,
     loginCode:      String,
     timesLoggedIn:  {type: Number, default: 0},
-    bundles:      [{type: ObjectId, ref: 'Bundle'}],
+    bundles:        [{type: ObjectId, ref: 'Bundle'}],
+    macros:         [{type: ObjectId, ref: 'Macro'}],
     institution:    String,
     verified:       {type: Boolean, default: false},
 
@@ -73,6 +74,7 @@ router.get('/users/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
       path: 'bundles',
       populate: { path: 'emrs' }
     }).
+    populate('macros').
     exec(function (err, user) {
       if (user) {
         // user.timesLoggedIn = user.timesLoggedIn + 1

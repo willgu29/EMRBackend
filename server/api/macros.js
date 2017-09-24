@@ -8,6 +8,7 @@ var Schema = mongoose.Schema,
 
 var MacroSchema = new Schema({
     name:     String,
+    author:   String,
     domains:  [String],
     text:     String
 });
