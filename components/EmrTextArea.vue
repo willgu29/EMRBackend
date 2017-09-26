@@ -2,51 +2,65 @@
 
   <div id='emr'>
 
-    <div id="buttons" v-if="this.program.name === 'Quest' || this.program.name === 'Epic'">
-      <button class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
-      <select v-model="selected">
-        <option name="epic">Epic</option>
-        <option name="quest">Quest</option>
-      </select>
-      <info-button :filePath='howTo' />
-    </div>
-    <div id="buttons" v-else>
-      <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
-      <info-button :filePath='howTo' />
-    </div>
+      <form id="addData" v-on:submit.stop.prevent="smartList">
+        <div id="bottom" v-if="this.indicator != 'NONE' && this.indicator != ''">
+          <label class='indicator' >Replace {{this.indicator}} with... </label> <br/>
+          <input type="text" placeholder="type in data and enter" v-model="replace" />
+          <input type="submit" />
+        </div>
+        <div v-else>
+          <label>DONE</label>
+        </div>
+      </form>
 
-    <textarea id="copyContainer" ref="copyContainer">{{this.text}}</textarea>
+      <div id="buttons" v-if="this.program.name === 'Quest' || this.program.name === 'Epic'">
+        <button class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
+        <select v-model="selected">
+          <option name="epic">Epic</option>
+          <option name="quest">Quest</option>
+        </select>
+        <info-button :filePath='howTo' />
+      </div>
+      <div id="buttons" v-else>
+        <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
+        <info-button :filePath='howTo' />
+      </div>
 
-
+    <textarea id="copyContainer" ref="copyContainer" v-model="text"></textarea>
   </div>
 </template>
 
 <style>
-
+.indicator {
+  display: inline-block;
+}
 #emr {
-  display: inline-grid;
-  margin-left: 10px;
+  display: inline-block;
+  margin: 0 auto;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 5px;
 }
 
 h1, h2 {
   font-weight: normal;
 }
-.copy {
-  width: 25%;
+#addData {
+  margin-left: 90px;
+  float: left;
+  text-align: left;
+  width: 60%;
 }
 #buttons {
-  display: flex;
+  margin-right: 90px;
+  float: right;
 }
 
 textarea {
   margin-top: 15px;
-  display: block;
+  display: inline-block;
   outline-color: black;
   outline-width: 1;
   outline-style: double;
@@ -56,6 +70,7 @@ textarea {
 }
 button {
   width: 100px;
+  cursor: pointer;
 }
 
 a {
@@ -75,10 +90,18 @@ export default {
     InfoButton
   },
   data () {
+    var howTo = ''
     if (this.program.name === 'Quest') {
-      return { howTo: '/other/howToQuest.pdf', selected: this.program.name, text: 'Loading...' }
+      howTo = '/other/howToQuest.pdf'
     } else {
-      return { howTo: '/other/howToTemplate.pdf', selected: this.program.name, text: 'Loading...' }
+      howTo = '/other/howToTemplate.pdf'
+    }
+    return {
+      howTo: howTo,
+      selected: this.program.name,
+      text: 'Loading...',
+      replace: '',
+      indicator: '.'
     }
   },
   beforeMount () {
@@ -100,6 +123,36 @@ export default {
       var successful = document.execCommand('copy')
       var msg = successful ? 'successful' : 'unsuccessful'
       console.log('Copying text command was ' + msg)
+    },
+    highlightNextReplace: function () {
+      if (this.selected === 'Quest') {
+        var find = '\\[\\[\\[.*\\]\\]\\]'
+        var re = new RegExp(find)
+        var result = this.text.match(re)
+        if (result) {
+          console.log('Match: ' + result[0])
+          this.indicator = result[0]
+        } else {
+          this.indicator = 'NONE'
+        }
+      } else if (this.selected === 'Epic') {
+        var find2 = '***'
+        var re2 = new RegExp(find2)
+        var result2 = this.text.match(re2)
+        if (result) {
+          console.log('Match: ' + result2[0])
+          this.indicator = result2[0]
+        } else {
+          this.indicator = 'NONE'
+        }
+      } else {
+        this.indicator = ''
+      }
+    },
+    smartList: function () {
+      if (this.indicator === 'NONE' || this.replace === '') { return }
+      this.text = this.text.replace(this.indicator, this.replace, 1)
+      this.replace = ''
     },
     exportAs: function (templateProgram, selectedProgram, text) {
       if (templateProgram === selectedProgram) {
@@ -128,7 +181,6 @@ export default {
         for (var fill of resultsFillIn) {
           var helperText = fill.replace('[[[', '')
           helperText = helperText.replace(']]]', '')
-          console.log(helperText)
           newText = newText.replace(fill, '***' + ' (' + helperText + ')', 1)
         }
       }
@@ -136,8 +188,11 @@ export default {
     }
   },
   watch: {
-    selected: function (val, oldVal, text) {
+    selected: function (val, oldVal) {
       this.exportAs(oldVal, val, this.text.slice())
+    },
+    text: function (val, oldVal) {
+      this.highlightNextReplace()
     }
   }
 
