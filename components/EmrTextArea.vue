@@ -4,8 +4,8 @@
 
       <form id="addData" v-on:submit.stop.prevent="smartList">
         <div id="bottom" v-if="this.indicator != 'NONE' && this.indicator != ''">
-          <label class='indicator' >Replace {{this.indicator}} with... </label> <br/>
-          <input type="text" placeholder="type in data and enter" v-model="replace" />
+          <label class='indicator' >Replace {{this.indicator}} with... </label><br />
+          <input id="wrap" type="text" placeholder="type in data and enter" v-model="replace" />
           <input type="submit" />
         </div>
         <div v-else>
@@ -33,30 +33,24 @@
 <style>
 .indicator {
   display: inline-block;
+  width: 600px;
+  text-align: left;
+}
+#bottom {
+  text-align: left;
+}
+#buttons {
+  text-align: right;
 }
 #emr {
-  display: inline-block;
   margin: 0 auto;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  width: 600px;
 }
 
 h1, h2 {
   font-weight: normal;
 }
-#addData {
-  margin-left: 90px;
-  float: left;
-  text-align: left;
-  width: 60%;
-}
-#buttons {
-  margin-right: 90px;
-  float: right;
-}
+
 
 textarea {
   margin-top: 15px;
