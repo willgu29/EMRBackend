@@ -4,7 +4,7 @@
 
       <form id="addData" v-on:submit.stop.prevent="smartList">
         <div id="bottom" v-if="this.indicator != 'NONE' && this.indicator != ''">
-          <label class='indicator' >Replace {{this.indicator}} with... </label><br />
+          <label class='indicator' >Replace <em>{{this.indicator}}</em> with... </label><br />
           <input id="wrap" type="text" placeholder="type in data and enter" v-model="replace" />
           <input type="submit" />
         </div>
