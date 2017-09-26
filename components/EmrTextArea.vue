@@ -136,10 +136,10 @@ export default {
           this.indicator = 'NONE'
         }
       } else if (this.selected === 'Epic') {
-        var find2 = '***'
+        var find2 = '\\*\\*\\*'
         var re2 = new RegExp(find2)
         var result2 = this.text.match(re2)
-        if (result) {
+        if (result2) {
           console.log('Match: ' + result2[0])
           this.indicator = result2[0]
         } else {
@@ -174,14 +174,17 @@ export default {
 
         var resultsData = newText.match(re2)
         var resultsFillIn = newText.match(re3)
-
-        for (var data of resultsData) {
-          newText = newText.replace(data, '***' + ' (' + data + ')', 1)
+        if (resultsData) {
+          for (var data of resultsData) {
+            newText = newText.replace(data, '***' + ' (' + data + ')', 1)
+          }
         }
-        for (var fill of resultsFillIn) {
-          var helperText = fill.replace('[[[', '')
-          helperText = helperText.replace(']]]', '')
-          newText = newText.replace(fill, '***' + ' (' + helperText + ')', 1)
+        if (resultsFillIn) {
+          for (var fill of resultsFillIn) {
+            var helperText = fill.replace('[[[', '')
+            helperText = helperText.replace(']]]', '')
+            newText = newText.replace(fill, '***' + ' (' + helperText + ')', 1)
+          }
         }
       }
       this.text = newText

@@ -4,7 +4,7 @@
       {{ error.statusCode }}
     </h1>
     <p class="error-text">
-      Well, I have no idea. Can I help you?
+      Try refreshing this screen.
     </p>
     <h2 class="info">
       {{ error.message }}
