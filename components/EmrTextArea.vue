@@ -15,7 +15,7 @@
       <info-button :filePath='howTo' />
     </div>
 
-    <textarea ref="copyContainer" readonly>Loading...</textarea>
+    <textarea id="copyContainer" ref="copyContainer">{{this.text}}</textarea>
 
 
   </div>
@@ -76,9 +76,9 @@ export default {
   },
   data () {
     if (this.program.name === 'Quest') {
-      return { howTo: '/other/howToQuest.pdf', selected: this.program.name }
+      return { howTo: '/other/howToQuest.pdf', selected: this.program.name, text: 'Loading...' }
     } else {
-      return { howTo: '/other/howToTemplate.pdf', selected: this.program.name }
+      return { howTo: '/other/howToTemplate.pdf', selected: this.program.name, text: 'Loading...' }
     }
   },
   beforeMount () {
@@ -93,7 +93,7 @@ export default {
       })
     },
     populateTextArea: function (text) {
-      this.$refs.copyContainer.value = text
+      this.text = text
     },
     copyToClipboard: function (text) {
       this.$refs.copyContainer.select()
@@ -101,21 +101,40 @@ export default {
       var msg = successful ? 'successful' : 'unsuccessful'
       console.log('Copying text command was ' + msg)
     },
-    exportAs: function (program) {
-      if (this.program.name === this.selected) {
+    exportAs: function (templateProgram, selectedProgram, text) {
+      if (templateProgram === selectedProgram) {
         return
       }
+      var newText = ''
+      var find = '\\[\\[\\[ \\]\\]\\]'
+      var re = new RegExp(find, 'g')
+      var find2 = '\\[<<\\w+>>\\]'
+      var re2 = new RegExp(find2, 'g')
+      var find3 = '\\[\\[\\[.*\\]\\]\\]'
+      var re3 = new RegExp(find3, 'g')
 
-      if (this.program.name === 'Quest') {
-        this.$refs.copyContainer.replace('/[[[.+]]]/', 'willgusayshi')
-      } else if (this.program.name === 'Epic') {
-        this.$refs.copyContainer.replace('***', 'willgusayshi')
+      if (templateProgram === 'Quest') {
+        newText = text.replace(re, '***')
+
+        var resultsData = newText.match(re2)
+        var resultsFillIn = newText.match(re3)
+
+        for (var data of resultsData) {
+          newText = newText.replace(data, '***' + ' (' + data + ')', 1)
+        }
+        for (var fill of resultsFillIn) {
+          var helperText = fill.replace('[[[', '')
+          helperText = helperText.replace(']]]', '')
+          console.log(helperText)
+          newText = newText.replace(fill, '***' + ' (' + helperText + ')', 1)
+        }
       }
-      if (this.selected === 'Epic') {
-        this.$refs.copyContainer.replace('willgusayshi', '***')
-      } else if (this.selected === 'Quest') {
-        this.$refs.copyContainer.replace('willgusayshi', '[[[ ]]]')
-      }
+      this.text = newText
+    }
+  },
+  watch: {
+    selected: function (val, oldVal, text) {
+      this.exportAs(oldVal, val, this.text.slice())
     }
   }
 
