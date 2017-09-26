@@ -108,6 +108,8 @@ export default {
       var newText = ''
       var find = '\\[\\[\\[ \\]\\]\\]'
       var re = new RegExp(find, 'g')
+      var find4 = '\\[\\[\\[\\]\\]\\]'
+      var re4 = new RegExp(find4, 'g')
       var find2 = '\\[<<\\w+>>\\]'
       var re2 = new RegExp(find2, 'g')
       var find3 = '\\[\\[\\[.*\\]\\]\\]'
@@ -115,6 +117,7 @@ export default {
 
       if (templateProgram === 'Quest') {
         newText = text.replace(re, '***')
+        newText = newText.replace(re4, '***')
 
         var resultsData = newText.match(re2)
         var resultsFillIn = newText.match(re3)
