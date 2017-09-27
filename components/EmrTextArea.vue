@@ -120,7 +120,7 @@ export default {
     },
     highlightNextReplace: function () {
       if (this.selected === 'Quest') {
-        var find = '\\[\\[\\[.*\\]\\]\\]'
+        var find = '\\[\\[\\[(.*?)\\]\\]\\]'
         var re = new RegExp(find)
         var result = this.text.match(re)
         if (result) {
