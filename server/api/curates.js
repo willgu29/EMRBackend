@@ -20,7 +20,7 @@ var Curate = mongoose.model('Curate', CurateSchema)
 
 var jsonParser = bodyParser.json()
 
-//id = emr
+//id = name
 router.post('/curates/:id', jsonParser, function (req, res, next) {
   if (!req.body) return res.sendStatus(400)
   const id = req.params.id

@@ -1,7 +1,7 @@
 <template>
 
   <div id='emr'>
-
+    <!--
       <form id="addData" v-on:submit.stop.prevent="smartList">
         <div id="bottom" v-if="this.indicator != 'NONE' && this.indicator != ''">
           <label class='indicator' >Replace <em>{{this.indicator}}</em> with... </label><br />
@@ -11,7 +11,7 @@
         <div v-else>
           <label>DONE</label>
         </div>
-      </form>
+      </form> -->
 
       <div id="buttons" v-if="this.program.name === 'Quest' || this.program.name === 'Epic'">
         <button class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
@@ -27,6 +27,7 @@
       </div>
 
     <textarea id="copyContainer" ref="copyContainer" v-model="text"></textarea>
+  
   </div>
 </template>
 
@@ -50,7 +51,16 @@
 h1, h2 {
   font-weight: normal;
 }
-
+code {
+  margin-top: 15px;
+  display: inline-block;
+  outline-color: black;
+  outline-width: 1;
+  outline-style: double;
+  width: 600px;
+  height: 500px;
+  text-align: left;
+}
 
 textarea {
   margin-top: 15px;
