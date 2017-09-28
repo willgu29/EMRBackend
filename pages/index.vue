@@ -24,7 +24,7 @@
         <ul class="items">
           <li v-for="(user, index) in users" :key="index" class="item">
             <nuxt-link class='button' :to="{ name: 'users-id', params: { id: user._id }}">
-              {{ user.name }}: {{ user.institution }}
+              {{ user.name }}
             </nuxt-link>
           </li>
         </ul>
