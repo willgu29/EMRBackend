@@ -6,6 +6,11 @@
     <h2 class="info">
       Note Template
     </h2>
+
+    <input v-if="this.editing != true" v-on:click="edit" class="save" type="submit" value="Click to edit" />
+    <input v-else v-on:click="saveDiv" class="save" type="submit" value="Save and submit for review" />
+
+
     <div id="note-template" contenteditable="true">
       <p>Date:  <span class='data-fill'>@TD@</span></p>
       <p>Patient's Name: <span class='data-fill'>@NAME@</span></p>
@@ -76,7 +81,7 @@
 
     </div>
     <p>By: Stanford Health Care (Lucy) </p>
-    <input v-on:click="saveDiv" class="submit" type="submit" value="Save and submit for review" />
+    <input v-on:click="saveDiv" class="save" type="submit" value="Save and submit for review" />
     <br />
 
   </section>
@@ -90,6 +95,11 @@ export default {
   head () {
     return {
       title: 'EMR Worx: Psych Note'
+    }
+  },
+  data () {
+    return {
+      editing: false
     }
   },
   methods: {
@@ -106,6 +116,14 @@ export default {
 </script>
 
 <style scoped>
+.save {
+  border-radius: 28px;
+  font-size: 20px;
+  border-color: blue;
+  margin-bottom: 18px;
+  background-color: #6093e5;
+  color: white;
+}
 .submit {
   margin-bottom: 20px;
 }
