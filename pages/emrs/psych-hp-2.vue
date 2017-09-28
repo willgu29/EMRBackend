@@ -16,8 +16,10 @@
 
 <p class='header'>History of Present Illness: </p>
 <p><span class='data-fill'>[&#60&#60MR_MS&#62&#62]  [&#60&#60PATIENT_NAME&#62&#62]</span> is a <span class='data-fill'>[&#60&#60AGE&#62&#62]</span> year old <span class='data-fill'>[&#60&#60SEX&#62&#62]</span> with previous diagnosis of [[[]]] who presents to ED <span class='smart-list'>[[[provide all details of reason for coming into hospital today, who brought it, pertinent + and - psych ROS]]]</span> </p>
-
-<p><b>Review of Systems:</b> Patient denies headache, nausea/vomiting.</p>
+<p><b>Depression History:</b> Patient denies changes in sleeping patterns, anhedonia, feelings of guilt, helplessness, or hopelessness, changes in energy, changes in concentration, changes in appetite.</p>
+<p><b>Mania History:</b> Patient denies distractibility, irritability, grandiosity, racing thoughts, rapid speech, increased goal-oriented activity, impulsivity.</p>
+<p><b>Psychosis History:</b> Patient denies delusions such as thought insertion, broadcast, IOR, paranoid ideation, communication with god</p>
+<p><b>Review of Systems:</b> Does not endorse shortness of breath, chest pain, nausea vomiting, constipation, or headache.</p>
 
 <p class='header'>Past Psychiatric History:</p>
 <p>Diagnoses and Course of Illness: <span class='smart-list'>[[[when given dx, who gave dx, why given that dx. Comment on previous symptoms of psych disorders here.]]]</span></p>
@@ -28,11 +30,6 @@
 <p>Access to firearms: [[[]]] </p>
 <p>Current providers: [[[]]] </p>
 
-<p><b>Depression History:</b> Patient denies changes in sleeping patterns, anhedonia, feelings of guilt, helplessness, or hopelessness, changes in energy, changes in concentration, changes in appetite.</p>
-
-<p><b>Mania History:</b> Patient denies distractibility, irritability, grandiosity, racing thoughts, rapid speech, increased goal-oriented activity, impulsivity.</p>
-
-<p><b>Psychosis History:</b> Patient denies delusions such as thought insertion, broadcast, IOR, paranoid ideation, communication with god</p>
 
 <p class='header'>Current and Past Psychiatric Medication Trials:</p>
 <p>Current: <span class='data-fill'>[&#60&#60MEDS_OUTPATIENT&#62&#62]</span></p>
@@ -49,8 +46,8 @@
 
 <p class='header'>Social History:</p>
 <p><b>Developmental:</b> Patient born full-term, does not recall any complications of pregnancy or birth. Met all developmental milestones as expected</p>
-<p>Lives with [[[]]] in a <span class='smart-list'>[[[apt/house]]]</span> in <span class='smart-list'>[[[city]]]</span></p>
-<p><b>Marriage Status:</b> <span class='smart-list'>[[[single/married/divorced]]]</span></p>
+<p>Lives with [[[]]] in a <span class='smart-list'><b>[[[apt/house]]]</b> (1. home 2. B&C 3. TRC 4. SNF 5. homeless 6. ***)</span> in <span class='smart-list'>[[[city]]]</span></p>
+<p><b>Marriage Status:</b> <span class='smart-list'><b>[[[single/married/divorced]]]</b> (1. single 2. married 3. divorced 4. ***)</span></p>
 <p><b>Children:</b> [[[]]]</p>
 <p><b>Highest Level of Education:</b> [[[]]]</p>
 <p><b>Employment:</b> [[[]]]</p>
@@ -58,7 +55,7 @@
 <p><b>Religion:</b> [[[]]] </p>
 <p><b>Legal:</b> [[[]]] </p>
 <p><b>Abuse:</b> Patient denies any history of sexual or physical abuse. Patient does not show signs of sexual or physical abuse or neglect. They report they have never felt unsafe at home. They report they have never been harmed, threatened or inappropriately touched by someone close to them.</p>
-<p><b>Sexual History:</b> Patient states their sexual preference is [[[]]] and they <span class='smart-list'>[[[are/are not]]]</span> currently sexually active. They <span class='smart-list'>[[[do/do not]]]</span> use contraception ([[[type]]]). They [[[have/have not]]] had an STI.</p>
+<p><b>Sexual History:</b> Patient states their sexual preference is [[[]]] and they <span class='smart-list'><b>[[[are/are not]]]</b> (1. are 2. are not 3. ***)</span> currently sexually active. They <span class='smart-list'>[[[do/do not]]]</span> use contraception ([[[type]]]). They [[[have/have not]]] had an STI.</p>
 
 <p class='header'>Substance Abuse History:</p>
 <p><b>Tobacco:</b> [[[]]]</p>
@@ -75,16 +72,18 @@
 
 
 <p class='header'>Physical Examination on Evaluation in ED:</p>
-<p><b>General:</b> NAD </p>
-<p><b>HEENT:</b> EOMI, moist mucous membranes, clear OP </p>
-<p><b>Neck:</b>  FROM</p>
-<p><b>Respiratory:</b> breathing comfortably on room air</p>
-<p><b>C/V:</b> RRR </p>
-<p><b>Abdomen:</b>  Soft, nontender</p>
-<p><b>Extremity:</b>  no c/c/e </p>
-<p><b>Neurological:</b>  Grossly intact motor and sensory exam; AOx3 </p>
+<p><b>GEN:</b> Awake, Alert, No apparent distress </p>
+<p><b>HEENT:</b> NC/AT. Pupils equally round and reactive to light, moist mucous membranes.</p>
+<p><b>Neck:</b>  Supple, FROM.</p>
+<p><b>CVS:</b> Regular rate and rhythm, normal S1 and S2, no murmurs, gallops, or rubs. PMI non-displaced.</p>
+<p><b>RESP:</b> Clear to auscultation bilaterally. No wheezes, rales, or rhonchi. </p>
+<p><b>ABD:</b>  Soft, nontender, non-distended. Normoactive bowel sounds.</p>
+<p><b>EXT:</b>  no cyanosis, clubbing, or edema </p>
+<p><b>SKIN: </b> No rash. Skin intact. </p>
+<p><b>NEURO:</b> Cranial nerves II-XII are intact. Motor System: 5/5 strength throughout. The patient has tabel gait on narrow base. No tremor or pronator drift. Sensory system: Intact throughout to light touch. Reflexes: 2+ and symmetric throughout.</p>
 
 <p class='header'>Mental Status Examination:</p>
+<p><span class='smart-list'><b>[[[ MSE ]]]</b> (1. .mse 2. .msenorm 3. .msedepr 4. .msemanic 5. .msepsychosis 6. .msesleep 7. msemute)</span>
 <p><b>Appearance:</b> Patient appears their stated age, has fair grooming and hygiene, and is wearing [[[]]]. Normal muscle tone.</p>
 <p><b>Behavior:</b> No psychomotor agitation or retardation. No abnormal movements. [[[]]] </p>
 <p><b>Speech:</b> Normal rate, rhythm, and tone. </p>
@@ -112,9 +111,9 @@
 
 <p><b>Assessment:</b> <span class='smart-list'>[[[age]]]</span> year old <span class='smart-list'>[[[m/f]]]</span> BIB [[[]]] for [[[]]]. <span class='smart-list'>[[[Explain why you are recommending the following]]]</span></p>
 
-<p class='macro'>.silow</p>
-<p class='macro'>.high</p>
-<p class='macro'>.hot</p>
+<p>Biological Factors:</p>
+<p>Psychological Factors:</p>
+<p>Social Factors:</p>
 
 <p class='header'>DSM-5 Diagnosis: <span class='smart-list'>[[[Diagnosis]]]</span></p>
 <p><b>Differential Diagnosis:</b></p>
