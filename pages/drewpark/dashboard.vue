@@ -24,7 +24,7 @@
           </tr>
           <tr>
             <td>Manson Worthfort</td>
-            <td>6.25</td>
+            <td>9</td>
             <td>09-28-2017</td>
             <td>100%</td>
             <td>None</td>
@@ -33,7 +33,7 @@
           </tr>
           <tr>
             <td>Slimy Popsicle</td>
-            <td>#</td>
+            <td>6.25</td>
             <td>09-27-2017</td>
             <td>100%</td>
             <td>None</td>
