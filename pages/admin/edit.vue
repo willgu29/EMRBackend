@@ -6,7 +6,7 @@
         <h2>
             {{ proxy.emr.name }}: {{ proxy.emr.description.short }}
         </h2>
-        <a :href="proxy.emr.filePath" target="_blank">{{ proxy.emr.filePath }}</a>
+        <a class='link' :href="proxy.emr.filePath" target="_blank">{{ proxy.emr.filePath }}</a>
         <p>{{ proxy.proxy }}</p>
         <p>{{ proxy._id }}</p>
 
@@ -45,5 +45,10 @@ export default {
 </script>
 
 <style scoped>
-
+.link {
+  color: #6093e5
+}
+.link:hover {
+  text-decoration: underline;
+}
 </style>
