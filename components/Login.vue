@@ -2,7 +2,7 @@
   <div class='login'>
     <form v-on:submit.stop.prevent="loginEmrWorx">
       <input placeholder="login with id" name="login" v-model="login" type="text" />
-      <input  type="submit" value="login" />
+      <input type="submit" value="login" />
     </form>
   </div>
 </template>

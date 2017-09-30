@@ -26,25 +26,15 @@
         </li>
       </ul>
     </div>
-
-    <div class="macros">
-      <h2 class="bundle" v-on:click="toggleShowBundle(user.bundles.length)">AutoText</h2>
-      <macro-list v-show="showEmrs[user.bundles.length]" :macros="this.user.macros" />
-    </div>
-
   </section>
 </template>
 
 <script>
 import axios from '~/plugins/axios'
-import MacroList from '~/components/MacroList.vue'
 
 export default {
   name: 'saved',
   layout: 'bundle',
-  components: {
-    MacroList
-  },
   validate ({ params, query }) {
     // TODO: Validate via cookie stored, hash via server
     // (compare saved cookie to sessionId in database)

@@ -14,12 +14,7 @@
 
     <div id="note-template" contenteditable="true">
       <p><b>Chief Complaint:</b> ***</p>
-      <p><b>Legal Status:</b> <span class="smart-list"><b>{Legal Status:13913}</b> <br/> (1. voluntary <br/>
-                                                                            2. involuntary <br/>
-                                                                            3. conservatorship <br/>
-                                                                            4. 72 hour hold <br/>
-                                                                            5. 14 day <br/>
-                                                                            6. temporary conservator)</span></p>
+      <p><b>Legal Status:</b> <span v-on:mouseover="legal" class="smart-list"><b>{Legal Status:13913}</b></span></p>
       <p><b>Hold Expiration:</b> ***</p>
       <p class="header">History of Present Illness: </p>
       <p>***</p>
@@ -177,6 +172,9 @@ export default {
         innerHTML: innerHTML
       })
       alert('Your note template has been submitted for review, thank you!')
+    },
+    legal: function () {
+      alert('1. voluntary \n 2. involuntary \n 3. conservatorship  \n 4. 72 hour hold \n5. 14 day \n  6. temporary conservator')
     }
   }
 }
