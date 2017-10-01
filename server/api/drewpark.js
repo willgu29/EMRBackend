@@ -9,7 +9,7 @@ var Schema = mongoose.Schema,
 var DrewParkSchema = new Schema({
     process:      String,
     displayType:  String,
-    htmlPath:     String //url to GCS txt file with html code (not div wrapped)
+    codePath:     String //url to GCS txt file with html code (not div wrapped)
 }, { timestamps: { createdAt: 'createdAt' } });
 
 var DrewPark = mongoose.model('drewpark', DrewParkSchema)
@@ -36,9 +36,9 @@ router.get('/drewpark/today', function (req, res, next) {
 
 router.get('/drewpark/test', function (req, res, next) {
   var newObject = new DrewPark()
-  newObject.process = 'pre-rounding'
-  newObject.displayType = 'list'
-  newObject.htmlPath = 'https://storage.googleapis.com/emrworx.com/drewpark/pre-rounding.txt'
+  newObject.process = 'none'
+  newObject.displayType = 'none'
+  newObject.codePath = ''
   newObject.save(function (err, object) {
     if (err) {return res.sendStatus(500)}
       res.json(object)

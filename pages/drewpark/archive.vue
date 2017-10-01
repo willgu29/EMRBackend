@@ -11,7 +11,6 @@
 
 <script>
 import HtmlView from '~/components/HtmlView.vue'
-
 export default {
   layout: 'landing',
   name: 'archive',
