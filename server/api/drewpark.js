@@ -17,9 +17,7 @@ var DrewPark = mongoose.model('drewpark', DrewParkSchema)
 
 /* GET object listing. */
 router.get('/drewpark', function (req, res, next) {
-  const cleanedText = req.query.text.toUpperCase()
-
-  DrewPark.find({}, function (err, objects) {
+  DrewPark.find({},{}, { sort: { 'createdAt' : -1 } }, function (err, objects) {
     if (err) {return res.sendStatus(404)}
     res.json(objects)
   })
@@ -29,7 +27,6 @@ router.get('/drewpark/today', function (req, res, next) {
 
   DrewPark.findOne({}, {}, { sort: { 'createdAt' : -1 } }, function(err, object) {
     if (err) {return res.sendStatus(404)}
-    console.log(object)
     res.json(object)
   });
 })

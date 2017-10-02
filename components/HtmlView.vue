@@ -39,42 +39,14 @@ th, td {
 </style>
 
 <script>
-import axios from '~/plugins/axios'
 export default {
-  props: ['id'],
+  props: ['codePath'],
   name: 'htmlView',
-  beforeMount () {
-    this.loadHtml()
-  },
   mounted () {
     const script = document.createElement('script')
     script.setAttribute('type', 'text/javascript')
-    script.setAttribute('src', 'https://storage.googleapis.com/emrworx.com/drewpark/pre-rounding.js')
+    script.setAttribute('src', this.codePath)
     this.$refs.html.appendChild(script)
-  },
-  methods: {
-    loadHtml: function () {
-      if (!this.id) { return }
-      const self = this
-      var url = ('/api/drewpark/file/' + this.id)
-      axios.get(url).then(response => {
-        console.log(response)
-        self.populateHtml(response.data.text)
-      })
-    },
-    populateHtml: function (text) {
-      // this.render(text)
-      // this.$refs.html.innerHTML = text
-      // var content = document.createElement('div')
-      // content.innerHTML = '<h1 v-on:click="hi">h1</h1>'
-      // this.$refs.html.appendChild(content)
-      // var element = this.$refs.html.innerHTML
-      // var element = document.getElementById('html').append(text)
-      // Vue._compile(this.$refs.html.innerHTML)
-    },
-    hi: function () {
-      alert('hi')
-    }
   }
 }
 </script>

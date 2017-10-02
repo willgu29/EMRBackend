@@ -3,7 +3,7 @@
     <h1>Welcome to your dashboard Drew</h1>
     <p>All important information for your day will be listed here.</p>
     <hr>
-    <html-view :id='this.object._id' />
+    <html-view :codePath='this.object.codePath' />
 
   </section>
 </template>

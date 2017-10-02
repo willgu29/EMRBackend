@@ -18,7 +18,7 @@ export default {
         return { emr: res.data }
       })
       .catch((e) => {
-        error({ statusCode: 404, message: 'Emr not found' })
+        error({ statusCode: 404, message: 'Order not found' })
       })
   },
   head () {
