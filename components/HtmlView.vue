@@ -43,10 +43,13 @@ export default {
   props: ['codePath'],
   name: 'htmlView',
   mounted () {
-    const script = document.createElement('script')
-    script.setAttribute('type', 'text/javascript')
-    script.setAttribute('src', this.codePath)
-    this.$refs.html.appendChild(script)
+    if (this.codePath) {
+      const script = document.createElement('script')
+      script.setAttribute('type', 'text/javascript')
+      script.setAttribute('src', this.codePath)
+      this.$refs.html.appendChild(script)
+    }
+
   }
 }
 </script>
