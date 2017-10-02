@@ -49,7 +49,6 @@ export default {
       script.setAttribute('src', this.codePath)
       this.$refs.html.appendChild(script)
     }
-
   }
 }
 </script>
