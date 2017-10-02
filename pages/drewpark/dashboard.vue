@@ -3,7 +3,12 @@
     <h1>Welcome to your dashboard Drew</h1>
     <p>All important information for your day will be listed here.</p>
     <hr>
-    <html-view :codePath='this.object.codePath' />
+    <div v-if="this.codePath">
+      <html-view :codePath='this.codePath' />
+    </div>
+    <div v-else>
+      <h3>No tasks currently being done.</h3>
+    </div>
 
   </section>
 </template>
@@ -22,7 +27,16 @@ export default {
     console.log(params)
     return axios.get('/api/drewpark/today')
       .then((res) => {
-        return { object: res.data }
+        var object = res.data
+        if (object) {
+          return {
+            process: object.process,
+            codePath: object.codePath,
+            displayType: object.displayType
+          }
+        } else {
+          return { process: '', codePath: '', displayType: '' }
+        }
       })
       .catch((e) => {
         error({ statusCode: 404, message: 'Object not found' })

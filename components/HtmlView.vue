@@ -43,6 +43,7 @@ export default {
   props: ['codePath'],
   name: 'htmlView',
   mounted () {
+    console.log(this)
     if (this.codePath) {
       const script = document.createElement('script')
       script.setAttribute('type', 'text/javascript')
