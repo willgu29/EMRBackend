@@ -14,20 +14,21 @@
       </form> -->
 
       <div id="buttons" v-if="this.program.name === 'Quest' || this.program.name === 'Epic'">
-        <button class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
-        <select v-model="selected">
+        <button v-if="this.fileType === 'txt'" class="copy" type="submit" v-on:click="copyToClipboard">Copy as</button>
+        <select v-if="this.fileType === 'txt'" v-model="selected">
           <option name="epic">Epic</option>
           <option name="quest">Quest</option>
         </select>
         <info-button :filePath='howTo' />
       </div>
       <div id="buttons" v-else>
-        <button class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
+        <button v-if="this.fileType === 'txt'" class="copy" type="submit" v-on:click="copyToClipboard">Copy</button>
         <info-button :filePath='howTo' />
       </div>
 
-    <textarea id="copyContainer" ref="copyContainer" v-model="text"></textarea>
-  
+    <textarea v-if="this.fileType == 'txt'" id="copyContainer" ref="copyContainer" v-model="text"></textarea>
+    <div v-else class='note-template' ref="copyContainer" v-html="text" contenteditable="true"></div>
+
   </div>
 </template>
 
@@ -81,14 +82,24 @@ a {
   color: #0a65ff;
   text-decoration: none;
 }
+.note-template {
+  margin: 0 auto;
+  text-align: left;
+  max-width: 600px;
+  outline-color: black;
+  outline-width: 1;
+  outline-style: double;
+}
 </style>
 
 
 <script>
 import axios from '~/plugins/axios'
 import InfoButton from '~/components/InfoButton.vue'
+import converter from '~/plugins/showdown.js'
+
 export default {
-  props: ['id', 'filePath', 'program'],
+  props: ['id', 'filePath', 'program', 'fileType'],
   name: 'emr',
   components: {
     InfoButton
@@ -120,7 +131,12 @@ export default {
       })
     },
     populateTextArea: function (text) {
-      this.text = text
+      if (this.fileType === 'txt') {
+        this.text = text
+      } else {
+        var html = converter.makeHtml(text)
+        this.text = html
+      }
     },
     copyToClipboard: function (text) {
       this.$refs.copyContainer.select()

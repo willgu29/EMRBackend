@@ -28,6 +28,11 @@
                   {{ emr.name }}: {{emr.description.short}}
                 </nuxt-link>
               </div>
+              <div v-else-if="emr.fileType == 'md'">
+                <nuxt-link :to="{ name: 'emrs-id', params: { id: emr._id }}" target="_blank">
+                  {{ emr.name }}: {{emr.description.short}}
+                </nuxt-link>
+              </div>
               <div v-else>
                 <nuxt-link :to="{ name: 'orders-id', params: {id: emr._id }}" target="_blank">
                   {{ emr.name }}: {{emr.description.short}}
