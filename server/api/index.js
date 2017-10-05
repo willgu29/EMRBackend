@@ -7,6 +7,7 @@ import curates from './curates'
 import bundles from './bundles'
 import macros from './macros'
 import drewpark from './drewpark'
+import smartlists from './smartlists'
 const router = Router()
 
 // Add Routes
@@ -17,5 +18,6 @@ router.use(curates)
 router.use(bundles)
 router.use(macros)
 router.use(drewpark)
+router.use(smartlists)
 
 export default router
