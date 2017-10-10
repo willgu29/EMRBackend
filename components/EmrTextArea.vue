@@ -80,7 +80,6 @@ a {
 }
 .smart-list {
   background-color: yellow;
-
 }
 a:hover {
   text-decoration: underline;
