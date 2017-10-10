@@ -76,6 +76,11 @@ a {
   margin: 0px 0px 0px 0px;
   color: #0a65ff;
   text-decoration: none;
+  background-color: yellow;
+}
+.smart-list {
+  background-color: yellow;
+
 }
 a:hover {
   text-decoration: underline;
