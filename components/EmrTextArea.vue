@@ -27,7 +27,7 @@
       </div>
 
     <textarea v-if="this.fileType == 'txt'" id="copyContainer" ref="copyContainer" v-model="text"></textarea>
-    <div v-else class='note-template' ref="copyContainer" v-html="text" contenteditable="true"></div>
+    <div v-else class='note-template' ref="copyContainer" v-html="text"></div>
 
   </div>
 </template>
@@ -48,21 +48,15 @@
   margin: 0 auto;
   width: 600px;
 }
-
-h1, h2 {
-  font-weight: normal;
+h1 {
+  margin: 0px 0px 10px 0px;
 }
-code {
-  margin-top: 15px;
-  display: inline-block;
-  outline-color: black;
-  outline-width: 1;
-  outline-style: double;
-  width: 600px;
-  height: 500px;
-  text-align: left;
+h2, h3 {
+  margin: 0px 0px 0px 0px;
 }
-
+p {
+  margin-top: 0px;
+}
 textarea {
   margin-top: 15px;
   display: inline-block;
@@ -79,8 +73,16 @@ button {
 }
 
 a {
+  margin: 0px 0px 0px 0px;
   color: #0a65ff;
   text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+a:visited {
+  color: #0a65ff;
 }
 .note-template {
   margin: 0 auto;
@@ -89,6 +91,9 @@ a {
   outline-color: black;
   outline-width: 1;
   outline-style: double;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 5px 20px 10px 10px
+
 }
 </style>
 
@@ -134,6 +139,8 @@ export default {
       if (this.fileType === 'txt') {
         this.text = text
       } else {
+        converter.setOption('simpleLineBreaks', true)
+        converter.setOption('openLinksInNewWindow', true)
         var html = converter.makeHtml(text)
         this.text = html
       }
