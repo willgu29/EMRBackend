@@ -73,6 +73,9 @@ export default {
 ul {
   list-style: none;
 }
+a {
+  background-color: none;
+}
 .buttons {
   margin-top: 20px;
 }
