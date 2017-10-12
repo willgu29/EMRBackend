@@ -74,7 +74,10 @@ ul {
   list-style: none;
 }
 a {
-  background-color: none;
+  background-color: transparent;
+}
+a:visited {
+  background-color: transparent;
 }
 .buttons {
   margin-top: 20px;
