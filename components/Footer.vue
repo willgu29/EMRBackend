@@ -1,11 +1,20 @@
 <template>
   <footer>
-    <p>Copyright © 2017 emrworx.com, All Rights Reserved.</p>
+    <p class='copyright'>Copyright © 2017 emrworx.com, All Rights Reserved.</p>
   </footer>
 </template>
 
 <style>
 footer {
-  
+  border-top: 1px solid #ddd;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #efefef;
+  text-align: center;
+}
+.copyright {
+  font-size: 10px;
 }
 </style>

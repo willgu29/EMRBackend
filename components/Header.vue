@@ -9,7 +9,7 @@
 <style>
   header {
     display: inline-block;
-    margin: 20px;
+    margin: 20px 20px 20px 40px;
   }
   .header-logo {
     vertical-align: middle;
