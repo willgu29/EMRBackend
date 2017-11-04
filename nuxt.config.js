@@ -7,7 +7,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'EMR Worx' },
+      { hid: 'description', name: 'description', content: 'Find coding and billing verified note templates for your practice.' },
       { hid: 'keywords', name: 'keywords', content: 'emr, emrs, emr worx, emr templates' }
 
     ],

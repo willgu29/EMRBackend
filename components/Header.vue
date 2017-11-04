@@ -1,21 +1,36 @@
 <template>
   <header>
-    <img class="header-logo" width="100" src="~/assets/img/logo.png" v-on:click="home" />
-   </header>
+    <img class="header-logo" width="150" src="~/assets/img/logo-roboto.svg" v-on:click="home" />
+    <nuxt-link class='header-link' to="/about" exact>ABOUT</nuxt-link>
+    <nuxt-link class='header-link' to="/contact" exact>CONTACT</nuxt-link>
+  </header>
 </template>
 
 <style>
-  .header-logo {
-    margin-left: 20px;
-    margin-top: 5px;
-  }
   header {
-    margin-top: 10px;
+    display: inline-block;
+    margin: 20px;
   }
-  a {
-    margin-left: 20px;
-    margin-right: 10px;
+  .header-logo {
+    vertical-align: middle;
+    margin-right: 40px;
   }
+  .header-link {
+    margin: 20px;
+    color: #b2b2b2;
+    text-decoration: none;
+  }
+  .header-link:visited {
+    color: #b2b2b2;
+  }
+  .header-link:hover {
+    color: #0043ff;
+  }
+  a.header-link.nuxt-link-exact-active.nuxt-link-active {
+    color: #0043ff;
+  }
+
+
 </style>
 
 <script>
