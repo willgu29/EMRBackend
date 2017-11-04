@@ -1,7 +1,10 @@
 <template>
   <section class="finder-container">
     <h2>EMR Worx Demo</h2>
-
+    <div class='conversation-box'>
+      <p class='bot-text'>{{conversation[0]}}</p> <br />
+      <p class='input-text'>{{text}}</p>
+    </div>
   </section>
 </template>
 
@@ -11,6 +14,16 @@ export default {
     return {
       title: 'EMR Worx Demo'
     }
+  },
+  data () {
+    return {
+      conversation: [
+        'Hello Dr. uh...',
+        'Right! Dr. <name>, welcome to EMR Worx. What speciality are you in? (Internal Medicine, Psychiatry, Family Practice, etc.)',
+        'Okay, let me pull up a few note templates.'
+      ],
+      text: 'Doctor\'s input...'
+    }
   }
 }
 </script>
@@ -19,23 +32,13 @@ export default {
 .finder-container {
   text-align: center;
 }
-#demo-video {
-  width: 720px;
-  margin-bottom: 20px;
+.conversation-box {
+  margin: 120px;
 }
-.btn {
-  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  background-color: #6093e5;
-  color: white;
-  border: 15px solid #6093e5;
-  border-radius: 25px;
-  text-align: center;
+.bot-text {
+  float: left;
 }
-.btn:hover {
-  background-color: #0a65ff;
-  border: 15px solid #0a65ff;
-
+.input-text {
+  float: right;
 }
 </style>

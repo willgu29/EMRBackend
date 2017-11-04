@@ -84,7 +84,7 @@ export default {
   display: flex;
 }
 .list {
-  width: 300px;
+  width: 350px;
   margin: 0px 60px 60px 120px;
   padding: 0px;
   list-style: none;
@@ -92,6 +92,8 @@ export default {
   border-width: thin;
   border-style: none;
   background-color: rgb(239, 239, 239);
+  font-size: 20px;
+
 }
 .list-title {
   margin-left: 125px;
@@ -122,13 +124,14 @@ export default {
 }
 .about-text {
   margin-top: 120px;
+  line-height: 30px;
 }
 .explainer {
   width: 500px;
 }
 .arrow {
   vertical-align: middle;
-  width: 11px;
+  width: 15px;
   float: right;
   margin-right: 20px;
 }

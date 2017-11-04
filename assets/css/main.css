@@ -1,11 +1,10 @@
 html, body
 {
-  background-color: #fff;
+  background-color: #ffffff;
   color: #000;
   letter-spacing: 0.5px;
   font-family: "Roboto", "Source Sans Pro", Arial, sans-serif;
   height:100%;
-
   margin: 0;
 }
 
@@ -14,6 +13,12 @@ footer
   padding: 10px;
   text-align: center;
   border-top: 1px solid #ddd;
+}
+h1, h2 {
+  font-size: 30px;
+}
+p {
+  font-size: 20px;
 }
 
 a, a:hover, a:focus, a:visited
