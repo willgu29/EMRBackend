@@ -45,6 +45,9 @@ export default {
       specialty: ''
     }
   },
+  beforeMount () {
+    this.logVisit()
+  },
   methods: {
     scrollToBottom: function () {
       window.scrollTo(0, document.body.scrollHeight)
@@ -64,6 +67,11 @@ export default {
         .catch((e) => {
           alert(e.response.statusText)
         })
+    },
+    logVisit: function () {
+      axios.post('/api/visits/', {
+        url: '/welcome'
+      })
     }
   }
 }

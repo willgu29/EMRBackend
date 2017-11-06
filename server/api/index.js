@@ -9,6 +9,7 @@ import macros from './macros'
 import drewpark from './drewpark'
 import smartlists from './smartlists'
 import welcomes from './welcomes'
+import visits from './visits'
 const router = Router()
 
 // Add Routes
@@ -21,5 +22,6 @@ router.use(macros)
 router.use(drewpark)
 router.use(smartlists)
 router.use(welcomes)
+router.use(visits)
 
 export default router
