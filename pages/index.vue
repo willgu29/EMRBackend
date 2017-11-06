@@ -38,6 +38,9 @@
 import axios from '~/plugins/axios'
 
 export default {
+  fetch ({ params, redirect }) {
+    redirect(301, '/welcome')
+  },
   asyncData ({ params, error }) {
     console.log(params)
     return axios.get('/api/users/')
