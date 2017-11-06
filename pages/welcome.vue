@@ -3,7 +3,7 @@
     <div class='welcome-header'>
       <h1>Welcome to <img class='logo-welcome' width="150" src="~/assets/img/logo-roboto.svg"/></h1>
       <p>We're currently in beta-testing. <span class='cta' v-on:click="scrollToBottom">Subscribe</span> to get early-access to over 300 note templates across multiple specialities. </p>
-      <img class="preview" width="800px" src="~/assets/img/preview.png" />
+      <img class="preview" width="800px" src="~/assets/img/preview-2.png" />
     </div>
     <div class='grid-container'>
       <div class='grid-3'>
@@ -20,30 +20,50 @@
 
     </div>
     <div name="subscribe" class='sign-up'>
-      <form>
-        <input class='form-field' type="text" placeholder="email" />
-        <input class='form-field' type="text" placeholder="speciality" />
-        <input class='subscribe' type="submit" value="subscribe" />
+      <form v-on:submit.stop.prevent="onSubmit">
+        <input class='form-field' name="email" type="text" placeholder="email" v-model="email" />
+        <input class='form-field' name="speciality" type="text" placeholder="specialty" v-model="specialty" />
+        <input class='subscribe'  type="submit" value="subscribe" />
       </form>
     </div>
   </section>
 </template>
 
 <script>
-import About from '~/components/About.vue'
+import axios from '~/plugins/axios'
+
 export default {
   layout: 'landing',
-  components: {
-    About
-  },
   head () {
     return {
       title: 'EMR Worx'
     }
   },
+  data () {
+    return {
+      email: '',
+      specialty: ''
+    }
+  },
   methods: {
     scrollToBottom: function () {
       window.scrollTo(0, document.body.scrollHeight)
+    },
+    onSubmit: function (event) {
+      if (this.email === '' || this.specialty === '') {
+        alert('Please enter an email and specialty then click subscribe.')
+        return
+      }
+      axios.post('/api/welcomes/', {
+        email: this.email,
+        specialty: this.specialty
+      })
+        .then((res) => {
+          window.location.replace('/subscribe-success')
+        })
+        .catch((e) => {
+          alert(e.response.statusText)
+        })
     }
   }
 }
