@@ -16,9 +16,11 @@ footer
 }
 h1, h2 {
   font-size: 30px;
+  font-weight: 400;
 }
 p {
   font-size: 20px;
+  line-height: 30px;
 }
 
 a, a:hover, a:focus, a:visited
