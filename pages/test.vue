@@ -1,35 +1,28 @@
 <template>
-  <section class="container">
-
-    <img width="250" src="~/assets/img/logo.png" />
-    <h2>
-      Finish your notes faster
-    </h2>
-    <form action="/search" method="get">
-      <input v-model='searchText' placeholder="Search for note templates" class="search-bar" type="search" name="text" autocomplete="off" />
-    </form>
-
-    <div class='buttons'>
-      <input v-on:click="search" type='submit' class='button' value='Search' />
-      <input v-on:click="demo" type='submit' class='button' value='Demo' />
-    </div>
-
-    <br />
-    <br />
-    <br />
-    <hr>
-    <section>
-      <h1 class='title'>Note Templates by Department:</h1>
-      <div class="list-wrapper" v-if="users.length > 0">
-        <ul class="items">
-          <li v-for="(user, index) in users" :key="index" class="item">
-            <nuxt-link class='button' :to="{ name: 'users-id', params: { id: user._id }}">
-              {{ user.name }}
-            </nuxt-link>
-          </li>
-        </ul>
+  <section class="main-container">
+    <div class='grid-container'>
+      <div class='grid-2'>
+        <h1 class='chat-title'>Find a note template</h1>
+        <div class='chat'>
+          <p class='text self'>Test</p>
+          <p class='text bot'>test</p>
+          <form class='chat-input' v-on:submit.stop.prevent="onSubmit">
+            <input class='form-field' name="text" type="text" placeholder="Type a message" v-model="message" />
+            <input class='submit-button'  type="submit" value="send" />
+          </form>
+        </div>
       </div>
-    </section>
+      <div class='grid-2'>
+        <h1 class='quick-start-title'>Quick Start</h1>
+        <div class='quick-display'>
+          <ul class='list'>
+            <li>Psychiatry</li>
+            <li>Internal Medicine</li>
+            <li>Surgery</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
   </section>
 </template>
@@ -55,42 +48,91 @@ export default {
   },
   data () {
     return {
-      searchText: ''
+      message: ''
     }
   },
   methods: {
-    search: function () {
-      window.location.href = '/search?text=' + this.searchText
-    },
-    demo: function () {
-      window.location.href = '/demo'
+    onSubmit: function (event) {
+
     }
   }
 }
 </script>
 
 <style scoped>
-ul {
+.list {
   list-style: none;
+  text-align: left;
 }
-a {
-  background-color: transparent;
+h1 {
+  font-size: 30px;
+
 }
-a:visited {
-  background-color: transparent;
+.chat-title {
+  text-align: left;
+  margin: 60px 20px 10px 100px;
 }
-.buttons {
-  margin-top: 20px;
+.quick-start-title {
+  text-align: left;
+  margin: 60px 60px 10px 20px;
 }
-.button {
-  margin: 5px 5px 5px 5px
+.quick-display {
+  min-width: 200px;
+  max-width: 300px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin: 0px 60px 60px 20px;
 }
-.title
-{
-  margin: 15px 0;
+.text {
+  margin: 20px;
 }
-.search-bar {
-  width: 30%;
-  font-size: 20px;
+.self {
+  text-align: right;
+}
+.bot {
+  text-align: left;
+}
+.chat {
+  min-width: 300px;
+  max-width: 500px;
+  margin: 0px 20px 10px 100px;
+  border-style: solid;
+  border-width: 1px;
+}
+.chat-input {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+.submit-button {
+  width: 25%;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-left: 5px;
+  background-color: rgb(0, 129, 213);
+  color: white;
+  font-size: 14px;
+}
+.submit-button:hover {
+  cursor: pointer;
+  background-color: #0043ff;
+}
+.form-field {
+  height: 30px;
+  width: 70%;
+  font-size: 16px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+}
+.grid-container {
+  display: flex;
+}
+.grid-2 {
+  flex: 1;
+  flex-direction: column;
+  justify-content: left;
 }
 </style>
