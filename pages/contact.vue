@@ -3,8 +3,8 @@
     <h1 class="title">
       Contact
     </h1>
-    <p><b><a href="mailto:info@emrworx.com">info@emrworx.com</a></b> for general inquiries.</p>
-    <p><b><a href="mailto:hello@emrworx.com">hello@emrworx.com</a></b> for everything else!</p>
+    <p><b><a href="mailto:will@emrworx.com">will@emrworx.com</a></b></p>
+
   </section>
 </template>
 
