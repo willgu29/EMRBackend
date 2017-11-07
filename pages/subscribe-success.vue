@@ -20,7 +20,7 @@ export default {
     }
   },
   beforeMount () {
-    this.logVisit()
+    // this.logVisit()
   },
   methods: {
     logVisit: function () {

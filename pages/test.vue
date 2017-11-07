@@ -4,21 +4,23 @@
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
         <div class='chat'>
-          <p class='text self'>Test</p>
-          <p class='text bot'>test</p>
+          <p class='text explainer'>Tell us what you're looking for</p>
           <form class='chat-input' v-on:submit.stop.prevent="onSubmit">
             <input class='form-field' name="text" type="text" placeholder="Type a message" v-model="message" />
             <input class='submit-button'  type="submit" value="send" />
           </form>
         </div>
       </div>
-      <div class='grid-2'>
+      <div class='grid-small'>
         <h1 class='quick-start-title'>Quick Start</h1>
         <div class='quick-display'>
           <ul class='list'>
-            <li>Psychiatry</li>
-            <li>Internal Medicine</li>
-            <li>Surgery</li>
+            <h3>Note Templates</h3>
+            <ul>
+              <li>Psychiatry</li>
+              <li>Internal Medicine</li>
+              <li>Surgery</li>
+            </ul>
           </ul>
         </div>
       </div>
@@ -43,7 +45,14 @@ export default {
   },
   head () {
     return {
-      title: 'EMR Worx'
+      title: 'EMR Worx',
+      meta: [
+        {
+          hid: `keywords`,
+          name: 'keywords',
+          keywords: 'emr, worx, emrworx, note templates'
+        }
+      ]
     }
   },
   data () {
@@ -60,17 +69,12 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  margin-bottom: 5px;
+}
 .list {
   list-style: none;
   text-align: left;
-}
-h1 {
-  font-size: 30px;
-
-}
-.chat-title {
-  text-align: left;
-  margin: 60px 20px 10px 100px;
 }
 .quick-start-title {
   text-align: left;
@@ -82,10 +86,21 @@ h1 {
   border-style: solid;
   border-radius: 5px;
   border-width: 1px;
-  margin: 0px 60px 60px 20px;
+  margin: 0px 40px 60px 20px;
+}
+
+
+
+.chat-title {
+  text-align: left;
+  margin: 60px 0px 10px 0px;
 }
 .text {
   margin: 20px;
+}
+.explainer {
+  text-align: center;
+  color: #b2b2b2;
 }
 .self {
   text-align: right;
@@ -94,15 +109,20 @@ h1 {
   text-align: left;
 }
 .chat {
+  min-height: 250px;
   min-width: 300px;
-  max-width: 500px;
-  margin: 0px 20px 10px 100px;
+  /*max-width: 500px;*/
   border-style: solid;
   border-width: 1px;
 }
 .chat-input {
   margin-left: 5px;
   margin-bottom: 5px;
+  position: absolute;
+  height: 30px;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .submit-button {
   width: 25%;
@@ -129,10 +149,14 @@ h1 {
 }
 .grid-container {
   display: flex;
+  justify-content: space-between;
 }
 .grid-2 {
-  flex: 1;
-  flex-direction: column;
-  justify-content: left;
+  margin-left: 60px;
+  position: relative;
+  width: 60%;
+}
+.grid-small {
+  width: 40%;
 }
 </style>
