@@ -7,6 +7,8 @@ import bundles from './bundles'
 import smartlists from './smartlists'
 import welcomes from './welcomes'
 import visits from './visits'
+import chats from './chats'
+
 const router = Router()
 
 // Add Routes
@@ -17,5 +19,6 @@ router.use(bundles)
 router.use(smartlists)
 router.use(welcomes)
 router.use(visits)
+router.use(chats)
 
 export default router

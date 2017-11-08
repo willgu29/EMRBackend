@@ -4,25 +4,17 @@
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
         <div class='chat'>
-          <p class='text explainer'>Tell us what you're looking for</p>
+          <ul v-if="conversation.length != 0" class='messages'></ul>
+          <p v-else class='text explainer'>Tell us what you're looking for</p>
           <form class='chat-input' v-on:submit.stop.prevent="onSubmit">
-            <input class='form-field' name="text" type="text" placeholder="Type a message" v-model="message" />
+            <input class='form-field' name="text" type="text" placeholder="Type a message" autocomplete="off" v-model="message" />
             <input class='submit-button'  type="submit" value="send" />
           </form>
         </div>
       </div>
       <div class='grid-small'>
-        <h1 class='quick-start-title'>Quick Start</h1>
-        <div class='quick-display'>
-          <ul class='list'>
-            <h3>Note Templates</h3>
-            <ul>
-              <li>Psychiatry</li>
-              <li>Internal Medicine</li>
-              <li>Surgery</li>
-            </ul>
-          </ul>
-        </div>
+        <h1 class='quick-start-title'>Quick Search</h1>
+        <note-selector />
       </div>
     </div>
 
@@ -31,8 +23,12 @@
 
 <script>
 import axios from '~/plugins/axios'
+import NoteSelector from '~/components/NoteSelector'
 
 export default {
+  components: {
+    NoteSelector
+  },
   asyncData ({ params, error }) {
     console.log(params)
     return axios.get('/api/users/')
@@ -57,7 +53,8 @@ export default {
   },
   data () {
     return {
-      message: ''
+      message: '',
+      conversation: []
     }
   },
   methods: {
@@ -69,31 +66,34 @@ export default {
 </script>
 
 <style scoped>
+.grid-container {
+  margin: 60px;
+  box-shadow: 0px 0px 10px #888888;
+}
 h3 {
-  margin-bottom: 5px;
+
+}
+li {
+  line-height: 30px;
 }
 .list {
   list-style: none;
   text-align: left;
 }
+.speciality {
+
+}
 .quick-start-title {
   text-align: left;
-  margin: 60px 60px 10px 20px;
+  margin-left: 10px;
 }
 .quick-display {
   min-width: 200px;
   max-width: 300px;
-  border-style: solid;
-  border-radius: 5px;
-  border-width: 1px;
-  margin: 0px 40px 60px 20px;
 }
-
-
-
 .chat-title {
   text-align: left;
-  margin: 60px 0px 10px 0px;
+  margin-left: 20px;
 }
 .text {
   margin: 20px;
@@ -112,17 +112,15 @@ h3 {
   min-height: 250px;
   min-width: 300px;
   /*max-width: 500px;*/
-  border-style: solid;
-  border-width: 1px;
 }
 .chat-input {
-  margin-left: 5px;
-  margin-bottom: 5px;
+  padding-left: 20px;
   position: absolute;
   height: 30px;
   bottom: 0;
   right: 0;
   left: 0;
+  box-shadow: 0px 0px 1px #888888;
 }
 .submit-button {
   width: 25%;
@@ -145,18 +143,18 @@ h3 {
   font-size: 16px;
   border-radius: 5px;
   border-style: solid;
-  border-width: 1px;
+  border-width: 0px;
 }
 .grid-container {
   display: flex;
   justify-content: space-between;
 }
 .grid-2 {
-  margin-left: 60px;
   position: relative;
-  width: 60%;
+  width: 65%;
 }
 .grid-small {
-  width: 40%;
+  width: 35%;
+  background-color: RGB(0, 129, 213);
 }
 </style>

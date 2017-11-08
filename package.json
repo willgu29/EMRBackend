@@ -21,6 +21,8 @@
     "nuxt": "^1.0.0-rc3",
     "pdfkit": "^0.8.3",
     "showdown": "^1.7.5",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "source-map-support": "^0.4.15",
     "tiny-cookie": "^2.0.2"
   },

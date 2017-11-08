@@ -6,6 +6,8 @@ import mongoose from 'mongoose'
 
 
 const app = express()
+
+
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
@@ -15,6 +17,7 @@ app.set('port', port)
 
 // Import API Routes
 app.use('/api', api)
+
 
 
 // Import and Set Nuxt.js options
@@ -45,6 +48,9 @@ if (config.dev) {
 
 
 
+var server = require('http').Server(app);
+var io = require('./helpers/io').initialize(server);
+
 // Listen the server
-app.listen(port, host)
+server.listen(port, host)
 console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
