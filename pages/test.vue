@@ -3,17 +3,10 @@
     <div class='grid-container'>
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
-        <div class='chat'>
-          <ul v-if="conversation.length != 0" class='messages'></ul>
-          <p v-else class='text explainer'>Tell us what you're looking for</p>
-          <form class='chat-input' v-on:submit.stop.prevent="onSubmit">
-            <input class='form-field' name="text" type="text" placeholder="Type a message" autocomplete="off" v-model="message" />
-            <input class='submit-button'  type="submit" value="send" />
-          </form>
-        </div>
+        <chat-box />
       </div>
       <div class='grid-small'>
-        <h1 class='quick-start-title'>Quick Search</h1>
+        <h1 class='quick-start-title'>Quick Links</h1>
         <note-selector />
       </div>
     </div>
@@ -24,10 +17,12 @@
 <script>
 import axios from '~/plugins/axios'
 import NoteSelector from '~/components/NoteSelector'
+import ChatBox from '~/components/ChatBox'
 
 export default {
   components: {
-    NoteSelector
+    NoteSelector,
+    ChatBox
   },
   asyncData ({ params, error }) {
     console.log(params)
