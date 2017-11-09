@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="container">
     <my-header/>
-    <nuxt/>
-    <my-footer/>
+    <nuxt id="body" />
+    <my-footer id="footer" />
   </div>
 </template>
 
@@ -19,6 +19,21 @@ export default {
 </script>
 
 <style>
+#container {
+   min-height:100%;
+   position:relative;
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background-color: #efefef;
+   border-top: 1px solid #ddd;
+}
+#body {
+  padding-bottom:60px;
+}
 .container
 {
   margin: 0;

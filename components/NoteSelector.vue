@@ -3,9 +3,8 @@
     <ul class='list'>
       <h3>Note Templates</h3>
       <ul class='list no-padding'>
-          <li v-if="step === 0" v-on:click="expand(index)" v-for="(speciality, index) in specialities" :key="index" class='speciality'>{{speciality}}</li>
-          <li v-if="step === 1" v-on:click="expand2(index)" v-for="(subSpeciality, index) in subSpecialities[this.index]" :key="index" class='speciality'>{{subSpeciality}}</li>
-          <li v-if="step === 2" v-on:click="goTo(noteTemplate.link)" v-for="(noteTemplate, index) in noteTemplates[this.index]" :key="index" class='speciality'>{{noteTemplate.name}}</li>
+          <li v-if="step === 0" v-on:click="expand(index)" v-for="(noteTemplate, index) in noteTemplates" :key="index" class='speciality'>{{noteTemplate}}</li>
+          <li v-if="step === 1" v-on:click="goTo(speciality.link)" v-for="(speciality, index) in specialities[this.index]" :key="index" class='speciality'>{{speciality.name}}</li>
       </ul>
     </ul>
   </div>
@@ -37,24 +36,15 @@ export default {
     return {
       step: 0,
       index: -1,
-      specialities: ['Psychiatry', 'Internal Medicine', 'Family Medicine'],
-      subSpecialities: [
-        ['Adult', 'Child & Adolescent', 'Geriatric'], // inpatient
-        ['General', 'Critical Care'], // inpatient only
-        ['General', 'Adolescent', 'Geriatric', 'Hospice & Palliative', 'Sports'] // outpatient only
-      ],
-      noteTemplates: [
-        [{name: 'H&P', link: ''}, {name: 'Progress Note', link: ''}, {name: 'Discharge Note', link: ''}, {name: 'After Visit Summary', link: ''}], // Adult
-        [{name: 'H&P', link: ''}, {name: 'Progress Note', link: ''}, {name: 'Discharge Note', link: ''}, {name: 'After Visit Summary', link: ''}], // Child & Adolescent
-        [{name: 'H&P', link: 'Progress Note'}, {name: 'Discharge Note', link: ''}, {name: 'After Visit Summary', link: ''}], // Geriatric
-        [{name: 'H&P', link: ''}, {name: 'Progress Note', link: ''}, {name: 'Discharge Note', link: ''}, {name: 'After Visit Summary', link: ''}], // General
-        [{name: 'H&P', link: ''}, {name: 'Progress Note', link: ''}, {name: 'Discharge Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}], // Critical Care
-        [{name: 'Initial Evaluation Note', link: ''}, {name: 'Progress Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}], // General
-        [{name: 'Initial Evaluation Note', link: ''}, {name: 'Progress Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}], // Adolescent
-        [{name: 'Initial Evaluation Note', link: ''}, {name: 'Progress Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}], // Geriatric
-        [{name: 'Initial Evaluation Note', link: ''}, {name: 'Progress Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}], // Hospice & Palliative
-        [{name: 'Initial Evaluation Note', link: ''}, {name: 'Progress Note', link: ''}, {name: 'After Visit Summary', link: ''}, {name: 'Procedure Note', link: ''}] // Sports
-
+      noteTemplates: ['H&P', 'Inpatient Progress Note', 'Discharge Note', 'After Visit Summary', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note', 'Outpatient Progress Note', 'Other'],
+      specialities: [
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}]
       ]
     }
   },

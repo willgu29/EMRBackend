@@ -6,13 +6,14 @@
 
 <style>
 footer {
-  border-top: 1px solid #ddd;
-  position: absolute;
+  /*border-top: 1px solid #ddd;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: #efefef;
   text-align: center;
+  height: 60px;*/
 }
 .copyright {
   font-size: 10px;
