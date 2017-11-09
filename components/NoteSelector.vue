@@ -36,7 +36,7 @@ export default {
     return {
       step: 0,
       index: -1,
-      noteTemplates: ['H&P', 'Inpatient Progress Note', 'Discharge Note', 'After Visit Summary', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note', 'Outpatient Progress Note', 'Other'],
+      noteTemplates: ['H&P', 'Inpatient Progress Note', 'Outpatient Progress Note', 'Discharge Note', 'After Visit Summary', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note', 'Other'],
       specialities: [
         [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
         [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],

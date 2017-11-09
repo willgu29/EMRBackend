@@ -10,6 +10,9 @@
         <note-selector />
       </div>
     </div>
+    <div class='width-too-small-alert'>
+      <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
+    </div>
 
   </section>
 </template>
@@ -152,4 +155,19 @@ li {
   width: 35%;
   background-color: RGB(0, 129, 213);
 }
+
+.width-too-small-alert {
+  display: none;
+}
+@media (max-width: 710px) {
+  .grid-container {
+    display: none;
+  }
+  .width-too-small-alert {
+    display: inline;
+    text-align: center;
+  }
+}
+
+
 </style>
