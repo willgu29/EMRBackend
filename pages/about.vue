@@ -1,5 +1,6 @@
 <template>
-  <section class="about-container">
+  <section>
+    <div class="about-container">
     <div class='flex-2'>
       <h2 class='list-title'>Why use EMR Worx?</h2>
     <ul class='list'>
@@ -19,6 +20,7 @@
         <div class="explainer" v-html="body"></div>
       </div>
     </div>
+  </div>
 
   </section>
 </template>
@@ -38,6 +40,7 @@ var descriptions = [
   '<a class="cta" href="/finder">Click here</a> to find your first note templates!'
 ]
 export default {
+  layout: 'info',
   head () {
     return {
       title: 'About EMR Worx',
@@ -80,6 +83,10 @@ export default {
 </script>
 
 <style scoped>
+.explainer {
+  text-align: left;
+  color: black;
+}
 .about-container {
   display: flex;
 }

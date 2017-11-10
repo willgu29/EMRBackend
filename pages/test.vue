@@ -1,5 +1,7 @@
 <template>
   <section class="main-container">
+    <field-tip :text='"hello"' :toolText='"will@emrworx.com"' />
+
     <div class='grid-container'>
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
@@ -10,6 +12,7 @@
         <note-selector />
       </div>
     </div>
+    <!-- Mobile Version Not Supported Alert -->
     <div class='width-too-small-alert'>
       <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
     </div>
@@ -21,11 +24,13 @@
 import axios from '~/plugins/axios'
 import NoteSelector from '~/components/NoteSelector'
 import ChatBox from '~/components/ChatBox'
+import FieldTip from '~/components/FieldTip'
 
 export default {
   components: {
     NoteSelector,
-    ChatBox
+    ChatBox,
+    FieldTip
   },
   asyncData ({ params, error }) {
     console.log(params)

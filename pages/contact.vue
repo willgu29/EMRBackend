@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  layout: 'info',
   head () {
     return {
       title: 'Contact EMR Worx'

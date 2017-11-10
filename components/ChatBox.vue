@@ -1,5 +1,5 @@
 <template>
-  <div class='chat'>
+  <div class='chat' ref="chat">
     <ul v-show="messages.length" ref='messages' class="messages">
       <li class="message" v-for="message in messages"><i :title="message.date">{{ message.date.split('T')[1].slice(0, -2) }}</i>: {{ message.text }}</li>
     </ul>
@@ -91,6 +91,8 @@ export default {
   min-height: 250px;
   min-width: 300px;
   /*max-width: 500px;*/
+  overflow: auto;
+  max-height: 500px;
 }
 .chat-input {
   padding-left: 20px;
