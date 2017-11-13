@@ -3,7 +3,7 @@
     <div class='grid-container'>
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
-        <chat-box />
+        <chat-box name="Anonymous" />
       </div>
       <div class='grid-small'>
         <h1 class='quick-start-title'>Quick Links</h1>
@@ -22,13 +22,11 @@
 import axios from '~/plugins/axios'
 import NoteSelector from '~/components/NoteSelector'
 import ChatBox from '~/components/ChatBox'
-import FieldTip from '~/components/FieldTip'
 
 export default {
   components: {
     NoteSelector,
-    ChatBox,
-    FieldTip
+    ChatBox
   },
   asyncData ({ params, error }) {
     console.log(params)

@@ -1,7 +1,7 @@
 <template>
   <div class='chat' ref="chat">
     <ul v-show="messages.length" ref='messages' class="messages">
-      <li class="message" v-for="message in messages"><i :title="message.date">{{ message.date.split('T')[1].slice(0, -2) }}</i>: {{ message.text }}</li>
+      <li class="message" v-for="message in messages"><field-tip :img='message.userPicture' :toolText='message.name' /><i :title="message.date">{{ message.date | formatDate }}</i>: {{ message.text }}</li>
     </ul>
     <p v-show="! messages.length" class='text explainer'>Tell us what you're looking for</p>
 
@@ -14,8 +14,13 @@
 
 <script>
 import socket from '~/plugins/socket.io.js'
+import FieldTip from '~/components/FieldTip'
+
 export default {
   props: ['name'],
+  components: {
+    FieldTip
+  },
   head () {
     return {
       title: 'EMR Worx Test'
@@ -25,14 +30,20 @@ export default {
     return {
       messages: [],
       message: '',
-      username: this.name || this.makeName()
+      userId: this.name || 'Anonymous',
+      userPicture: '',
+      joined: false
     }
   },
   beforeMount () {
-    socket.on('new-message', (message) => {
-      this.messages.push(message)
-      this.scrollToBottom()
-    })
+    if (this.userId === 'will@emrworx.com') {
+      this.userPicture = 'https://www.emrworx.com/public/assets/will.jpg'
+      socket.on('new-message', (message) => {
+        this.messages.push(message)
+        this.scrollToBottom()
+      })
+      this.joined = true
+    }
   },
   mounted () {
     this.scrollToBottom()
@@ -42,12 +53,22 @@ export default {
       if (!this.message.trim()) return
       let message = {
         date: new Date().toJSON(),
-        text: this.message.trim()
+        text: this.message.trim(),
+        name: this.userId,
+        userPicture: this.userPicture
       }
       this.messages.push(message)
       this.message = ''
       socket.emit('send-message', message)
       this.scrollToBottom()
+      // Don't get messages until a message has been sent
+      if (!this.joined) {
+        socket.on('new-message', (message) => {
+          this.messages.push(message)
+          this.scrollToBottom()
+        })
+        this.joined = true
+      }
     },
     onSubmit: function () {
       this.sendMessage()
@@ -75,6 +96,10 @@ export default {
 </script>
 
 <style>
+.message {
+  list-style: none;
+  margin: 10px;
+}
 .text {
   margin: 20px;
 }
@@ -86,15 +111,15 @@ export default {
 .self {
   text-align: right;
 }
-.bot {
+.other {
   text-align: left;
 }
 .chat {
-  min-height: 250px;
+  /*min-height: 250px;*/
   min-width: 300px;
   /*max-width: 500px;*/
   overflow: auto;
-  max-height: 450px;
+  height: 450px
 }
 .chat-input {
   padding-left: 20px;

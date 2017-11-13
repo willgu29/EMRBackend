@@ -37,7 +37,7 @@ var descriptions = [
   `We know how much time and energy you put into patient care, that's why we've marked our templates with a completion metric to guide you on how much more of the note you'll have to fill out.
 
   A higher percentage means more of the note is filled out, however, please double check to make sure the information is accurate based upon your patient's specific care needs before you go on a <img src="https://emrworx.com/public/assets/coffee.svg" width="25px" /> break.`,
-  '<a class="cta" href="/finder">Click here</a> to find your first note templates!'
+  '<a class="cta" href="/">Click here</a> to find your first note templates!'
 ]
 export default {
   layout: 'info',

@@ -1,11 +1,17 @@
 <template>
   <span class="field-tip">
-    {{this.displayText}}
+    <img class="img-circle" :src='this.imgPath' />
     <span class="tip-content">{{this.hoverText}}</span>
   </span>
 </template>
 
 <style>
+.img-circle {
+  border-radius: 50%;
+  width: 30px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
 /* Hover tooltips */
 .field-tip {
     position:relative;
@@ -51,11 +57,11 @@
 <script>
 export default {
   name: 'fieldTip',
-  props: ['text', 'toolText'],
+  props: ['img', 'toolText'],
   data () {
     return {
-      displayText: this.text || '',
-      hoverText: this.toolText || ''
+      imgPath: this.img || 'https://www.emrworx.com/public/assets/blank-profile.png',
+      hoverText: this.toolText || 'Anonymous'
     }
   }
 }

@@ -4,7 +4,7 @@
       <h3>Note Templates</h3>
       <ul class='list no-padding'>
           <li v-if="step === 0" v-on:click="expand(index)" v-for="(noteTemplate, index) in noteTemplates" :key="index" class='speciality'>{{noteTemplate}}</li>
-          <p class='back-header' v-if="step === 1"><img class='back-arrow' src="~/assets/img/arrow-left2.svg" /> {{this.noteType}}</p>
+          <p class='back-header' v-on:click="back()" v-if="step === 1"><img ref="backArrow" class='back-arrow' src="~/assets/img/arrow-left2.svg" /> {{this.noteType}}</p>
           <li v-if="step === 1" v-on:click="goTo(specialty.link)" v-for="(specialty, index) in specialties[this.index]" :key="index" class='speciality'>{{specialty.name}}</li>
       </ul>
     </ul>
@@ -37,9 +37,7 @@
 .back-arrow {
   width: 20px;
 }
-.back-arrow:hover {
-  cursor: pointer;
-}
+
 </style>
 
 <script>
@@ -69,6 +67,11 @@ export default {
       this.index = index
       this.noteType = this.noteTemplates[index]
       this.step = 1
+    },
+    back: function () {
+      this.index = -1
+      this.noteType = ''
+      this.step = 0
     },
     goTo: function (link) {
       window.open(link, '_blank')
