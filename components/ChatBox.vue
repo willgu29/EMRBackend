@@ -1,7 +1,7 @@
 <template>
   <div class='chat' ref="chat">
     <ul v-show="messages.length" ref='messages' class="messages">
-      <li class="message" v-for="message in messages"><field-tip :img='message.userPicture' :toolText='message.name' /><i :title="message.date">{{ message.date | formatDate }}</i>: {{ message.text }}</li>
+      <li class="message" v-for="message in messages"><field-tip :img='message.userPicture' :toolText='message.name' /><p class='message-text'><i :title="message.date">{{ message.date | formatDate }}</i>: {{ message.text }}</p></li>
     </ul>
     <p v-show="! messages.length" class='text explainer'>Tell us what you're looking for</p>
 
@@ -101,6 +101,12 @@ export default {
 .message {
   list-style: none;
   margin: 10px;
+  max-width: 650px;
+  text-align: left;
+}
+.message-text {
+  font-size: 16px;
+  display: inline;
 }
 .text {
   margin: 20px;
@@ -121,7 +127,8 @@ export default {
   min-width: 300px;
   /*max-width: 500px;*/
   overflow: auto;
-  height: 450px
+  height: 430px;
+  margin-bottom: 20px;
 }
 .chat-input {
   padding-left: 20px;

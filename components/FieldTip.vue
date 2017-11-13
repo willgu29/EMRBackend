@@ -8,7 +8,7 @@
 <style>
 .img-circle {
   border-radius: 50%;
-  width: 30px;
+  width: 25px;
   vertical-align: middle;
   margin-right: 10px;
 }
