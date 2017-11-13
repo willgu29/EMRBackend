@@ -31,12 +31,12 @@ var descriptions = [
   `Better patient care starts with better documentation.
 
   EMR Worx brings the most essential note templates to your practice so you can spend less time worrying about your notes and more time being a doctor.`,
-  `Templates marked with a <img src="https://emrworx.com/public/assets/clipboard.svg" width="20px" /> are verified by a certified AAPC coder and billing specialist.
+  `All of our templates are verified by a certified AAPC coder and billing specialist.
 
   We've included recommendations and best-practice guidelines when filling out your notes to make sure diagnoses and procedures are accurately found and your practice is reimbursed properly.`,
-  `We know how much time and energy you put into patient care, that's why we've marked our templates with a completion metric to guide you on how much more of the note you'll have to fill out.
+  `We know how much time and energy you put into patient care, that's why if we don't have a template, we'll create one for you.
 
-  A higher percentage means more of the note is filled out, however, please double check to make sure the information is accurate based upon your patient's specific care needs before you go on a <img src="https://emrworx.com/public/assets/coffee.svg" width="25px" /> break.`,
+  Just leave your email with us, and we'll sent it to you when it is ready. Your email will never be used for any other purpose or reason other than to deliver your note template.`,
   '<a class="cta" href="/">Click here</a> to find your first note templates!'
 ]
 export default {

@@ -15,6 +15,7 @@
 <script>
 import socket from '~/plugins/socket.io.js'
 import FieldTip from '~/components/FieldTip'
+import axios from '~/plugins/axios'
 
 export default {
   props: ['name'],
@@ -57,6 +58,7 @@ export default {
         name: this.userId,
         userPicture: this.userPicture
       }
+      axios.post('/api/chats/', message)
       this.messages.push(message)
       this.message = ''
       socket.emit('send-message', message)

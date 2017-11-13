@@ -39,7 +39,7 @@ import axios from '~/plugins/axios'
 
 export default {
   fetch ({ params, redirect }) {
-    redirect(301, '/welcome')
+    redirect(301, '/chat')
   },
   asyncData ({ params, error }) {
     console.log(params)
