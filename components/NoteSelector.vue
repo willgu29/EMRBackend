@@ -4,7 +4,8 @@
       <h3>Note Templates</h3>
       <ul class='list no-padding'>
           <li v-if="step === 0" v-on:click="expand(index)" v-for="(noteTemplate, index) in noteTemplates" :key="index" class='speciality'>{{noteTemplate}}</li>
-          <li v-if="step === 1" v-on:click="goTo(speciality.link)" v-for="(speciality, index) in specialities[this.index]" :key="index" class='speciality'>{{speciality.name}}</li>
+          <p class='back-header' v-if="step === 1"><img class='back-arrow' src="~/assets/img/arrow-left2.svg" /> {{this.noteType}}</p>
+          <li v-if="step === 1" v-on:click="goTo(specialty.link)" v-for="(specialty, index) in specialties[this.index]" :key="index" class='speciality'>{{specialty.name}}</li>
       </ul>
     </ul>
   </div>
@@ -26,6 +27,19 @@
   cursor: pointer;
   color: white;
 }
+.back-header {
+
+}
+.back-header:hover {
+  color: white;
+  cursor: pointer;
+}
+.back-arrow {
+  width: 20px;
+}
+.back-arrow:hover {
+  cursor: pointer;
+}
 </style>
 
 <script>
@@ -36,8 +50,10 @@ export default {
     return {
       step: 0,
       index: -1,
-      noteTemplates: ['H&P', 'Inpatient Progress Note', 'Outpatient Progress Note', 'Discharge Note', 'After Visit Summary', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note', 'Other'],
-      specialities: [
+      noteType: '',
+      noteTemplates: ['H&P', 'Inpatient Progress Note', 'Discharge Note', 'After Visit Summary', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note', 'Outpatient Progress Note'],
+      specialties: [
+        [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
         [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
         [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
         [{name: 'Psychiatry', link: ''}, {name: 'Internal Medicine', link: ''}, {name: 'Family Medicine', link: ''}],
@@ -51,18 +67,8 @@ export default {
   methods: {
     expand: function (index) {
       this.index = index
+      this.noteType = this.noteTemplates[index]
       this.step = 1
-    },
-    expand2: function (index) {
-      if (this.index === 0) {
-        index = index + 0
-      } else if (this.index === 1) {
-        index = index + 3
-      } else if (this.index === 2) {
-        index = index + 5
-      }
-      this.index = index
-      this.step = 2
     },
     goTo: function (link) {
       window.open(link, '_blank')

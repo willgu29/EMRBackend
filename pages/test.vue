@@ -1,7 +1,5 @@
 <template>
   <section class="main-container">
-    <field-tip :text='"hello"' :toolText='"will@emrworx.com"' />
-
     <div class='grid-container'>
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>

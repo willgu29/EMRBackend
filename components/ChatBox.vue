@@ -31,6 +31,7 @@ export default {
   beforeMount () {
     socket.on('new-message', (message) => {
       this.messages.push(message)
+      this.scrollToBottom()
     })
   },
   mounted () {
@@ -46,13 +47,14 @@ export default {
       this.messages.push(message)
       this.message = ''
       socket.emit('send-message', message)
+      this.scrollToBottom()
     },
     onSubmit: function () {
       this.sendMessage()
     },
     scrollToBottom () {
       this.$nextTick(() => {
-        this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight
+        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
       })
     },
     makeId: function () {
@@ -92,7 +94,7 @@ export default {
   min-width: 300px;
   /*max-width: 500px;*/
   overflow: auto;
-  max-height: 500px;
+  max-height: 450px;
 }
 .chat-input {
   padding-left: 20px;
