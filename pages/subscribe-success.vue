@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .subscribe-success-container {
-  margin: 60px 60px 60px 60px;
+  margin: 60px 60px 60px 120px;
 }
 .logo-welcome {
   vertical-align: middle;

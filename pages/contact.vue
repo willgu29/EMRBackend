@@ -1,35 +1,36 @@
 <template>
-  <section class="container">
-    <h1 class="title">
-      Contact
-    </h1>
-    <p><b><a href="mailto:will@emrworx.com">will@emrworx.com</a></b></p>
-
+  <section class="subscribe-success-container">
+    <div>
+      <h1>Contact</h1>
+      <p><a class='link' href="mailto:will@emrworx.com">will@emrworx.com</a></p>
+    </div>
   </section>
 </template>
 
 <script>
+
 export default {
-  layout: 'info',
   head () {
     return {
-      title: 'Contact EMR Worx'
+      title: 'EMR Worx'
+    }
+  },
+  methods: {
+    goHome: function () {
+      window.location.href = '/'
     }
   }
 }
 </script>
 
 <style scoped>
-.title {
-  margin: 15px 0;
+#blurb {
+  max-width: 700px;
 }
-b {
-  font-weight: 600;
+.subscribe-success-container {
+  margin: 60px 60px 60px 120px;
 }
-a {
-  text-decoration: underline;
-  margin-right: 0px;
-  margin-left: 0px;
+.logo-welcome {
+  vertical-align: middle;
 }
-
 </style>
