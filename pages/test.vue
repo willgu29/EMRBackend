@@ -37,7 +37,7 @@
           <ul>
             <li>Checklists for streamlining your HPI</li>
             <li>Coding and billing tips for proper reimbursement</li>
-            <li>Examples for filling sections of the note</li>
+            <li>Personalized content based on your patient</li>
           </ul>
         </div>
       </div>
