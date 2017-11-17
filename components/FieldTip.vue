@@ -57,11 +57,11 @@
 <script>
 export default {
   name: 'fieldTip',
-  props: ['img', 'toolText'],
+  props: ['img', 'text'],
   data () {
     return {
       imgPath: this.img || 'https://www.emrworx.com/public/assets/blank-profile.png',
-      hoverText: this.toolText || 'Anonymous'
+      hoverText: this.text || 'Anonymous'
     }
   }
 }
