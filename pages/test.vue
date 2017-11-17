@@ -3,29 +3,31 @@
     <div class='grid-container'>
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
-        <form class="form">
+        <form class="form" v-on:click.self="displayFocus">
           <div class='input-group'>
             <label>Type:</label>
             <input v-on:focus="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
-            <ul>
+            <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 0" v-on:click="highlightType" v-for="text in display">{{text}}</li>
             </ul>
           </div>
           <div class='input-group'>
             <label>Specialty:</label>
             <input ref="specialty" v-on:focus="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
-            <ul>
+            <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 1" v-on:click="highlightSpecialty" v-for="text in display">{{text}}</li>
             </ul>
           </div>
           <div class='input-group'>
-            <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="This is probably a reasonable explanation length."/>
+            <div>
+              <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="Please select a specialty before a diagnosis." />
+            </div>
             <input ref="diagnosis"  v-on:focus="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
-            <ul>
+            <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 2" v-on:click="hightlightDiagnosis" v-for="text in display">{{text}}</li>
             </ul>
-            <input type="submit" class='submit-button' value="FIND" />
           </div>
+          <input type="submit" class='submit-button' value="FIND" />
         </form>
       </div>
       <div class='grid-small'>
@@ -173,6 +175,15 @@ export default {
 .input-group {
   margin-top: 10px;
   margin-bottom: 40px;
+  position: relative;
+  display: block;
+}
+.dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 label {
   font-size: 24px;
@@ -206,6 +217,7 @@ label {
 .clickable-list-item {
   list-style: none;
   text-decoration: underline;
+  padding: 0px 20px 0px 0px;
 }
 .clickable-list-item:hover {
   color: #0043ff;
@@ -240,12 +252,11 @@ li {
 }
 
 .submit-button {
-  width: 25%;
+  width: 100%;
   height: 30px;
   border-style: solid;
   border-radius: 5px;
   border-width: 1px;
-  margin-left: 5px;
   background-color: rgb(0, 129, 213);
   color: white;
   font-size: 14px;

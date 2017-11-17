@@ -7,10 +7,11 @@
 
 <style>
 .img-circle {
-  border-radius: 50%;
-  width: 25px;
+  width: 20px;
   vertical-align: middle;
+  margin-left: 5px;
   margin-right: 10px;
+  margin-bottom: 4px;
 }
 /* Hover tooltips */
 .field-tip {
@@ -19,10 +20,10 @@
 }
     .field-tip .tip-content {
         position:absolute;
-        top:-10px; /* - top padding */
+        top:-30px; /* - top padding */
         right:9999px;
         width:200px;
-        margin-right:-220px; /* width + left/right padding */
+        margin-right:-180px; /* width + left/right padding */
         padding:10px;
         color:#fff;
         background:#333;
