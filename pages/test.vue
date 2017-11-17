@@ -4,27 +4,40 @@
       <div class='grid-2'>
         <h1 class='chat-title'>Find a note template</h1>
         <form class="form">
-          <label>Type:</label>
-          <input v-on:focus="displayFocus" type="text" class='form-search-field' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType"/>
-          <ul>
-            <li v-show="focused === 0" v-for="text in display">{{text}}</li>
-          </ul>
-          <label>Specialty:</label>
-          <input v-on:focus="displayFocus" type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
-          <ul>
-            <li v-show="focused === 1" v-for="text in display">{{text}}</li>
-          </ul>
-          <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="This is probably a reasonable explanation length."/>
-          <input v-on:focus="displayFocus" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
-          <ul>
-            <li v-show="focused === 2" v-for="text in display">{{text}}</li>
-          </ul>
-          <input type="submit" class='submit-button' value="FIND" />
+          <div class='input-group'>
+            <label>Type:</label>
+            <input v-on:focus="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
+            <ul>
+              <li class='clickable-list-item' v-show="focused === 0" v-on:click="highlightType" v-for="text in display">{{text}}</li>
+            </ul>
+          </div>
+          <div class='input-group'>
+            <label>Specialty:</label>
+            <input ref="specialty" v-on:focus="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
+            <ul>
+              <li class='clickable-list-item' v-show="focused === 1" v-on:click="highlightSpecialty" v-for="text in display">{{text}}</li>
+            </ul>
+          </div>
+          <div class='input-group'>
+            <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="This is probably a reasonable explanation length."/>
+            <input ref="diagnosis"  v-on:focus="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
+            <ul>
+              <li class='clickable-list-item' v-show="focused === 2" v-on:click="hightlightDiagnosis" v-for="text in display">{{text}}</li>
+            </ul>
+            <input type="submit" class='submit-button' value="FIND" />
+          </div>
         </form>
       </div>
       <div class='grid-small'>
-        <h1 class='quick-start-title'>How to Use EMR Worx:</h1>
-        <p></p>
+        <div class='text-container'>
+          <p>EMR Worx finds relevant note templates and helps you finish faster without sacrificing accuracy.</p>
+          <h2>We break note templates into:</h2>
+          <ul>
+            <li>Checklists for streamlining your HPI</li>
+            <li>Coding and billing tips for proper reimbursement</li>
+            <li>Examples for filling sections of the note</li>
+          </ul>
+        </div>
       </div>
     </div>
     <!-- Mobile Version Not Supported Alert -->
@@ -68,11 +81,11 @@ export default {
   data () {
     return {
       noteTypes: ['History and Physical', 'Inpatient Progress Note', 'Discharge Note', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note'],
-      specialties: ['Psychiatry', 'Internal Medicine', 'Family Practice'],
+      specialties: ['Psychiatry', 'Internal Medicine', 'Family Medicine'],
       diagnoses: [
         ['For Psychiatry'],
-        ['For Internal Medicine'],
-        ['For Family Practice']
+        ['Congestive Heart Failure (CHF)'],
+        ['For Family Medicine']
       ],
       display: [],
       selectedType: '',
@@ -84,6 +97,18 @@ export default {
   methods: {
     onSubmit: function (event) {
 
+    },
+    highlightType: function (event) {
+      this.selectedType = event.target.textContent
+      this.$refs.specialty.focus()
+    },
+    highlightSpecialty: function (event) {
+      this.selectedSpecialty = event.target.textContent
+      this.$refs.diagnosis.focus()
+    },
+    hightlightDiagnosis: function (event) {
+      this.selectedDiagnosis = event.target.textContent
+      this.focused = -1
     },
     filterNote: function (event) {
       var filter = event.target.value.toUpperCase()
@@ -99,7 +124,8 @@ export default {
     },
     filterDiagnosis: function (event) {
       var filter = event.target.value.toUpperCase()
-      var searchArray = this.specialties
+      var index = this.specialties.indexOf(this.selectedSpecialty)
+      var searchArray = this.diagnoses[index]
       var newDisplay = this.filterSearch(filter, searchArray)
       this.display = newDisplay
     },
@@ -121,7 +147,7 @@ export default {
       } else if (inputFocused === 'specialty') {
         this.display = this.specialties
         this.focused = 1
-      } else {
+      } else if (inputFocused === 'diagnosis') {
         if (this.selectedSpecialty === '') {
           // display error/alert
         } else {
@@ -129,6 +155,8 @@ export default {
           this.display = this.diagnoses[index]
           this.focused = 2
         }
+      } else {
+        this.focused = -1
       }
     }
   }
@@ -136,12 +164,52 @@ export default {
 </script>
 
 <style scoped>
+.text-container {
+  margin: 20px;
+}
+.form {
+  margin: 20px;
+}
+.input-group {
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+label {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
 .grid-container {
   margin: 60px;
   box-shadow: 0px 0px 10px #888888;
 }
 .form-search-field {
+  margin-top: 10px;
   display: block;
+  height: 30px;
+  width: 85%;
+  min-width: 350px;
+  max-width: 400px;
+  font-size: 16px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #b2b2b2;
+  background: RGB(239, 239, 239) url("~/assets/img/menu3.png") no-repeat right;
+}
+.form-search-field:focus {
+  background-color: white;
+}
+.completed {
+  background-color: RGB(0, 129, 213);
+}
+
+.clickable-list-item {
+  list-style: none;
+  text-decoration: underline;
+}
+.clickable-list-item:hover {
+  color: #0043ff;
+  cursor: pointer;
 }
 
 li {
@@ -150,9 +218,6 @@ li {
 .list {
   list-style: none;
   text-align: left;
-}
-.speciality {
-
 }
 .quick-start-title {
   text-align: left;
@@ -174,15 +239,6 @@ li {
   color: #b2b2b2;
 }
 
-.chat-input {
-  padding-left: 20px;
-  position: absolute;
-  height: 30px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  box-shadow: 0px 0px 1px #888888;
-}
 .submit-button {
   width: 25%;
   height: 30px;
@@ -198,31 +254,24 @@ li {
   cursor: pointer;
   background-color: #0043ff;
 }
-.form-field {
-  height: 30px;
-  width: 70%;
-  font-size: 16px;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 0px;
-}
+
 .grid-container {
   display: flex;
   justify-content: space-between;
 }
 .grid-2 {
   position: relative;
-  width: 50%;
+  width: 60%;
 }
 .grid-small {
-  width: 50%;
-  background-color: RGB(0, 129, 213);
+  width: 40%;
+  background-color: RGB(225, 240, 255);
 }
 
 .width-too-small-alert {
   display: none;
 }
-@media (max-width: 710px) {
+@media (max-width: 750px) {
   .grid-container {
     display: none;
   }
