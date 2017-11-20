@@ -28,6 +28,9 @@ export default {
     NoteSelector,
     ChatBox
   },
+  fetch ({ params, redirect }) {
+    redirect(301, '/find')
+  },
   asyncData ({ params, error }) {
     console.log(params)
     return axios.get('/api/users/')
