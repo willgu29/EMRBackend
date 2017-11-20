@@ -29,7 +29,7 @@ export default {
     ChatBox
   },
   fetch ({ params, redirect }) {
-    redirect(301, '/find')
+    redirect(302, '/find')
   },
   asyncData ({ params, error }) {
     console.log(params)

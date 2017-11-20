@@ -1,44 +1,65 @@
 <template>
-  <section class="container">
-    <img width="250" src="~/assets/img/logo.png" />
-    <h2>
-      Finish your notes faster
-    </h2>
-    <form action="/search" method="get">
-      <input v-model='searchText' placeholder="Search for note templates" class="search-bar" type="search" name="text" autocomplete="off" />
-    </form>
-
-    <div class='buttons'>
-      <input v-on:click="search" type='submit' class='button' value='Search' />
-      <input v-on:click="demo" type='submit' class='button' value='Demo' />
-    </div>
-
-    <br />
-    <br />
-    <br />
-    <hr>
-    <section>
-      <h1 class='title'>Note Templates by Department:</h1>
-      <div class="list-wrapper" v-if="users.length > 0">
-        <ul class="items">
-          <li v-for="(user, index) in users" :key="index" class="item">
-            <nuxt-link class='button' :to="{ name: 'users-id', params: { id: user._id }}">
-              {{ user.name }}
-            </nuxt-link>
-          </li>
-        </ul>
+  <section class="main-container" v-on:click="displayFocus">
+    <div class='grid-container'>
+      <div class='grid-2'>
+        <h1 class='chat-title'>Find a note template</h1>
+        <form class="form"  v-on:submit.prevent="onSubmit">
+          <div class='input-group'>
+            <label>Type:</label>
+            <input v-on:focus.self="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType, error: retryType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
+            <ul class='dropdown'>
+              <li class='clickable-list-item' v-show="focused === 0" v-on:click.stop="highlightType" v-for="text in display">{{text}}</li>
+            </ul>
+          </div>
+          <div class='input-group'>
+            <label>Specialty:</label>
+            <input ref="specialty" v-on:focus.self="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty, error: retrySpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
+            <ul class='dropdown'>
+              <li class='clickable-list-item' v-show="focused === 1" v-on:click.stop="highlightSpecialty" v-for="text in display">{{text}}</li>
+            </ul>
+          </div>
+          <div class='input-group'>
+            <div>
+              <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="Please select a specialty before a diagnosis." />
+            </div>
+            <input ref="diagnosis"  v-on:focus.self="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis, error: retryDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
+            <ul class='dropdown'>
+              <li class='clickable-list-item' v-show="focused === 2" v-on:click.stop="hightlightDiagnosis" v-for="text in display">{{text}}</li>
+            </ul>
+          </div>
+          <input type="submit" class='submit-button' value="FIND" />
+        </form>
       </div>
-    </section>
+      <div class='grid-small'>
+        <div class='text-container'>
+          <p>EMR Worx finds relevant note templates and helps you finish them faster without sacrificing accuracy.</p>
+          <h2>We break note templates into:</h2>
+          <ul>
+            <li>Checklists for streamlining your HPI</li>
+            <li>Coding and billing tips for proper reimbursement</li>
+            <li>Personalized content based on your patient</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Version Not Supported Alert -->
+    <div class='width-too-small-alert'>
+      <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
+    </div>
 
   </section>
 </template>
 
 <script>
 import axios from '~/plugins/axios'
-
+import FieldTip from '~/components/FieldTip'
+import data from '~/assets/data.js'
 export default {
+  components: {
+    FieldTip
+  },
   fetch ({ params, redirect }) {
-    redirect(301, '/find')
+    redirect(302, '/find')
   },
   asyncData ({ params, error }) {
     console.log(params)
@@ -52,47 +73,265 @@ export default {
   },
   head () {
     return {
-      title: 'EMR Worx'
+      title: 'EMR Worx',
+      meta: [
+        {
+          hid: `keywords`,
+          name: 'keywords',
+          keywords: 'emr, worx, emrworx, note templates'
+        }
+      ]
     }
   },
   data () {
     return {
-      searchText: ''
+      noteTypes: ['History and Physical', '', '', '', 'Consultation Note', 'Initial Evaluation Note', ''],
+      specialties: ['Psychiatry', 'Internal Medicine', 'Family Medicine'],
+      diagnoses: [
+        ['Attention Deficit Hyperactivity Disorder (ADHD)', 'Anxiety'],
+        ['Acute Kidney Injury (AKI)', 'Anemia', '', '', '', '', 'Heart Failure (HF)', 'Hyperglycemia'],
+        ['Acute Kidney Injury (AKI)', 'Anemia']
+      ],
+      display: [],
+      selectedType: '',
+      selectedSpecialty: '',
+      selectedDiagnosis: '',
+      focused: 0,
+      retryType: false,
+      retrySpecialty: false,
+      retryDiagnosis: false
     }
   },
   methods: {
-    search: function () {
-      window.location.href = '/search?text=' + this.searchText
+    onSubmit: function (event) {
+      // pending drew... is note type + diagnosis one to one?
+      var indexType = this.noteTypes.indexOf(this.selectedType)
+      if (indexType === -1) {
+        this.retryType = true
+        return
+      }
+      var indexSpecialty = this.specialties.indexOf(this.selectedSpecialty)
+      if (indexSpecialty === -1) {
+        this.retrySpecialty = true
+        return
+      }
+      var indexDiagnosis = this.diagnoses[indexSpecialty].indexOf(this.selectedDiagnosis)
+      if (this.selectedDiagnosis !== '' && indexDiagnosis === -1) {
+        this.retryDiagnosis = true
+        return
+      }
+      var code = (indexType + 1).toString() + (indexSpecialty + 1).toString() + (indexDiagnosis + 1).toString()
+      console.log(code)
+      var self = this
+      var result = data.filter(function (x) {
+        return self.values(x).indexOf(code) > -1
+      })
+      console.log(result[0])
+      if (result[0]) {
+        window.open(result[0].link, '_blank')
+      } else {
+        alert('We couldn\'t find a note template that matched what you\'re looking for.')
+      }
     },
-    demo: function () {
-      window.location.href = '/demo'
+    values: function (x) {
+      return Object.keys(x).map(function (k) { return x[k] })
+    },
+    highlightType: function (event) {
+      this.selectedType = event.target.textContent
+      this.retryType = false
+      this.$refs.specialty.focus()
+    },
+    highlightSpecialty: function (event) {
+      this.selectedSpecialty = event.target.textContent
+      this.retrySpecialty = false
+      this.$refs.diagnosis.focus()
+    },
+    hightlightDiagnosis: function (event) {
+      this.selectedDiagnosis = event.target.textContent
+      this.retryDiagnosis = false
+      this.focused = -1
+    },
+    filterNote: function (event) {
+      var filter = event.target.value.toUpperCase()
+      var searchArray = this.noteTypes
+      var newDisplay = this.filterSearch(filter, searchArray)
+      this.display = newDisplay
+    },
+    filterSpecialty: function (event) {
+      var filter = event.target.value.toUpperCase()
+      var searchArray = this.specialties
+      var newDisplay = this.filterSearch(filter, searchArray)
+      this.display = newDisplay
+    },
+    filterDiagnosis: function (event) {
+      var filter = event.target.value.toUpperCase()
+      var index = this.specialties.indexOf(this.selectedSpecialty)
+      var searchArray = this.diagnoses[index]
+      var newDisplay = this.filterSearch(filter, searchArray)
+      this.display = newDisplay
+    },
+    filterSearch: function (filter, searchArray) {
+      var newDisplay = []
+      for (var i = 0; i < searchArray.length; i++) {
+        var item = searchArray[i].toUpperCase()
+        if (item.indexOf(filter) > -1) {
+          newDisplay.push(searchArray[i])
+        }
+      }
+      return newDisplay
+    },
+    displayFocus: function (event) {
+      var inputFocused = event.target.name
+      if (inputFocused === 'type') {
+        this.display = this.noteTypes
+        this.focused = 0
+      } else if (inputFocused === 'specialty') {
+        this.display = this.specialties
+        this.focused = 1
+      } else if (inputFocused === 'diagnosis') {
+        if (this.selectedSpecialty === '') {
+          // display error/alert
+        } else {
+          var index = this.specialties.indexOf(this.selectedSpecialty)
+          this.display = this.diagnoses[index]
+          this.focused = 2
+        }
+      } else {
+        this.focused = -1
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-ul {
+.text-container {
+  margin: 20px;
+}
+.form {
+  margin: 20px;
+}
+.input-group {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  position: relative;
+  display: block;
+}
+.dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+label {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.grid-container {
+  margin: 60px;
+  box-shadow: 0px 0px 10px #888888;
+}
+.form-search-field {
+  margin-top: 10px;
+  display: block;
+  height: 30px;
+  width: 85%;
+  min-width: 350px;
+  max-width: 400px;
+  font-size: 16px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #b2b2b2;
+  background: RGB(239, 239, 239) url("~/assets/img/menu3.png") no-repeat right;
+}
+.form-search-field:focus {
+  background-color: white;
+}
+.completed {
+  background-color: RGB(0, 129, 213);
+}
+.error {
+  background-color: red;
+}
+.clickable-list-item {
   list-style: none;
+  text-decoration: underline;
+  padding: 0px 20px 0px 0px;
 }
-a {
-  background-color: transparent;
+.clickable-list-item:hover {
+  color: #0043ff;
+  cursor: pointer;
 }
-a:visited {
-  background-color: transparent;
+
+li {
+  line-height: 30px;
 }
-.buttons {
-  margin-top: 20px;
+.list {
+  list-style: none;
+  text-align: left;
 }
-.button {
-  margin: 5px 5px 5px 5px
+.quick-start-title {
+  text-align: left;
+  margin-left: 10px;
 }
-.title
-{
-  margin: 15px 0;
+.quick-display {
+  min-width: 200px;
+  max-width: 300px;
 }
-.search-bar {
-  width: 30%;
-  font-size: 20px;
+.chat-title {
+  text-align: left;
+  margin-left: 20px;
 }
+.text {
+  margin: 20px;
+}
+.explainer {
+  text-align: center;
+  color: #b2b2b2;
+}
+
+.submit-button {
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: rgb(0, 129, 213);
+  color: white;
+  font-size: 14px;
+}
+.submit-button:hover {
+  cursor: pointer;
+  background-color: #0043ff;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: space-between;
+}
+.grid-2 {
+  position: relative;
+  width: 60%;
+}
+.grid-small {
+  width: 40%;
+  background-color: RGB(225, 240, 255);
+}
+
+.width-too-small-alert {
+  display: none;
+}
+@media (max-width: 750px) {
+  .grid-container {
+    display: none;
+  }
+  .width-too-small-alert {
+    display: inline;
+    text-align: center;
+  }
+}
+
+
 </style>
