@@ -6,14 +6,14 @@
         <form class="form"  v-on:submit.prevent="onSubmit">
           <div class='input-group'>
             <label>Type:</label>
-            <input v-on:focus.self="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
+            <input v-on:focus.self="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType, error: retryType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
             <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 0" v-on:click.stop="highlightType" v-for="text in display">{{text}}</li>
             </ul>
           </div>
           <div class='input-group'>
             <label>Specialty:</label>
-            <input ref="specialty" v-on:focus.self="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
+            <input ref="specialty" v-on:focus.self="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty, error: retrySpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
             <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 1" v-on:click.stop="highlightSpecialty" v-for="text in display">{{text}}</li>
             </ul>
@@ -22,7 +22,7 @@
             <div>
               <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="Please select a specialty before a diagnosis." />
             </div>
-            <input ref="diagnosis"  v-on:focus.self="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
+            <input ref="diagnosis"  v-on:focus.self="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis, error: retryDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
             <ul class='dropdown'>
               <li class='clickable-list-item' v-show="focused === 2" v-on:click.stop="hightlightDiagnosis" v-for="text in display">{{text}}</li>
             </ul>
@@ -32,7 +32,7 @@
       </div>
       <div class='grid-small'>
         <div class='text-container'>
-          <p>EMR Worx finds relevant note templates and helps you finish faster without sacrificing accuracy.</p>
+          <p>EMR Worx finds relevant note templates and helps you finish them faster without sacrificing accuracy.</p>
           <h2>We break note templates into:</h2>
           <ul>
             <li>Checklists for streamlining your HPI</li>
@@ -53,7 +53,7 @@
 <script>
 import axios from '~/plugins/axios'
 import FieldTip from '~/components/FieldTip'
-
+import data from '~/assets/data.js'
 export default {
   components: {
     FieldTip
@@ -82,48 +82,70 @@ export default {
   },
   data () {
     return {
-      noteTypes: ['History and Physical', 'Inpatient Progress Note', 'Discharge Note', 'Procedure Note', 'Consultation Note', 'Initial Encounter Note'],
+      noteTypes: ['History and Physical', '', '', '', 'Consultation Note', 'Initial Evaluation Note', ''],
       specialties: ['Psychiatry', 'Internal Medicine', 'Family Medicine'],
       diagnoses: [
-        ['Attention Deficit Hyperactivity Disorder', 'Anxiety', 'Bipolar Disorder', 'Depression', 'Eating Disorder', 'Obsessive Compulsive Disorder', 'Panic Disorder', 'Psychotic Disorder'],
-        ['Acute Kidney Injury', 'Anemia', 'Asthma', 'Atrial Fibrillation', 'Cellulitis', 'Chronic Obstructive Pulmonary Disease', 'Heart Failure', 'Hyperglycemia', 'Hyperkalemia', 'Hyponatremia'],
-        ['For Family Medicine']
+        ['Attention Deficit Hyperactivity Disorder (ADHD)', 'Anxiety'],
+        ['Acute Kidney Injury (AKI)', 'Anemia', '', '', '', '', 'Heart Failure (HF)', 'Hyperglycemia'],
+        ['Acute Kidney Injury (AKI)', 'Anemia']
       ],
       display: [],
       selectedType: '',
       selectedSpecialty: '',
       selectedDiagnosis: '',
-      focused: 0
+      focused: 0,
+      retryType: false,
+      retrySpecialty: false,
+      retryDiagnosis: false
     }
   },
   methods: {
     onSubmit: function (event) {
       // pending drew... is note type + diagnosis one to one?
-      var data = [{code: '110', link: ''}, {code: '111', link: ''}, {code: '112', link: ''}, {code: '113', link: ''}, {code: '114', link: ''}, {code: '115', link: ''}, {code: '116', link: ''}]
       var indexType = this.noteTypes.indexOf(this.selectedType)
+      if (indexType === -1) {
+        this.retryType = true
+        return
+      }
       var indexSpecialty = this.specialties.indexOf(this.selectedSpecialty)
+      if (indexSpecialty === -1) {
+        this.retrySpecialty = true
+        return
+      }
       var indexDiagnosis = this.diagnoses[indexSpecialty].indexOf(this.selectedDiagnosis)
+      if (this.selectedDiagnosis !== '' && indexDiagnosis === -1) {
+        this.retryDiagnosis = true
+        return
+      }
       var code = (indexType + 1).toString() + (indexSpecialty + 1).toString() + (indexDiagnosis + 1).toString()
       console.log(code)
       var self = this
       var result = data.filter(function (x) {
         return self.values(x).indexOf(code) > -1
       })
-      console.log(result)
+      console.log(result[0])
+      if (result[0]) {
+        window.open(result[0].link, '_blank')
+      } else {
+        alert('We couldn\'t find a note template that matched what you\'re looking for.')
+      }
     },
     values: function (x) {
       return Object.keys(x).map(function (k) { return x[k] })
     },
     highlightType: function (event) {
       this.selectedType = event.target.textContent
+      this.retryType = false
       this.$refs.specialty.focus()
     },
     highlightSpecialty: function (event) {
       this.selectedSpecialty = event.target.textContent
+      this.retrySpecialty = false
       this.$refs.diagnosis.focus()
     },
     hightlightDiagnosis: function (event) {
       this.selectedDiagnosis = event.target.textContent
+      this.retryDiagnosis = false
       this.focused = -1
     },
     filterNote: function (event) {
@@ -227,7 +249,9 @@ label {
 .completed {
   background-color: RGB(0, 129, 213);
 }
-
+.error {
+  background-color: red;
+}
 .clickable-list-item {
   list-style: none;
   text-decoration: underline;
