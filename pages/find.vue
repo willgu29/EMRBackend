@@ -32,12 +32,11 @@
       </div>
       <div class='grid-small'>
         <div class='text-container'>
-          <p>EMR Worx finds relevant note templates and helps you finish them faster without sacrificing accuracy.</p>
+          <p>EMR Worx is a guide to initial work-up and management of common clinical scenarios, in addition to documentation improvement for coding and billing.</p>
           <h2>We break note templates into:</h2>
           <ul>
-            <li>Checklists for streamlining your HPI</li>
-            <li>Coding and billing tips for proper reimbursement</li>
-            <li>Personalized content based on your patient</li>
+            <li>Checklists for diagnosis and treatment</li>
+            <li> <text-tip text="Tips for coding and billing" toolTip="To request personalized clinical documentation coaching, email will@emrworx.com" /></li>
           </ul>
         </div>
       </div>
@@ -53,10 +52,12 @@
 <script>
 import axios from '~/plugins/axios'
 import FieldTip from '~/components/FieldTip'
+import TextTip from '~/components/TextTip'
 import data from '~/assets/data.js'
 export default {
   components: {
-    FieldTip
+    FieldTip,
+    TextTip
   },
   asyncData ({ params, error }) {
     console.log(params)

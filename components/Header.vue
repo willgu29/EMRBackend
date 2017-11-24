@@ -3,6 +3,7 @@
     <img class="header-logo" width="150" src="~/assets/img/logo-roboto.png" v-on:click="home" />
     <nuxt-link class='header-link' to="/about" exact>ABOUT</nuxt-link>
     <nuxt-link class='header-link' to="/contact" exact>CONTACT</nuxt-link>
+    <nuxt-link class='header-link' to="/contributors" exact>CONTRIBUTORS</nuxt-link>
     <nuxt-link class='header-link' to="/data-security" exact>DATA SECURITY</nuxt-link>
   </header>
 </template>
