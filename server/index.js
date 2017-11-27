@@ -47,10 +47,10 @@ if (config.dev) {
 
 
 
-
-var server = require('http').Server(app);
-var io = require('./helpers/io').initialize(server);
+//
+// var server = require('http').Server(app);
+// var io = require('./helpers/io').initialize(server);
 
 // Listen the server
-server.listen(port, host)
+app.listen(port, host)
 console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console

@@ -1,12 +1,12 @@
 <template>
-  <section class="search-container">
+  <section class="search-container" v-on:click="unFocus">
     <div>
-      <form class="form"  v-on:submit.prevent="onSubmit">
+      <form class="form" v-on:submit.prevent="onSubmit">
         <div class='input-group'>
           <label>Diagnosis:</label>
-          <input v-on:focus.self="displayFocus" placeholder='Search "Hyperglycemia, unspecified (R73.9)" or "Psychosis"'  type="text" v-bind:class="{ completed: selectedType, error: retryType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
+          <input v-on:click.stop v-on:focus.self="dropdown" placeholder='Search "Hyperglycemia, unspecified (R73.9)" or "Psychosis"'  type="text" v-bind:class="{ error: retryDiagnosis }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="searchText">
           <ul class='dropdown'>
-            <li class='clickable-list-item' v-show="focused === 0" v-on:click.stop="highlightType" v-for="text in display">{{text}}</li>
+            <li class='clickable-list-item' v-on:click.stop="selectDiagnosis" v-show="focused === 0" v-for="diagnosis in displayDiagnoses">{{diagnosis}}</li>
           </ul>
         </div>
         <div class='input-group inline'>
@@ -20,32 +20,125 @@
           <select name="specialty" v-model="specialty">
             <option value="Psychiatry">Psychiatry</option>
             <option value="Internal Medicine">Internal Medicine</option>
-            <option value="Family Practice">Family Practice</option>
+            <option value="Family Medicine">Family Medicine</option>
           </select>
         </div>
+        <input type='submit' value='find' />
       </form>
-
     </div>
+    <div v-show="displayTemplate === 1" id='template'>
+      <h1>Note Title</h1>
+      <ul>
+        <li v-on:click.self="expand(0)">
+          <div>
+            <h2 class='inline'>HPI</h2>
+            <copy-to-clipboard />
+          </div>
+          <pre>
+            History of diabetes
+     - T1DM vs T2DM vs gestational diabetes
+     - Newly vs previously diagnosed
+     - Last HbA1c
+     - Recent fasting glucose measurements
+  Medications
+     - Oral hypoglycemics
+          - Metformin
+            Dose, schedule, compliance
+          - Sulfonylureas, GLP1 agonists, DPP4 inhibitors, SGLT1 inhbitors, TZDs, alpha glucosidase inhibitors
+            Dose, schedule, compliance
+     - Insulin
+       Dose, schedule, compliance
+  Pregnancy (if female)
+  Lifestyle
+     - Diet
+     - Exercise
+     - Acute stressors
+  Complications
+     - Acute complications
+          - DKA, HHS
+     - Chronic complications
+          - Macrovascular complications
+               - CAD, PVD
+     - Microvascular complications
+          - Diabetic retinopathy, nephropathy, neuropathy
+          </pre>
+        </li>
+        <li>Chief Complaint</li>
+        <li>...</li>
+      </ul>
+    </div>
+    {{diagnoses}}
   </section>
 </template>
 
 <script>
+import CopyToClipboard from '~/components/CopyToClipboard'
+import axios from '~/plugins/axios'
 
 export default {
+  components: {
+    CopyToClipboard
+  },
   head () {
     return {
       title: 'EMR Worx'
     }
   },
+  async asyncData (context) {
+    var url = ('/api/diagnoses')
+    let { data } = await axios.get(url)
+    return { diagnoses: data }
+  },
   data () {
     return {
+      searchText: '',
+      retryDiagnosis: false,
       noteType: 'History and Physical',
-      specialty: 'Psychiatry'
+      specialty: 'Psychiatry',
+      diagnoses: [],
+      displayDiagnoses: [],
+      displayTemplate: -1,
+      focused: 0
     }
   },
   methods: {
     onSubmit: function (event) {
+      this.displayTemplate = 1
+    },
+    expand: function (index) {
 
+    },
+    parseJSON: function (escapedString) {
+      return JSON.parse(escapedString)
+    },
+    unFocus: function () {
+      this.focused = -1
+    },
+    dropdown: function () {
+      this.focused = 0
+      this.retryDiagnosis = false
+      this.filterNote()
+    },
+    selectDiagnosis: function (event) {
+      this.searchText = event.target.textContent
+      this.retryDiagnosis = false
+      this.unFocus()
+    },
+    filterNote: function (event) {
+      var filter = this.searchText
+      var searchArray = this.diagnoses
+      var newDisplay = this.filterSearch(filter.toUpperCase(), searchArray)
+      this.displayDiagnoses = newDisplay
+    },
+    filterSearch: function (filter, searchArray) {
+      var newDisplay = []
+      for (var i = 0; i < searchArray.length; i++) {
+        var item = searchArray[i].displayText.toUpperCase()
+        if (item.indexOf(filter) > -1) {
+          newDisplay.push(item)
+        }
+      }
+      return newDisplay
     }
   }
 }
@@ -55,13 +148,44 @@ export default {
 .inline {
   display: inline;
 }
+.input-group {
+  display: relative;
+  display: inline-block;
+}
+.dropdown {
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
 .clickable-list-item {
+  display: block;
   list-style: none;
   text-decoration: underline;
-  padding: 0px 20px 0px 0px;
+  padding: 20px 20px 20px 20px;
 }
 .clickable-list-item:hover {
   color: #0043ff;
   cursor: pointer;
+}
+.completed {
+  background-color: RGB(0, 129, 213);
+}
+.error {
+  background-color: red;
+}
+
+@media (max-width: 750px) {
+  .grid-container {
+    display: none;
+  }
+  .width-too-small-alert {
+    display: inline;
+    text-align: center;
+  }
 }
 </style>

@@ -27,10 +27,9 @@ module.exports = {
             { src: '~/plugins/hotjar.js', ssr: false},
             { src: '~/plugins/tiny-cookie.js', ssr: false },
             { src: '~/plugins/showdown.js', ssr: false },
-            { src: '~/plugins/socket.io.js', ssr: false},
             { src: '~/plugins/filters.js', ssr: false}],
   build: {
-    vendor: ['axios', 'tiny-cookie', 'babel-polyfill', 'showdown', 'socket.io-client'],
+    vendor: ['axios', 'tiny-cookie', 'babel-polyfill', 'showdown'],
     /*
     ** Run ESLINT on save
     */
