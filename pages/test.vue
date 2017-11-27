@@ -8,6 +8,7 @@
           <ul class='dropdown'>
             <li class='clickable-list-item' v-on:click.stop="selectDiagnosis" v-show="focused === 0" v-for="diagnosis in displayDiagnoses">{{diagnosis}}</li>
           </ul>
+          <input type='submit' value='add diagnosis' />
         </div>
         <div class='input-group inline'>
           <select name="noteType" v-model="noteType">
@@ -23,8 +24,12 @@
             <option value="Family Medicine">Family Medicine</option>
           </select>
         </div>
-        <input type='submit' value='find' />
       </form>
+    </div>
+    <div>
+      <ul>
+        <li v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
+      </ul>
     </div>
     <div v-show="displayTemplate === 1" id='template'>
       <h1>Note Title</h1>
@@ -97,12 +102,18 @@ export default {
       specialty: 'Psychiatry',
       diagnoses: [],
       displayDiagnoses: [],
+      addedDiagnoses: [],
       displayTemplate: -1,
       focused: 0
     }
   },
   methods: {
     onSubmit: function (event) {
+      axios.get('/api/templates/')
+      var diagnoses = this.addedDiagnoses
+      diagnoses.push(this.searchText)
+      this.addedDiagnoses = diagnoses
+      this.searchText = ''
       this.displayTemplate = 1
     },
     expand: function (index) {
@@ -150,7 +161,6 @@ export default {
 }
 .input-group {
   display: relative;
-  display: inline-block;
 }
 .dropdown {
   margin: 0px;
