@@ -27,6 +27,7 @@ module.exports = {
             { src: '~/plugins/hotjar.js', ssr: false},
             { src: '~/plugins/tiny-cookie.js', ssr: false },
             { src: '~/plugins/showdown.js', ssr: false },
+            { src: '~/plugins/specialFunctions.js', ssr: false },
             { src: '~/plugins/filters.js', ssr: false}],
   build: {
     vendor: ['axios', 'tiny-cookie', 'babel-polyfill', 'showdown'],

@@ -26,51 +26,26 @@
         </div>
       </form>
     </div>
-    <div>
-      <ul>
-        <li v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
-      </ul>
-    </div>
-    <div v-show="displayTemplate === 1" id='template'>
-      <h1>Note Title</h1>
-      <ul>
-        <li v-on:click.self="expand(0)">
-          <div>
-            <h2 class='inline'>HPI</h2>
-            <copy-to-clipboard />
-          </div>
-          <pre>
-            History of diabetes
-     - T1DM vs T2DM vs gestational diabetes
-     - Newly vs previously diagnosed
-     - Last HbA1c
-     - Recent fasting glucose measurements
-  Medications
-     - Oral hypoglycemics
-          - Metformin
-            Dose, schedule, compliance
-          - Sulfonylureas, GLP1 agonists, DPP4 inhibitors, SGLT1 inhbitors, TZDs, alpha glucosidase inhibitors
-            Dose, schedule, compliance
-     - Insulin
-       Dose, schedule, compliance
-  Pregnancy (if female)
-  Lifestyle
-     - Diet
-     - Exercise
-     - Acute stressors
-  Complications
-     - Acute complications
-          - DKA, HHS
-     - Chronic complications
-          - Macrovascular complications
-               - CAD, PVD
-     - Microvascular complications
-          - Diabetic retinopathy, nephropathy, neuropathy
-          </pre>
-        </li>
-        <li>Chief Complaint</li>
-        <li>...</li>
-      </ul>
+    <div class='grid-container' v-show="displayTemplate === 1">
+      <div class='outline grid-small'>
+        <h1>Note Title</h1>
+        <ul>
+          <li v-on:click.stop="expand(index)" v-for="(section, index) in sections" :key="index">
+            <div>
+              <p class='inline'>{{section.header}}</p>
+              <copy-to-clipboard />
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class='notePanel grid-large'>
+          <ul>
+            <li v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
+          </ul>
+        <pre>
+          {{sectionText}}
+        </pre>
+      </div>
     </div>
     {{diagnoses}}
   </section>
@@ -104,7 +79,9 @@ export default {
       displayDiagnoses: [],
       addedDiagnoses: [],
       displayTemplate: -1,
-      focused: 0
+      focused: 0,
+      sections: [{'header': 'Chief Complaint', 'text': 'Textext'}, {'header': 'Chief Complaint', 'text': 'Textext'}],
+      sectionText: 'History of diabetes\r\n     - T1DM vs T2DM vs gestational diabetes\r\n     - Newly vs previously diagnosed\r\n     - Last HbA1c\r\n     - Recent fasting glucose measurements\r\n  Medications\r\n     - Oral hypoglycemics\r\n          - Metformin\r\n            Dose, schedule, compliance\r\n          - Sulfonylureas, GLP1 agonists, DPP4 inhibitors, SGLT1 inhbitors, TZDs, \r\n alpha glucosidase inhibitors\r\n            Dose, schedule, compliance\r\n     - Insulin\r\n       Dose, schedule, compliance\r\n  Pregnancy (if female)\r\n  Lifestyle\r\n     - Diet\r\n     - Exercise\r\n     - Acute stressors\r\n  Complications\r\n     - Acute complications\r\n          - DKA, HHS\r\n     - Chronic complications\r\n          - Macrovascular complications\r\n               - CAD, PVD\r\n     - Microvascular complications\r\n          - Diabetic retinopathy, nephropathy, neuropathy'
     }
   },
   methods: {
@@ -117,7 +94,8 @@ export default {
       this.displayTemplate = 1
     },
     expand: function (index) {
-
+      var text = this.sections[index].text
+      this.sectionText = text
     },
     parseJSON: function (escapedString) {
       return JSON.parse(escapedString)
@@ -156,6 +134,25 @@ export default {
 </script>
 
 <style scoped>
+.grid-container {
+  display: flex;
+  justify-content: space-between;
+}
+.grid-large {
+  /*position: relative;*/
+  width: 65%;
+}
+.grid-small {
+  width: 35%;
+  background-color: RGB(0, 129, 213);
+}
+.outline {
+
+}
+.notePanel {
+
+}
+
 .inline {
   display: inline;
 }
