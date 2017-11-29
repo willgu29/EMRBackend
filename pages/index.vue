@@ -59,7 +59,7 @@ export default {
     FieldTip
   },
   fetch ({ params, redirect }) {
-    redirect(302, '/find')
+    redirect(302, '/about')
   },
   asyncData ({ params, error }) {
     console.log(params)

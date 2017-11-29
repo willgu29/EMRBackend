@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import removeStopwordsFrom from '../helpers/stopwords.js'
-import isValidEmr from '../helpers/validateEmr.js'
 import bodyParser from 'body-parser'
 import Find from './models/Find.js'
 
@@ -8,7 +7,6 @@ const router = Router()
 
 /* GET proxies listing. */
 router.get('/finds', function (req, res, next) {
-
   var searchText = req.query.text.toLowerCase();
   var cleanedText = removeStopwordsFrom(searchText).toUpperCase();
   console.log("Cleaned Search: " + cleanedText)
@@ -25,8 +23,7 @@ router.get('/finds', function (req, res, next) {
           var templates = []
           for (var index in proxies) {
             var template = proxies[index].template
-              templates.push(template)
-            }
+            templates.push(template)
           }
           res.json(templates);
         } else {
@@ -36,7 +33,7 @@ router.get('/finds', function (req, res, next) {
 })
 
 /* GET emr by ID. */
-router.get('/find/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
+router.get('/finds/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
   const id = req.params.id
 
   console.log(id)
@@ -49,7 +46,7 @@ router.get('/find/:id([a-zA-Z0-9]{20,})', function (req, res, next) {
   });
 })
 
-router.get('/find/all', function (req, res, next) {
+router.get('/finds/all', function (req, res, next) {
   Find.
     find({}).
     populate({

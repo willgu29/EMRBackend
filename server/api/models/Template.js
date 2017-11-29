@@ -20,7 +20,7 @@ var TemplateSchema = new Schema({
     },
     diagnosis: {type: ObjectId, ref: 'Diagnosis'},
     sections: [{type: ObjectId, ref: 'Section'}]
-}, { timestamps: { createdAt: 'createdAt' });
+}, { timestamps: { createdAt: 'createdAt' }});
 
 var Template = mongoose.model('Template', TemplateSchema)
 

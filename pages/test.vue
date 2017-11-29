@@ -1,12 +1,12 @@
 <template>
   <section class="search-container" v-on:click="unFocus">
-    <div>
+    <div class='display-container'>
       <form class="form" v-on:submit.prevent="onSubmit">
         <div class='input-group'>
           <label>Diagnosis:</label>
           <input v-on:click.stop v-on:focus.self="dropdown" placeholder='Search "Hyperglycemia, unspecified (R73.9)" or "Psychosis"'  type="text" v-bind:class="{ error: retryDiagnosis }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="searchText">
           <ul class='dropdown'>
-            <li class='clickable-list-item' v-on:click.stop="selectDiagnosis" v-show="focused === 0" v-for="diagnosis in displayDiagnoses">{{diagnosis}}</li>
+            <li class='clickable-list-item' v-on:click.stop="selectDiagnosis(diagnosis.code, $event)" v-show="focused === 0" v-for="diagnosis in displayDiagnoses">{{diagnosis.displayText}}</li>
           </ul>
           <input type='submit' value='add diagnosis' />
         </div>
@@ -42,10 +42,14 @@
           <ul>
             <li v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
           </ul>
-        <pre>
+        <pre class='document'>
           {{sectionText}}
         </pre>
       </div>
+    </div>
+    <!-- Mobile Version Not Supported Alert -->
+    <div class='width-too-small-alert'>
+      <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
     </div>
     {{diagnoses}}
   </section>
@@ -75,18 +79,30 @@ export default {
       retryDiagnosis: false,
       noteType: 'History and Physical',
       specialty: 'Psychiatry',
-      diagnoses: [],
-      displayDiagnoses: [],
-      addedDiagnoses: [],
+      diagnoses: [], // initial from server
+      displayDiagnoses: [], // formatted to text, list under search bar
+      addedDiagnoses: [], // saved, displaying for note template
+      selectedDiagnosis: '', // send to server for finds API
       displayTemplate: -1,
       focused: 0,
-      sections: [{'header': 'Chief Complaint', 'text': 'Textext'}, {'header': 'Chief Complaint', 'text': 'Textext'}],
-      sectionText: 'History of diabetes\r\n     - T1DM vs T2DM vs gestational diabetes\r\n     - Newly vs previously diagnosed\r\n     - Last HbA1c\r\n     - Recent fasting glucose measurements\r\n  Medications\r\n     - Oral hypoglycemics\r\n          - Metformin\r\n            Dose, schedule, compliance\r\n          - Sulfonylureas, GLP1 agonists, DPP4 inhibitors, SGLT1 inhbitors, TZDs, \r\n alpha glucosidase inhibitors\r\n            Dose, schedule, compliance\r\n     - Insulin\r\n       Dose, schedule, compliance\r\n  Pregnancy (if female)\r\n  Lifestyle\r\n     - Diet\r\n     - Exercise\r\n     - Acute stressors\r\n  Complications\r\n     - Acute complications\r\n          - DKA, HHS\r\n     - Chronic complications\r\n          - Macrovascular complications\r\n               - CAD, PVD\r\n     - Microvascular complications\r\n          - Diabetic retinopathy, nephropathy, neuropathy'
+      sections: [],
+      sectionText: ''
     }
   },
   methods: {
     onSubmit: function (event) {
-      axios.get('/api/templates/')
+      var url = ('/api/finds?text=' + this.selectedDiagnosis)
+      var self = this
+      axios.get(url)
+        .then(function (response) {
+          console.log(response.data[0])
+          var template = response.data[0]
+          self.sections = template.sections
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
       var diagnoses = this.addedDiagnoses
       diagnoses.push(this.searchText)
       this.addedDiagnoses = diagnoses
@@ -108,8 +124,9 @@ export default {
       this.retryDiagnosis = false
       this.filterNote()
     },
-    selectDiagnosis: function (event) {
+    selectDiagnosis: function (diagnosisCode, event) {
       this.searchText = event.target.textContent
+      this.selectedDiagnosis = diagnosisCode
       this.retryDiagnosis = false
       this.unFocus()
     },
@@ -124,7 +141,7 @@ export default {
       for (var i = 0; i < searchArray.length; i++) {
         var item = searchArray[i].displayText.toUpperCase()
         if (item.indexOf(filter) > -1) {
-          newDisplay.push(item)
+          newDisplay.push(searchArray[i])
         }
       }
       return newDisplay
@@ -134,6 +151,11 @@ export default {
 </script>
 
 <style scoped>
+.document {
+  min-height: 400px;
+  max-height: 550px;
+  overflow: auto;
+}
 .grid-container {
   display: flex;
   justify-content: space-between;
@@ -186,8 +208,11 @@ export default {
   background-color: red;
 }
 
+.width-too-small-alert {
+  display: none;
+}
 @media (max-width: 750px) {
-  .grid-container {
+  .display-container {
     display: none;
   }
   .width-too-small-alert {

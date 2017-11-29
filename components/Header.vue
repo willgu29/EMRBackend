@@ -12,6 +12,7 @@
   header {
     display: inline-block;
     margin: 20px 20px 20px 40px;
+    min-width: 800px;
   }
   .header-logo {
     vertical-align: middle;

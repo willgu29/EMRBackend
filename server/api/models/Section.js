@@ -10,7 +10,7 @@ var SectionSchema = new Schema({
     header:      String,
     text:        String,
     diagnosis: {type: ObjectId, ref: 'Diagnosis'}
-}, { timestamps: { createdAt: 'createdAt' });
+}, { timestamps: { createdAt: 'createdAt' }});
 
 var Section = mongoose.model('Section', SectionSchema)
 
