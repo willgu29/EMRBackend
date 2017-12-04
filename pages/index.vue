@@ -1,253 +1,363 @@
 <template>
-  <section class="main-container" v-on:click="displayFocus">
-    <div class='grid-container'>
-      <div class='grid-2'>
-        <h1 class='chat-title'>Find a note template</h1>
-        <form class="form"  v-on:submit.prevent="onSubmit">
-          <div class='input-group'>
-            <label>Type:</label>
-            <input v-on:focus.self="displayFocus" placeholder='Search "History and Physical"'  type="text" v-bind:class="{ completed: selectedType, error: retryType }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="selectedType">
-            <ul class='dropdown'>
-              <li class='clickable-list-item' v-show="focused === 0" v-on:click.stop="highlightType" v-for="text in display">{{text}}</li>
-            </ul>
-          </div>
-          <div class='input-group'>
-            <label>Specialty:</label>
-            <input ref="specialty" v-on:focus.self="displayFocus" placeholder='Search "Internal Medicine" or "Medicine"' v-bind:class="{ completed: selectedSpecialty, error: retrySpecialty }"  type="text" class='form-search-field' name="specialty" v-on:keyup="filterSpecialty" autocomplete="off" v-model="selectedSpecialty"/>
-            <ul class='dropdown'>
-              <li class='clickable-list-item' v-show="focused === 1" v-on:click.stop="highlightSpecialty" v-for="text in display">{{text}}</li>
-            </ul>
-          </div>
-          <div class='input-group'>
-            <div>
-              <label>Diagnosis:</label> <field-tip img="https://www.emrworx.com/public/assets/info.png" text="Please select a specialty before a diagnosis." />
-            </div>
-            <input ref="diagnosis"  v-on:focus.self="displayFocus" placeholder='Search "Congestive Heart Failure" or "CHF"' v-bind:class="{ completed: selectedDiagnosis, error: retryDiagnosis }" type="text" class='form-search-field' name="diagnosis" v-on:keyup="filterDiagnosis" autocomplete="off" v-model="selectedDiagnosis" />
-            <ul class='dropdown'>
-              <li class='clickable-list-item' v-show="focused === 2" v-on:click.stop="hightlightDiagnosis" v-for="text in display">{{text}}</li>
-            </ul>
-          </div>
-          <input type="submit" class='submit-button' value="FIND" />
-        </form>
-      </div>
-      <div class='grid-small'>
-        <div class='text-container'>
-          <p>EMR Worx finds relevant note templates and helps you finish them faster without sacrificing accuracy.</p>
-          <h2>We break note templates into:</h2>
-          <ul>
-            <li>Checklists for streamlining your HPI</li>
-            <li>Coding and billing tips for proper reimbursement</li>
-            <li>Personalized content based on your patient</li>
+  <section class="search-container" v-on:click="unFocus">
+    <!-- HEADER -->
+    <div class='display-container'>
+      <img class="header-logo" width="150" src="~/assets/img/logo-roboto.png" v-on:click="home" />
+      <div class="form inline">
+        <div class='input-group inline'>
+          <input ref='searchBar' v-on:click.stop.prevent v-on:keyup.enter.stop="autoComplete" v-on:focus.self="dropdown" placeholder='Search "Hyperglycemia, unspecified (R73.9)" or "Psychosis"'  type="text" v-bind:class="{ error: retryDiagnosis }" class='form-search-field ' name="type" v-on:keyup="filterNote" autocomplete="off" v-model="searchText">
+          <ul class='dropdown'>
+            <li class='clickable-list-item' v-on:click.stop="selectDiagnosis(diagnosis.code, $event)" v-show="focused === 0" v-for="diagnosis in displayDiagnoses">{{diagnosis.displayText}}</li>
           </ul>
+          <input type='submit' class='submit-button' value='add diagnosis' v-on:keyup.enter.stop v-on:click.prevent.stop="onSubmit"/>
         </div>
       </div>
     </div>
+    <div v-show="displayTemplate !== 1">
+      <h1 class='gray'>EMR Worx helps you find diagnosis templates. New? Check out our FAQ.</h1>
+    </div>
+    <input ref="focuser" type='submit' class='focuser' />
+    <!-- TEMPLATE -->
+    <div class='grid-container' v-show="displayTemplate === 1">
+      <div class='outline grid-small'>
+        <h1 class='noteType'>{{type}}</h1>
+        <input type='submit' class='submit-button-expand' value='Press space to go to next section' v-on:keyup.enter.stop v-on:click.self.prevent.stop="nextSection"/>
+        <ul>
+          <li class='sections clickable' v-on:click.stop="expand(index)" v-for="(section, index) in sections" :key="index">
+            <div>
+              <p class='inline clickable section-header' v-bind:class="{ selected: sectionIndexDisplayed === index }">{{section.header}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class='notePanel grid-large'>
+          <ul v-on:click.stop="copy">
+            <li class='inline diagnosis' v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
+          </ul>
+        <pre ref="document" class='document'>
+          {{sectionText}}
+        </pre>
+      </div>
+    </div>
+    <!-- FOOOTER -->
+    <div class='footer'>
+      <ul>
+        <nuxt-link class='header-link' to="/about" exact>ABOUT</nuxt-link>
+        <nuxt-link class='header-link' to="/contact" exact>CONTACT</nuxt-link>
+        <nuxt-link class='header-link' to="/contributors" exact>CONTRIBUTORS</nuxt-link>
+        <nuxt-link class='header-link' to="/data-security" exact>DATA SECURITY</nuxt-link>
+      </ul>
+    </div>
     <!-- Mobile Version Not Supported Alert -->
-    <div class='width-too-small-alert'>
+    <div v-show="displayTemplate !== 1" class='width-too-small-alert'>
       <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
     </div>
-
   </section>
 </template>
 
 <script>
+import CopyToClipboard from '~/components/CopyToClipboard'
 import axios from '~/plugins/axios'
-import FieldTip from '~/components/FieldTip'
-import data from '~/assets/data.js'
+
 export default {
+  layout: 'none',
   components: {
-    FieldTip
-  },
-  fetch ({ params, redirect }) {
-    redirect(302, '/about')
-  },
-  asyncData ({ params, error }) {
-    console.log(params)
-    return axios.get('/api/users/')
-      .then((res) => {
-        return { users: res.data }
-      })
-      .catch((e) => {
-        error({ statusCode: 404, message: 'Users not found' })
-      })
+    CopyToClipboard
   },
   head () {
     return {
-      title: 'EMR Worx',
-      meta: [
-        {
-          hid: `keywords`,
-          name: 'keywords',
-          keywords: 'emr, worx, emrworx, note templates'
-        }
-      ]
+      title: 'EMR Worx'
     }
+  },
+  async asyncData (context) {
+    var url = ('/api/diagnoses')
+    let { data } = await axios.get(url)
+    return { diagnoses: data }
   },
   data () {
     return {
-      noteTypes: ['History and Physical', '', '', '', 'Consultation Note', 'Initial Evaluation Note', ''],
-      specialties: ['Psychiatry', 'Internal Medicine', 'Family Medicine'],
-      diagnoses: [
-        ['Attention Deficit Hyperactivity Disorder (ADHD)', 'Anxiety'],
-        ['Acute Kidney Injury (AKI)', 'Anemia', '', '', '', '', 'Heart Failure (HF)', 'Hyperglycemia'],
-        ['Acute Kidney Injury (AKI)', 'Anemia']
-      ],
-      display: [],
-      selectedType: '',
-      selectedSpecialty: '',
-      selectedDiagnosis: '',
-      focused: 0,
-      retryType: false,
-      retrySpecialty: false,
-      retryDiagnosis: false
+      searchText: '',
+      retryDiagnosis: false,
+      noteType: 'History and Physical',
+      specialty: 'Psychiatry',
+      diagnoses: [], // initial from server
+      displayDiagnoses: [], // formatted to text, list under search bar
+      addedDiagnoses: [], // saved, displaying for note template
+      selectedDiagnosis: '', // send to server for finds API
+      displayTemplate: -1,
+      focused: -1, // 0 = searchBar, 1 = Space input button
+      sections: [],
+      sectionIndexDisplayed: -1,
+      sectionText: '',
+      type: ''
     }
   },
+  mounted () {
+    var self = this
+    document.addEventListener('keyup', function (event) {
+      if (event.keyCode === 32 && self.focused !== 0) {
+        self.nextSection()
+      }
+    })
+  },
   methods: {
-    onSubmit: function (event) {
-      // pending drew... is note type + diagnosis one to one?
-      var indexType = this.noteTypes.indexOf(this.selectedType)
-      if (indexType === -1) {
-        this.retryType = true
-        return
+    command: function () {
+      if (this.displayTemplate === 1) {
+        this.nextSection()
+      } else if (this.focused === 0) {
+        this.autoComplete()
+      } else if (this.displayTemplate === -1) {
+        this.onSubmit()
+      } else {
+        console.log('nada')
       }
-      var indexSpecialty = this.specialties.indexOf(this.selectedSpecialty)
-      if (indexSpecialty === -1) {
-        this.retrySpecialty = true
-        return
-      }
-      var indexDiagnosis = this.diagnoses[indexSpecialty].indexOf(this.selectedDiagnosis)
-      if (this.selectedDiagnosis !== '' && indexDiagnosis === -1) {
+    },
+    autoComplete: function () {
+      if (this.displayDiagnoses.length === 0) {
         this.retryDiagnosis = true
         return
       }
-      var code = (indexType + 1).toString() + (indexSpecialty + 1).toString() + (indexDiagnosis + 1).toString()
-      console.log(code)
-      var self = this
-      var result = data.filter(function (x) {
-        return self.values(x).indexOf(code) > -1
-      })
-      console.log(result[0])
-      if (result[0]) {
-        window.open(result[0].link, '_blank')
-      } else {
-        alert('We couldn\'t find a note template that matched what you\'re looking for.')
-      }
-    },
-    values: function (x) {
-      return Object.keys(x).map(function (k) { return x[k] })
-    },
-    highlightType: function (event) {
-      this.selectedType = event.target.textContent
-      this.retryType = false
-      this.$refs.specialty.focus()
-    },
-    highlightSpecialty: function (event) {
-      this.selectedSpecialty = event.target.textContent
-      this.retrySpecialty = false
-      this.$refs.diagnosis.focus()
-    },
-    hightlightDiagnosis: function (event) {
-      this.selectedDiagnosis = event.target.textContent
+      var diagnosis = this.displayDiagnoses[0]
+      this.searchText = diagnosis.displayText
+      this.selectedDiagnosis = diagnosis.code
       this.retryDiagnosis = false
+      this.unFocus()
+      // this.onSubmit()
+    },
+    nextSection: function () {
+      var newIndex = this.sectionIndexDisplayed + 1
+      if (newIndex >= this.sections.length) {
+        newIndex = 0
+      }
+      var sectionText = this.sections[newIndex].text
+      this.sectionText = sectionText
+      this.sectionIndexDisplayed = newIndex
+    },
+    home: function () {
+      this.$router.replace('/')
+    },
+    onSubmit: function (event) {
+      console.log(event)
+      var check = this.filterSearch(this.searchText, this.displayDiagnoses)
+      console.log(check)
+      if (check.length === 0) {
+        this.retryDiagnosis = true
+        return
+      }
+      var url = ('/api/finds?text=' + this.selectedDiagnosis)
+      var self = this
+      axios.get(url)
+        .then(function (response) {
+          console.log(response.data[0])
+          var template = response.data[0]
+          self.sections = template.sections
+          self.sectionText = template.sections[0].text
+          self.sectionIndexDisplayed = 0
+          self.type = template.type
+          self.$refs.focuser.focus()
+          self.focused = 1
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      // var diagnoses = this.addedDiagnoses
+      // diagnoses.push(this.searchText)
+      this.addedDiagnoses = [this.searchText] // diagnoses
+      this.searchText = ''
+      this.displayTemplate = 1
+    },
+    expand: function (index) {
+      var text = this.sections[index].text
+      this.sectionIndexDisplayed = index
+      this.sectionText = text
+    },
+    parseJSON: function (escapedString) {
+      return JSON.parse(escapedString)
+    },
+    unFocus: function () {
       this.focused = -1
     },
+    dropdown: function () {
+      this.focused = 0
+      this.retryDiagnosis = false
+      this.filterNote()
+    },
+    selectDiagnosis: function (diagnosisCode, event) {
+      this.searchText = event.target.textContent
+      this.selectedDiagnosis = diagnosisCode
+      this.retryDiagnosis = false
+      this.unFocus()
+    },
     filterNote: function (event) {
-      var filter = event.target.value.toUpperCase()
-      var searchArray = this.noteTypes
-      var newDisplay = this.filterSearch(filter, searchArray)
-      this.display = newDisplay
-    },
-    filterSpecialty: function (event) {
-      var filter = event.target.value.toUpperCase()
-      var searchArray = this.specialties
-      var newDisplay = this.filterSearch(filter, searchArray)
-      this.display = newDisplay
-    },
-    filterDiagnosis: function (event) {
-      var filter = event.target.value.toUpperCase()
-      var index = this.specialties.indexOf(this.selectedSpecialty)
-      var searchArray = this.diagnoses[index]
-      var newDisplay = this.filterSearch(filter, searchArray)
-      this.display = newDisplay
+      var filter = this.searchText
+      var searchArray = this.diagnoses
+      var newDisplay = this.filterSearch(filter.toUpperCase(), searchArray)
+      this.displayDiagnoses = newDisplay
     },
     filterSearch: function (filter, searchArray) {
       var newDisplay = []
+      filter = filter.toUpperCase()
       for (var i = 0; i < searchArray.length; i++) {
-        var item = searchArray[i].toUpperCase()
+        var item = searchArray[i].displayText.toUpperCase()
         if (item.indexOf(filter) > -1) {
           newDisplay.push(searchArray[i])
         }
       }
       return newDisplay
-    },
-    displayFocus: function (event) {
-      var inputFocused = event.target.name
-      if (inputFocused === 'type') {
-        this.display = this.noteTypes
-        this.focused = 0
-      } else if (inputFocused === 'specialty') {
-        this.display = this.specialties
-        this.focused = 1
-      } else if (inputFocused === 'diagnosis') {
-        if (this.selectedSpecialty === '') {
-          // display error/alert
-        } else {
-          var index = this.specialties.indexOf(this.selectedSpecialty)
-          this.display = this.diagnoses[index]
-          this.focused = 2
-        }
-      } else {
-        this.focused = -1
-      }
     }
   }
 }
 </script>
 
 <style scoped>
-.text-container {
+.search-container {
+  padding: 0px;
+  margin: 0px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.header-link {
   margin: 20px;
+  color: black;
+  text-decoration: none;
 }
-.form {
-  margin: 20px;
+.header-link:visited {
+  color: black;
 }
-.input-group {
-  margin-top: 10px;
-  margin-bottom: 40px;
-  position: relative;
-  display: block;
+.header-link:hover {
+  color: #0043ff;
 }
-.dropdown {
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+.footer {
+  background-color:  #89CFF0;
 }
-label {
+.gray {
+  color: #D3D3D3;
+  margin: 60px;
+}
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  background-color: yellow;
+}
+.selected {
+  background-color: yellow;
+}
+.noteType {
+  margin-top: 0px;
+}
+.submit-button {
+  cursor: pointer;
+  width: 120px;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-left: 5px;
+  background-color: rgb(0, 129, 213);
+  color: white;
+  font-size: 14px;
+}
+.submit-button-expand {
+  cursor: pointer;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-left: 5px;
+  background-color: rgb(0, 129, 213);
+  color: white;
+  font-size: 14px;
+}
+.focuser {
+  opacity:0;
+  filter:alpha(opacity=0);
+}
+.display-container {
+  background-color: #89CFF0;
+  min-width: 900px;
+  padding: 20px;
+}
+.diagnosis {
   font-size: 24px;
-  margin-bottom: 20px;
+}
+.header-logo {
+  vertical-align: middle;
+  margin-right: 40px;
+}
+.document {
+  min-height: 400px;
+  max-height: 550px;
+  overflow: auto;
 }
 .grid-container {
-  margin: 60px;
+  display: flex;
+  justify-content: space-between;
+  min-width: 800px;
+}
+.grid-large {
+  /*position: relative;*/
+  width: 60%;
+}
+.grid-small {
+  width: 40%;
+  background-color: RGB(0, 129, 213);
+  padding: 20px;
+}
+.noteType {
+  font-size: 24px;
+}
+.section-header {
+  font-size: 16px;
+}
+.sections {
+  list-style: none;
+
+}
+.grid-container {
+  margin: 30px 60px 60px 60px;
   box-shadow: 0px 0px 10px #888888;
 }
 .form-search-field {
-  margin-top: 10px;
-  display: block;
   height: 30px;
-  width: 85%;
-  min-width: 350px;
-  max-width: 400px;
+  width: 500px;
   font-size: 16px;
-  border-radius: 2px;
+  border-radius: 5px;
   border-style: solid;
-  border-width: 1px;
-  border-color: #b2b2b2;
-  background: RGB(239, 239, 239) url("~/assets/img/menu3.png") no-repeat right;
+  border-width: 0px;
 }
-.form-search-field:focus {
-  background-color: white;
+.inline {
+  display: inline;
+}
+.input-group {
+  display: relative;
+}
+.dropdown {
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  left: 210px;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 500px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.clickable-list-item {
+  display: block;
+  list-style: none;
+  text-decoration: underline;
+  padding: 20px 20px 20px 20px;
+}
+.clickable-list-item:hover {
+  color: #0043ff;
+  cursor: pointer;
 }
 .completed {
   background-color: RGB(0, 129, 213);
@@ -255,76 +365,12 @@ label {
 .error {
   background-color: red;
 }
-.clickable-list-item {
-  list-style: none;
-  text-decoration: underline;
-  padding: 0px 20px 0px 0px;
-}
-.clickable-list-item:hover {
-  color: #0043ff;
-  cursor: pointer;
-}
-
-li {
-  line-height: 30px;
-}
-.list {
-  list-style: none;
-  text-align: left;
-}
-.quick-start-title {
-  text-align: left;
-  margin-left: 10px;
-}
-.quick-display {
-  min-width: 200px;
-  max-width: 300px;
-}
-.chat-title {
-  text-align: left;
-  margin-left: 20px;
-}
-.text {
-  margin: 20px;
-}
-.explainer {
-  text-align: center;
-  color: #b2b2b2;
-}
-
-.submit-button {
-  width: 100%;
-  height: 30px;
-  border-style: solid;
-  border-radius: 5px;
-  border-width: 1px;
-  background-color: rgb(0, 129, 213);
-  color: white;
-  font-size: 14px;
-}
-.submit-button:hover {
-  cursor: pointer;
-  background-color: #0043ff;
-}
-
-.grid-container {
-  display: flex;
-  justify-content: space-between;
-}
-.grid-2 {
-  position: relative;
-  width: 60%;
-}
-.grid-small {
-  width: 40%;
-  background-color: RGB(225, 240, 255);
-}
 
 .width-too-small-alert {
   display: none;
 }
 @media (max-width: 750px) {
-  .grid-container {
+  .display-container {
     display: none;
   }
   .width-too-small-alert {
@@ -332,6 +378,4 @@ li {
     text-align: center;
   }
 }
-
-
 </style>
