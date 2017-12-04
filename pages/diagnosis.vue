@@ -16,29 +16,28 @@
     <div class='grid-container' v-show="displayTemplate === 1">
       <div class='outline grid-small'>
         <h1 class='noteType'>{{type}}</h1>
+        <input type='submit' class='submit-button-expand' value='Press space to go to next section' v-on:keyup.enter.stop v-on:click.self.prevent.stop="nextSection"/>
         <ul>
           <li class='sections clickable' v-on:click.stop="expand(index)" v-for="(section, index) in sections" :key="index">
             <div>
-              <p class='inline section-header' v-bind:class="{ selected: sectionIndexDisplayed === index }">{{section.header}}</p>
+              <p class='inline clickable section-header' v-bind:class="{ selected: sectionIndexDisplayed === index }">{{section.header}}</p>
             </div>
           </li>
         </ul>
       </div>
       <div class='notePanel grid-large'>
-          <ul>
-            <li class='inline' v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
-            <copy-to-clipboard v-on:click.self.stop="copy(index)" />
+          <ul v-on:click.stop="copy">
+            <li class='inline diagnosis' v-for="diagnosis in addedDiagnoses">{{diagnosis}}</li>
           </ul>
-        <pre class='document'>
+        <pre ref="document" class='document'>
           {{sectionText}}
         </pre>
       </div>
     </div>
     <!-- Mobile Version Not Supported Alert -->
-    <div class='width-too-small-alert'>
+    <div v-show="displayTemplate !== 1" class='width-too-small-alert'>
       <p>EMR Worx is intended for use on a desktop. Please widen your browser window.</p>
     </div>
-    {{diagnoses}}
   </section>
 </template>
 
@@ -82,7 +81,7 @@ export default {
   mounted () {
     var self = this
     document.addEventListener('keyup', function (event) {
-      if (event.keyCode === 32) {
+      if (event.keyCode === 32 && self.focused !== 0) {
         self.nextSection()
       }
     })
@@ -123,9 +122,6 @@ export default {
     home: function () {
       this.$router.replace('/')
     },
-    copy: function (index) {
-
-    },
     onSubmit: function (event) {
       console.log(event)
       var check = this.filterSearch(this.searchText, this.displayDiagnoses)
@@ -151,9 +147,9 @@ export default {
           console.log(error)
         })
 
-      var diagnoses = this.addedDiagnoses
-      diagnoses.push(this.searchText)
-      this.addedDiagnoses = diagnoses
+      // var diagnoses = this.addedDiagnoses
+      // diagnoses.push(this.searchText)
+      this.addedDiagnoses = [this.searchText] // diagnoses
       this.searchText = ''
       this.displayTemplate = 1
     },
@@ -205,13 +201,29 @@ export default {
   cursor: pointer;
 }
 .clickable:hover {
-
+  background-color: yellow;
 }
 .selected {
   background-color: yellow;
 }
+.noteType {
+  margin-top: 0px;
+}
 .submit-button {
+  cursor: pointer;
   width: 120px;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-left: 5px;
+  background-color: rgb(0, 129, 213);
+  color: white;
+  font-size: 14px;
+}
+.submit-button-expand {
+  cursor: pointer;
+  width: 100%;
   height: 30px;
   border-style: solid;
   border-radius: 5px;
@@ -229,6 +241,9 @@ export default {
   background-color: #89CFF0;
   min-width: 900px;
   padding: 20px;
+}
+.diagnosis {
+  font-size: 24px;
 }
 .header-logo {
   vertical-align: middle;
@@ -263,10 +278,10 @@ export default {
   list-style: none;
 
 }
-.notePanel {
-
+.grid-container {
+  margin: 60px;
+  box-shadow: 0px 0px 10px #888888;
 }
-
 .form-search-field {
   height: 30px;
   width: 500px;
