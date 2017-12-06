@@ -43,9 +43,11 @@
     <div class='footer'>
       <ul>
         <nuxt-link class='header-link' to="/about" exact>ABOUT</nuxt-link>
+        <nuxt-link class='header-link' to="/data-security" exact>DATA SECURITY</nuxt-link>
         <nuxt-link class='header-link' to="/contact" exact>CONTACT</nuxt-link>
         <nuxt-link class='header-link' to="/contributors" exact>CONTRIBUTORS</nuxt-link>
-        <nuxt-link class='header-link' to="/data-security" exact>DATA SECURITY</nuxt-link>
+        <nuxt-link class='header-link' to="/faqs" exact>FAQS</nuxt-link>
+        <nuxt-link class='header-link' to="/demo" exact>DEMO</nuxt-link>
       </ul>
     </div>
     <!-- Mobile Version Not Supported Alert -->
@@ -140,7 +142,7 @@ export default {
       console.log(event)
       var check = this.filterSearch(this.searchText, this.displayDiagnoses)
       console.log(check)
-      if (check.length === 0) {
+      if (check.length !== 1) {
         this.retryDiagnosis = true
         return
       }
@@ -220,6 +222,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  background-color:  #89CFF0;
 }
 .header-link {
   margin: 20px;
@@ -231,9 +234,6 @@ export default {
 }
 .header-link:hover {
   color: #0043ff;
-}
-.footer {
-  background-color:  #89CFF0;
 }
 .gray {
   color: #D3D3D3;
