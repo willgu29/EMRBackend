@@ -59,6 +59,9 @@ export default {
     FieldTip,
     TextTip
   },
+  fetch ({ params, redirect }) {
+    redirect(302, '/')
+  },
   asyncData ({ params, error }) {
     console.log(params)
     return axios.get('/api/users/')
