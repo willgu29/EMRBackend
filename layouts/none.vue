@@ -1,3 +1,5 @@
+<!-- does not have Header/Footer -->
+
 <template>
   <div>
     <nuxt/>

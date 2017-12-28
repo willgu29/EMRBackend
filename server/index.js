@@ -45,12 +45,6 @@ if (config.dev) {
   mongoose.connect(url)
 }
 
-
-
-//
-// var server = require('http').Server(app);
-// var io = require('./helpers/io').initialize(server);
-
 // Listen the server
 app.listen(port, host)
 console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console

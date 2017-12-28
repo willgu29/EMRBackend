@@ -1,3 +1,14 @@
+/* NOTE TO CODER:
+These stopwords will be helpful if Drew wants to add some sort of
+"search logic" later on. These just remove the words in the array from the
+query so there's a bit more flexibilty for "natural language"
+
+Currently, this is not being used anywhere in the code.
+Note that note, template, order, orders and several EMRS (quest, cerner)
+are being removed as stopwords. This is intentional, but may not be what you're
+looking for later on. They are at the end of the array.
+*/
+
 var stopwords = [
   'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any',
   'are', 'aren\'t', 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below',
@@ -25,5 +36,3 @@ function removeStopwordsFrom (text) {
 }
 
 export default removeStopwordsFrom
-
-//REMOVED NOTE AND TEMPlATE AND ORDER AND ORDERS FROM SEARCH, added Program (EMR) names ****

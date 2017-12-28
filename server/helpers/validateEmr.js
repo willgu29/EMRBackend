@@ -1,22 +1,12 @@
-import fs from 'fs'
-import path from 'path'
-import axios from 'axios'
+/* NOTE TO CODER:
 
-function isValidEmr(emr) {
-  var relativePath = __dirname + '/../../static'
-  if (fs.existsSync(path.join(relativePath, emr.filePath))) {
-    return true
-  }
-  return false;
-}
-// TODO: Check if valid URL to file (GCS)
+Previously we stored files in GCS and I had implemented a checker here since
+Drew was adding data directly to the database but since it happened in steps
+(EMR --> Proxy previously, it is now Template --> Find) there was the chance
+that some piece would be lost. i.e. he creates an Template with a Find (Proxy).
 
-//Can't figure out async shit for real URL checking, hacky checking
-function isValidUrl(emr) {
-  if (emr.filePath.includes('https://storage.googleapis.com/emrworx.com/')){
-    return true
-  }
-  return false
-}
+I would highly recommend re-implementing a checker and inserting it in the
+GET methods for finds.js/templates.js to prevent the server from populating
+the search bar with "finds" that have no "templates".
 
-export default isValidUrl
+Therefore, I have left this file here, although it is not in use anywhere. */

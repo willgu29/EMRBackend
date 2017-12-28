@@ -1,3 +1,27 @@
+<!--NOTE TO CODER:
+
+This admin panel helps Drew create proxies.
+How I searched proxies was inclusive: So if a proxy had ["Well Child 6 Month"]
+Then "Well" or "Child" or "Well Child" or "Child 6" would turn up as a hit.
+"Child Well" would not.
+
+To make it simplier for Drew, I just ran all the different combinations of potential
+search terms.
+
+For example: if the key words were HEART, FAILURE, and HF.
+The proxy would be ["HEART FAILURE HF", "HEART HF FAILURE", "FAILURE HEART HF", ...]
+until all the combinations of searches for those 3 key words could be ordered.
+
+This is currently not in use, to use it, just rewire the onSubmit function to
+a valid API endpoint (as currently proxy is replaced with finds)
+
+To visit this route, I added a small checker, so the actual route is
+emrworx.com/admin/proxy?user=drew&pw=toocool2
+
+This is reflected in the validate function.
+
+ -->
+
 <template>
   <section class="container">
     <h1 class="title">
